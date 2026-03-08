@@ -25,13 +25,15 @@ def _read_bilanzposten() -> pl.DataFrame:
 # Journal reading
 # ---------------------------------------------------------------------------
 
-def _read_journal(journal_file: str, exclude_jeb: bool = False) -> pl.DataFrame:
+def _read_journal(journal_file: str, exclude_jeb: bool = False, only_jab: bool = False) -> pl.DataFrame:
     journal = pl.read_csv(
         journal_file,
         schema_overrides={"Konto": pl.Utf8, "Journalnummer": pl.Int64},
     )
     if exclude_jeb:
         journal = journal.filter(~pl.col("Belegnummer").str.contains("JEB"))
+    if only_jab:
+        journal = journal.filter(pl.col("Belegnummer").str.contains("JAB"))
     return journal
 
 
@@ -96,8 +98,9 @@ def _get_konten(
     start: date,
     ende: date,
     exclude_jeb: bool = False,
+    only_jab: bool = False,
 ) -> pl.DataFrame:
-    journal = _read_journal(journal_file, exclude_jeb)
+    journal = _read_journal(journal_file, exclude_jeb, only_jab)
     return _join_and_summarise(journal, konten_file, start, ende)
 
 
@@ -405,19 +408,10 @@ def _bilanz_signed_betrag(bilanz_konten: pl.DataFrame) -> pl.DataFrame:
     )
 
 
-def bilanz(
-    journal_file: str, konten_file: str, start: str, ende: str, hebesatz: int
-) -> pl.DataFrame:
-    start_d, ende_d = _parse_date(start), _parse_date(ende)
-    konten = _get_konten_mit_steuer(journal_file, konten_file, start_d, ende_d, hebesatz)
-
-    guv_df = guv(journal_file, konten_file, start, ende, hebesatz)
-    ju_row = guv_df.filter(pl.col("GuV Posten") == "17. Jahresüberschuss/Jahresfehlbetrag")
-    jahresueberschuss = float(ju_row["Betrag"][0]) if not ju_row.is_empty() else 0.0
-
+def _format_bilanz(konten: pl.DataFrame, jahresueberschuss: float = 0.0) -> pl.DataFrame:
+    """Format account data into bilanz structure with Bilanzseite/Ebene1/Ebene2/Betrag."""
     bp_lookup = _build_bilanzposten_lookup()
 
-    # Join accounts with bilanzposten structure, apply sign convention
     bilanz_konten = (
         konten.filter(pl.col("Bilanzposten").is_not_null())
         .join(bp_lookup, on="Bilanzposten", how="left")
@@ -428,21 +422,19 @@ def bilanz(
         pl.col("Betrag").sum()
     )
 
-    # Add Jahresüberschuss
-    bilanz_by_posten = pl.concat([
-        bilanz_by_posten,
-        pl.DataFrame({
-            "Bilanzposten": ["V. Jahresüberschuß/Jahresfehlbetrag"],
-            "Betrag": [jahresueberschuss],
-        }),
-    ])
+    if abs(round(jahresueberschuss, 2)) > 0:
+        bilanz_by_posten = pl.concat([
+            bilanz_by_posten,
+            pl.DataFrame({
+                "Bilanzposten": ["V. Jahresüberschuß/Jahresfehlbetrag"],
+                "Betrag": [jahresueberschuss],
+            }),
+        ])
 
-    # Map back to Bilanzseite/Ebene1/Ebene2
     bilanz_structured = bilanz_by_posten.join(
         bp_lookup, on="Bilanzposten", how="left"
     ).select(["Bilanzseite", "Ebene1", "Ebene2", "Betrag"]).unique()
 
-    # Build output from template: total → Ebene1 → Ebene2
     template = (
         _read_bilanzposten()
         .unique(subset=["Bilanzseite", "Ebene1", "Ebene2"], keep="first")
@@ -493,6 +485,28 @@ def bilanz(
         ).alias("Betrag")
     )
     return result
+
+
+def bilanz(
+    journal_file: str, konten_file: str, start: str, ende: str, hebesatz: int
+) -> pl.DataFrame:
+    start_d, ende_d = _parse_date(start), _parse_date(ende)
+    konten = _get_konten_mit_steuer(journal_file, konten_file, start_d, ende_d, hebesatz)
+
+    guv_df = guv(journal_file, konten_file, start, ende, hebesatz)
+    ju_row = guv_df.filter(pl.col("GuV Posten") == "17. Jahresüberschuss/Jahresfehlbetrag")
+    jahresueberschuss = float(ju_row["Betrag"][0]) if not ju_row.is_empty() else 0.0
+
+    return _format_bilanz(konten, jahresueberschuss)
+
+
+def eroeffnungsbilanz(
+    journal_file: str, konten_file: str, start: str, ende: str,
+) -> pl.DataFrame:
+    """Opening balance sheet using only JAB entries."""
+    start_d, ende_d = _parse_date(start), _parse_date(ende)
+    konten = _get_konten(journal_file, konten_file, start_d, ende_d, only_jab=True)
+    return _format_bilanz(konten)
 
 
 def _format_german_number(value: float) -> str:

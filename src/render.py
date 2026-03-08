@@ -5,6 +5,7 @@ from pathlib import Path
 
 from buchhaltung import (
     bilanz,
+    eroeffnungsbilanz,
     guv,
     t_konten,
     validiere_bilanz,
@@ -70,14 +71,8 @@ def _render_guv_body(journal_file, konten_file, start, ende, hebesatz, firma):
     return html
 
 
-def _render_bilanz_body(journal_file, konten_file, start, ende, hebesatz, firma, titel=None):
-    b = bilanz(journal_file, konten_file, start, ende, hebesatz)
-    journal_valid = validiere_journal(journal_file, konten_file, start, ende)
-    bilanz_valid = validiere_bilanz(journal_file, konten_file, start, ende, hebesatz)
-
-    if titel is None:
-        ende_str = f"31.12.{ende[:4]}"
-        titel = f"Bilanz zum {ende_str}"
+def _render_bilanz_body(firma, titel, bilanz_df, journal_valid="", bilanz_valid=""):
+    b = bilanz_df
 
     html = f'<h2 class="text-xl font-bold mb-6">{firma} &mdash; {titel}</h2>\n'
 
@@ -236,7 +231,10 @@ def render_guv(journal_file, konten_file, start, ende, hebesatz, firma, ort, nam
 
 def render_bilanz(journal_file, konten_file, start, ende, hebesatz, firma, ort, name, position):
     ende_str = f"31.12.{ende[:4]}"
-    body = _render_bilanz_body(journal_file, konten_file, start, ende, hebesatz, firma)
+    b = bilanz(journal_file, konten_file, start, ende, hebesatz)
+    jv = validiere_journal(journal_file, konten_file, start, ende)
+    bv = validiere_bilanz(journal_file, konten_file, start, ende, hebesatz)
+    body = _render_bilanz_body(firma, f"Bilanz zum {ende_str}", b, jv, bv)
     body += _signature(ort, ende_str, name, position)
     return _wrap_html(f"Bilanz {firma}", body)
 
@@ -253,15 +251,17 @@ def render_all(journal_file, konten_file, start, ende, hebesatz, firma, ort, nam
     ende_str = f"31.12.{jahr}"
     start_str = f"01.01.{jahr}"
 
-    # Eröffnungsbilanz (only opening entries on 01.01)
-    body = _render_bilanz_body(journal_file, konten_file, start, start, hebesatz, firma,
-                               titel=f"Eröffnungsbilanz zum {start_str}")
+    # Eröffnungsbilanz (only JAB entries)
+    eb = eroeffnungsbilanz(journal_file, konten_file, start, ende)
+    body = _render_bilanz_body(firma, f"Eröffnungsbilanz zum {start_str}", eb)
     body += _signature(ort, start_str, name, position)
     body += PAGE_BREAK
 
     # Schlussbilanz (full year)
-    body += _render_bilanz_body(journal_file, konten_file, start, ende, hebesatz, firma,
-                                titel=f"Schlussbilanz zum {ende_str}")
+    sb = bilanz(journal_file, konten_file, start, ende, hebesatz)
+    jv = validiere_journal(journal_file, konten_file, start, ende)
+    bv = validiere_bilanz(journal_file, konten_file, start, ende, hebesatz)
+    body += _render_bilanz_body(firma, f"Schlussbilanz zum {ende_str}", sb, jv, bv)
     body += _signature(ort, ende_str, name, position)
     body += PAGE_BREAK
 

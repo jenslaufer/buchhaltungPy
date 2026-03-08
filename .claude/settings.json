@@ -11,7 +11,8 @@
       "Bash(ln -sf /home/jens/Repos/buchhaltung/tests/fixtures/real_2024.csv /tmp/journal_2024.csv)",
       "Bash(chmod +x /home/jens/Repos/buchhaltung/render_solytics.sh)",
       "Bash(./render_solytics.sh)",
-      "Bash(python3 -c \":*)"
+      "Bash(python3 -c \":*)",
+      "Bash(python3:*)"
     ]
   }
 }

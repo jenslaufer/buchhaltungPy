@@ -157,3 +157,48 @@ def test_bilanz_rueckstellungen_with_taxes(api, konten):
     rs = get_bilanz_betrag(result, "Passiva", "B. Rückstellungen", "")
     # bilanz() internally adds tax bookings via .get_konten_mit_steuer
     assert parse_german_number(rs) >= 0  # May be 0 if taxes aren't booked as provisions
+
+
+# --- Eröffnungsbilanz tests ---
+
+def test_eroeffnungsbilanz_has_required_columns(api, konten):
+    result = api.eroeffnungsbilanz(
+        fixture_path("15_with_gewinnvortrag.csv"), konten,
+        DEFAULT_START, DEFAULT_ENDE,
+    )
+    assert "Bilanzseite" in result.columns
+    assert "Ebene1" in result.columns
+    assert "Ebene2" in result.columns
+    assert "Betrag" in result.columns
+
+
+def test_eroeffnungsbilanz_aktiva_equals_passiva(api, konten):
+    result = api.eroeffnungsbilanz(
+        fixture_path("15_with_gewinnvortrag.csv"), konten,
+        DEFAULT_START, DEFAULT_ENDE,
+    )
+    aktiva = get_bilanz_betrag(result, "Aktiva", "", "")
+    passiva = get_bilanz_betrag(result, "Passiva", "", "")
+    assert aktiva == passiva, f"Aktiva {aktiva} != Passiva {passiva}"
+
+
+def test_eroeffnungsbilanz_only_jab_entries(api, konten):
+    """Eröffnungsbilanz must only contain JAB entries, not regular bookings."""
+    result = api.eroeffnungsbilanz(
+        fixture_path("15_with_gewinnvortrag.csv"), konten,
+        DEFAULT_START, DEFAULT_ENDE,
+    )
+    aktiva = parse_german_number(get_bilanz_betrag(result, "Aktiva", "", ""))
+    # Fixture 15 has JAB entries totalling 50000 on Aktiva side
+    # (25000 Stammkapital + 25000 Gewinnvortrag = 50000 Bank)
+    assert abs(aktiva - 50000.0) < 0.01
+
+
+def test_eroeffnungsbilanz_empty_without_jab(api, konten):
+    """Journal without JAB entries produces zero Eröffnungsbilanz."""
+    result = api.eroeffnungsbilanz(
+        fixture_path("01_simple_profit.csv"), konten,
+        DEFAULT_START, DEFAULT_ENDE,
+    )
+    aktiva = get_bilanz_betrag(result, "Aktiva", "", "")
+    assert aktiva == "0,00"

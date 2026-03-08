@@ -189,3 +189,57 @@ def test_real_bilanz_all_rows(api, year, start, ende, hebesatz):
             # Both should match as-is (string "NA" == string "NA")
             assert act_val == exp_val, \
                 f"{year} row {i} col '{col}': '{act_val}' != '{exp_val}'"
+
+
+# --- Eröffnungsbilanz: Aktiva == Passiva ---
+
+YEARS_WITH_JAB = [y for y in REAL_YEARS if y[0] != "2022"]
+
+
+@pytest.mark.parametrize("year,start,ende,hebesatz", YEARS_WITH_JAB, ids=[
+    f"real_{y[0]}" for y in YEARS_WITH_JAB
+])
+def test_real_eroeffnungsbilanz_balanced(api, year, start, ende, hebesatz):
+    eb = api.eroeffnungsbilanz(fixture(year), KONTEN_FILE, start, ende)
+    aktiva = eb.filter((eb["Bilanzseite"] == "Aktiva") & (eb["Ebene1"] == "NA") & (eb["Ebene2"] == "NA"))
+    passiva = eb.filter((eb["Bilanzseite"] == "Passiva") & (eb["Ebene1"] == "NA") & (eb["Ebene2"] == "NA"))
+    assert not aktiva.is_empty() and not passiva.is_empty(), f"{year}: empty EB"
+    assert aktiva["Betrag"][0] == passiva["Betrag"][0], \
+        f"{year}: EB Aktiva {aktiva['Betrag'][0]} != Passiva {passiva['Betrag'][0]}"
+
+
+# --- Schlussbilanz year N == Eröffnungsbilanz year N+1 ---
+
+YEAR_TRANSITIONS = [
+    ("2022", "2023", 395),
+    ("2023", "2024", 395),
+    ("2024", "2025", 395),
+    ("2025", "2026", 395),
+]
+
+
+@pytest.mark.parametrize("prev_year,next_year,hebesatz", YEAR_TRANSITIONS, ids=[
+    f"{t[0]}_to_{t[1]}" for t in YEAR_TRANSITIONS
+])
+def test_schlussbilanz_matches_eroeffnungsbilanz(api, prev_year, next_year, hebesatz):
+    """Schlussbilanz of year N must match Eröffnungsbilanz of year N+1."""
+    prev_start = f"{prev_year}-01-01"
+    prev_ende = f"{prev_year}-12-31"
+    next_start = f"{next_year}-01-01"
+    next_ende = f"{next_year}-12-31"
+
+    sb = api.bilanz(fixture(prev_year), KONTEN_FILE, prev_start, prev_ende, hebesatz)
+    eb = api.eroeffnungsbilanz(fixture(next_year), KONTEN_FILE, next_start, next_ende)
+
+    sb_aktiva = sb.filter((sb["Bilanzseite"] == "Aktiva") & (sb["Ebene1"] == "NA") & (sb["Ebene2"] == "NA"))
+    eb_aktiva = eb.filter((eb["Bilanzseite"] == "Aktiva") & (eb["Ebene1"] == "NA") & (eb["Ebene2"] == "NA"))
+
+    assert not sb_aktiva.is_empty() and not eb_aktiva.is_empty()
+    assert sb_aktiva["Betrag"][0] == eb_aktiva["Betrag"][0], \
+        f"SB {prev_year} Aktiva {sb_aktiva['Betrag'][0]} != EB {next_year} Aktiva {eb_aktiva['Betrag'][0]}"
+
+    sb_passiva = sb.filter((sb["Bilanzseite"] == "Passiva") & (sb["Ebene1"] == "NA") & (sb["Ebene2"] == "NA"))
+    eb_passiva = eb.filter((eb["Bilanzseite"] == "Passiva") & (eb["Ebene1"] == "NA") & (eb["Ebene2"] == "NA"))
+
+    assert sb_passiva["Betrag"][0] == eb_passiva["Betrag"][0], \
+        f"SB {prev_year} Passiva {sb_passiva['Betrag'][0]} != EB {next_year} Passiva {eb_passiva['Betrag'][0]}"
