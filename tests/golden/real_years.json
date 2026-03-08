@@ -1,14 +1,14 @@
 {
   "2022": {
-    "betriebsergebnis": 46073.74,
+    "betriebsergebnis": 46073.73999999999,
     "koerperschaftssteuer": 6910.95,
     "soli": 380.1,
-    "gewerbesteuer": 6359.5,
-    "steuern": 13650.55,
+    "gewerbesteuer": 4910.5,
+    "steuern": 12201.55,
     "validiere_journal": "",
     "validiere_bilanz": "",
     "guv": {
-      "1. Umsatzerlöse": 48165.01,
+      "1. Umsatzerlöse": 48165.009999999995,
       "2. Erhöhung oder Verminderung des Bestands an fertigen und unfertigen Erzeugnissen": 0.0,
       "3. Andere aktivierte Eigenleistungen": 0.0,
       "4. Sonstige betriebliche Erträge": 0.0,
@@ -16,16 +16,16 @@
       "6. Personalaufwand": 0.0,
       "7. Abschreibungen": 276.47,
       "8. Sonstige betriebliche Aufwendungen": 1814.8,
-      "Betriebsergebnis": 46073.740000000005,
+      "Betriebsergebnis": 46073.73999999999,
       "9. Erträge aus Beteiligungen, davon aus verbundenen Unternehmen": 0.0,
       "10. Erträge aus anderen Wertpapieren und Ausleihungen des Finanzanlagevermögens, davon aus verbundenen Unternehmen": 0.0,
       "11. Sonstige Zinsen und ähnliche Erträge, davon aus verbundenen Unternehmen": 0.0,
       "12. Abschreibungen auf Finanzanlagen und auf Wertpapiere des Umlaufvermögens": 0.0,
       "13. Zinsen und ähnliche Aufwendungen, davon an verbundene Unternehmen": 0.0,
-      "14. Steuern vom Einkommen und vom Ertrag": 13650.55,
-      "15. Ergebnis nach Steuern": 32423.190000000006,
+      "14. Steuern vom Einkommen und vom Ertrag": 12201.55,
+      "15. Ergebnis nach Steuern": 33872.18999999999,
       "16. Sonstige Steuern": 0.0,
-      "17. Jahresüberschuss/Jahresfehlbetrag": 32423.190000000006
+      "17. Jahresüberschuss/Jahresfehlbetrag": 33872.18999999999
     },
     "bilanz": [
       {
@@ -116,7 +116,7 @@
         "Bilanzseite": "Passiva",
         "Ebene1": "A. Eigenkapital",
         "Ebene2": "NA",
-        "Betrag": "57.423,19"
+        "Betrag": "58.872,19"
       },
       {
         "Bilanzseite": "Passiva",
@@ -146,13 +146,13 @@
         "Bilanzseite": "Passiva",
         "Ebene1": "A. Eigenkapital",
         "Ebene2": "V. Jahresüberschuß/Jahresfehlbetrag",
-        "Betrag": "32.423,19"
+        "Betrag": "33.872,19"
       },
       {
         "Bilanzseite": "Passiva",
         "Ebene1": "B. Rückstellungen",
         "Ebene2": "NA",
-        "Betrag": "13.650,55"
+        "Betrag": "12.201,55"
       },
       {
         "Bilanzseite": "Passiva",
@@ -175,11 +175,11 @@
     ]
   },
   "2023": {
-    "betriebsergebnis": 110872.17,
+    "betriebsergebnis": 110872.16999999998,
     "koerperschaftssteuer": 16630.8,
     "soli": 914.69,
-    "gewerbesteuer": 15318.1,
-    "steuern": 32893.18,
+    "gewerbesteuer": 12603.5,
+    "steuern": 30178.579999999998,
     "validiere_journal": "",
     "validiere_bilanz": "",
     "guv": {
@@ -191,16 +191,16 @@
       "6. Personalaufwand": 17000.0,
       "7. Abschreibungen": 2209.24,
       "8. Sonstige betriebliche Aufwendungen": 1218.71,
-      "Betriebsergebnis": 110872.17,
+      "Betriebsergebnis": 110872.16999999998,
       "9. Erträge aus Beteiligungen, davon aus verbundenen Unternehmen": 0.0,
       "10. Erträge aus anderen Wertpapieren und Ausleihungen des Finanzanlagevermögens, davon aus verbundenen Unternehmen": 0.0,
       "11. Sonstige Zinsen und ähnliche Erträge, davon aus verbundenen Unternehmen": 0.0,
       "12. Abschreibungen auf Finanzanlagen und auf Wertpapiere des Umlaufvermögens": 0.0,
       "13. Zinsen und ähnliche Aufwendungen, davon an verbundene Unternehmen": 0.0,
-      "14. Steuern vom Einkommen und vom Ertrag": 32893.18,
-      "15. Ergebnis nach Steuern": 77978.98999999999,
+      "14. Steuern vom Einkommen und vom Ertrag": 30178.579999999998,
+      "15. Ergebnis nach Steuern": 80693.58999999998,
       "16. Sonstige Steuern": 0.0,
-      "17. Jahresüberschuss/Jahresfehlbetrag": 77978.98999999999
+      "17. Jahresüberschuss/Jahresfehlbetrag": 80693.58999999998
     },
     "bilanz": [
       {
@@ -291,7 +291,7 @@
         "Bilanzseite": "Passiva",
         "Ebene1": "A. Eigenkapital",
         "Ebene2": "NA",
-        "Betrag": "136.762,56"
+        "Betrag": "139.477,16"
       },
       {
         "Bilanzseite": "Passiva",
@@ -321,13 +321,13 @@
         "Bilanzseite": "Passiva",
         "Ebene1": "A. Eigenkapital",
         "Ebene2": "V. Jahresüberschuß/Jahresfehlbetrag",
-        "Betrag": "77.978,99"
+        "Betrag": "80.693,59"
       },
       {
         "Bilanzseite": "Passiva",
         "Ebene1": "B. Rückstellungen",
         "Ebene2": "NA",
-        "Betrag": "30.480,28"
+        "Betrag": "27.765,68"
       },
       {
         "Bilanzseite": "Passiva",
@@ -350,11 +350,11 @@
     ]
   },
   "2024": {
-    "betriebsergebnis": 13287.19,
+    "betriebsergebnis": 13287.189999999999,
     "koerperschaftssteuer": 1993.05,
     "soli": 109.62,
-    "gewerbesteuer": 1824.9,
-    "steuern": 3975.24,
+    "gewerbesteuer": 1501.5,
+    "steuern": 3651.84,
     "validiere_journal": "",
     "validiere_bilanz": "",
     "guv": {
@@ -366,16 +366,16 @@
       "6. Personalaufwand": 42000.0,
       "7. Abschreibungen": 531.91,
       "8. Sonstige betriebliche Aufwendungen": 1737.3899999999999,
-      "Betriebsergebnis": 13287.19,
+      "Betriebsergebnis": 13287.189999999999,
       "9. Erträge aus Beteiligungen, davon aus verbundenen Unternehmen": 0.0,
       "10. Erträge aus anderen Wertpapieren und Ausleihungen des Finanzanlagevermögens, davon aus verbundenen Unternehmen": 0.0,
       "11. Sonstige Zinsen und ähnliche Erträge, davon aus verbundenen Unternehmen": 0.0,
       "12. Abschreibungen auf Finanzanlagen und auf Wertpapiere des Umlaufvermögens": 0.0,
       "13. Zinsen und ähnliche Aufwendungen, davon an verbundene Unternehmen": 0.0,
-      "14. Steuern vom Einkommen und vom Ertrag": 3975.2400000000002,
-      "15. Ergebnis nach Steuern": 9311.95,
+      "14. Steuern vom Einkommen und vom Ertrag": 3651.84,
+      "15. Ergebnis nach Steuern": 9635.349999999999,
       "16. Sonstige Steuern": 0.0,
-      "17. Jahresüberschuss/Jahresfehlbetrag": 9311.95
+      "17. Jahresüberschuss/Jahresfehlbetrag": 9635.349999999999
     },
     "bilanz": [
       {
@@ -466,7 +466,7 @@
         "Bilanzseite": "Passiva",
         "Ebene1": "A. Eigenkapital",
         "Ebene2": "NA",
-        "Betrag": "148.789,11"
+        "Betrag": "149.112,51"
       },
       {
         "Bilanzseite": "Passiva",
@@ -496,13 +496,13 @@
         "Bilanzseite": "Passiva",
         "Ebene1": "A. Eigenkapital",
         "Ebene2": "V. Jahresüberschuß/Jahresfehlbetrag",
-        "Betrag": "9.311,95"
+        "Betrag": "9.635,35"
       },
       {
         "Bilanzseite": "Passiva",
         "Ebene1": "B. Rückstellungen",
         "Ebene2": "NA",
-        "Betrag": "16.893,03"
+        "Betrag": "16.569,63"
       },
       {
         "Bilanzseite": "Passiva",

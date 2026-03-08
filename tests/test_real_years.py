@@ -16,13 +16,18 @@ from tests.conftest import KONTEN_FILE, GOLDEN_DIR, FIXTURES_DIR
 with open(GOLDEN_DIR / "real_years.json") as f:
     GOLDEN = json.load(f)
 
+# Single source of truth for per-year Hebesatz
+HEBESATZ = {
+    "2022": 305,
+    "2023": 325,
+    "2024": 325,
+    "2025": 325,
+    "2026": 395,
+}
+
 REAL_YEARS = [
-    # (year, start, ende, hebesatz)
-    ("2022", "2022-01-01", "2022-12-31", 395),
-    ("2023", "2023-01-01", "2023-12-31", 395),
-    ("2024", "2024-01-01", "2024-12-31", 395),
-    ("2025", "2025-01-01", "2025-12-31", 395),
-    ("2026", "2026-01-01", "2026-12-31", 395),
+    (year, f"{year}-01-01", f"{year}-12-31", HEBESATZ[year])
+    for year in HEBESATZ
 ]
 
 
@@ -94,20 +99,6 @@ def test_real_gewerbesteuer(api, year, start, ende, hebesatz):
     f"real_{y[0]}" for y in REAL_YEARS
 ])
 def test_real_steuern(api, year, start, ende, hebesatz):
-    expected = golden(year)["steuern"]
-    result = api.steuern(fixture(year), KONTEN_FILE, start, ende, hebesatz)
-    assert abs(result - expected) < 0.02, f"{year}: expected {expected}, got {result}"
-
-
-# --- Tax consistency: steuern == KSt + Soli + GewSt ---
-# Note: real journals may contain Vorjahressteuern (prior-year tax bookings)
-# which steuern() includes but individual KSt/Soli/GewSt functions don't.
-# So we only check that steuern() matches the golden value, not the sum.
-
-@pytest.mark.parametrize("year,start,ende,hebesatz", REAL_YEARS, ids=[
-    f"real_{y[0]}" for y in REAL_YEARS
-])
-def test_real_steuern_matches_golden(api, year, start, ende, hebesatz):
     expected = golden(year)["steuern"]
     result = api.steuern(fixture(year), KONTEN_FILE, start, ende, hebesatz)
     assert abs(result - expected) < 0.02, f"{year}: expected {expected}, got {result}"
@@ -185,8 +176,6 @@ def test_real_bilanz_all_rows(api, year, start, ende, hebesatz):
         for col in ["Bilanzseite", "Ebene1", "Ebene2", "Betrag"]:
             exp_val = expected[col]
             act_val = actual[col]
-            # Normalize NA: polars reads "NA" as string, golden has "NA"
-            # Both should match as-is (string "NA" == string "NA")
             assert act_val == exp_val, \
                 f"{year} row {i} col '{col}': '{act_val}' != '{exp_val}'"
 
@@ -214,13 +203,11 @@ def test_real_eroeffnungsbilanz_balanced(api, year, start, ende, hebesatz):
         f"{year}: EB Aktiva {aktiva['Betrag'][0]} != Passiva {passiva['Betrag'][0]}"
 
 
-# --- Schlussbilanz year N == Eröffnungsbilanz year N+1 ---
+# --- Schlussbilanz year N == Eröffnungsbilanz year N+1 (derived from REAL_YEARS) ---
 
 YEAR_TRANSITIONS = [
-    ("2022", "2023", 305),
-    ("2023", "2024", 325),
-    ("2024", "2025", 325),
-    ("2025", "2026", 325),
+    (REAL_YEARS[i][0], REAL_YEARS[i + 1][0], HEBESATZ[REAL_YEARS[i][0]])
+    for i in range(len(REAL_YEARS) - 1)
 ]
 
 
