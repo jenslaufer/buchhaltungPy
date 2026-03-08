@@ -159,9 +159,15 @@ def test_bilanz_rueckstellungen_with_taxes(api, konten):
     assert parse_german_number(rs) >= 0  # May be 0 if taxes aren't booked as provisions
 
 
-# --- Eröffnungsbilanz tests ---
+# --- Eröffnungsbilanz tests (Python-only, no R equivalent) ---
+
+def _skip_if_no_eroeffnungsbilanz(api):
+    if not hasattr(api, "eroeffnungsbilanz"):
+        pytest.skip("eroeffnungsbilanz not available in this backend")
+
 
 def test_eroeffnungsbilanz_has_required_columns(api, konten):
+    _skip_if_no_eroeffnungsbilanz(api)
     result = api.eroeffnungsbilanz(
         fixture_path("15_with_gewinnvortrag.csv"), konten,
         DEFAULT_START, DEFAULT_ENDE,
@@ -173,6 +179,7 @@ def test_eroeffnungsbilanz_has_required_columns(api, konten):
 
 
 def test_eroeffnungsbilanz_aktiva_equals_passiva(api, konten):
+    _skip_if_no_eroeffnungsbilanz(api)
     result = api.eroeffnungsbilanz(
         fixture_path("15_with_gewinnvortrag.csv"), konten,
         DEFAULT_START, DEFAULT_ENDE,
@@ -184,6 +191,7 @@ def test_eroeffnungsbilanz_aktiva_equals_passiva(api, konten):
 
 def test_eroeffnungsbilanz_only_jab_entries(api, konten):
     """Eröffnungsbilanz must only contain JAB entries, not regular bookings."""
+    _skip_if_no_eroeffnungsbilanz(api)
     result = api.eroeffnungsbilanz(
         fixture_path("15_with_gewinnvortrag.csv"), konten,
         DEFAULT_START, DEFAULT_ENDE,
@@ -196,6 +204,7 @@ def test_eroeffnungsbilanz_only_jab_entries(api, konten):
 
 def test_eroeffnungsbilanz_empty_without_jab(api, konten):
     """Journal without JAB entries produces zero Eröffnungsbilanz."""
+    _skip_if_no_eroeffnungsbilanz(api)
     result = api.eroeffnungsbilanz(
         fixture_path("01_simple_profit.csv"), konten,
         DEFAULT_START, DEFAULT_ENDE,

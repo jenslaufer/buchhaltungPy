@@ -191,15 +191,21 @@ def test_real_bilanz_all_rows(api, year, start, ende, hebesatz):
                 f"{year} row {i} col '{col}': '{act_val}' != '{exp_val}'"
 
 
-# --- Eröffnungsbilanz: Aktiva == Passiva ---
+# --- Eröffnungsbilanz: Aktiva == Passiva (Python-only) ---
 
 YEARS_WITH_JAB = [y for y in REAL_YEARS if y[0] != "2022"]
+
+
+def _skip_if_no_eroeffnungsbilanz(api):
+    if not hasattr(api, "eroeffnungsbilanz"):
+        pytest.skip("eroeffnungsbilanz not available in this backend")
 
 
 @pytest.mark.parametrize("year,start,ende,hebesatz", YEARS_WITH_JAB, ids=[
     f"real_{y[0]}" for y in YEARS_WITH_JAB
 ])
 def test_real_eroeffnungsbilanz_balanced(api, year, start, ende, hebesatz):
+    _skip_if_no_eroeffnungsbilanz(api)
     eb = api.eroeffnungsbilanz(fixture(year), KONTEN_FILE, start, ende)
     aktiva = eb.filter((eb["Bilanzseite"] == "Aktiva") & (eb["Ebene1"] == "NA") & (eb["Ebene2"] == "NA"))
     passiva = eb.filter((eb["Bilanzseite"] == "Passiva") & (eb["Ebene1"] == "NA") & (eb["Ebene2"] == "NA"))
@@ -223,6 +229,7 @@ YEAR_TRANSITIONS = [
 ])
 def test_schlussbilanz_matches_eroeffnungsbilanz(api, prev_year, next_year, hebesatz):
     """Schlussbilanz of year N must match Eröffnungsbilanz of year N+1."""
+    _skip_if_no_eroeffnungsbilanz(api)
     prev_start = f"{prev_year}-01-01"
     prev_ende = f"{prev_year}-12-31"
     next_start = f"{next_year}-01-01"
