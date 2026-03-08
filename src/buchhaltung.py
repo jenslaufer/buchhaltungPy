@@ -531,6 +531,99 @@ def get_konten(
 
 
 # ---------------------------------------------------------------------------
+# T-Konten (ledger accounts)
+# ---------------------------------------------------------------------------
+
+def t_konto(
+    journal_file: str, konten_file: str, start: str, ende: str,
+    hebesatz: int, konto: str,
+) -> pl.DataFrame:
+    """Return T-account detail for a single account: Soll/Haben side-by-side."""
+    start_d, ende_d = _parse_date(start), _parse_date(ende)
+    konten = _get_konten_mit_steuer(journal_file, konten_file, start_d, ende_d, hebesatz)
+    row = konten.filter(pl.col("Konto") == konto)
+    if row.is_empty():
+        return pl.DataFrame(schema={
+            "Soll_Belegdatum": pl.Utf8, "Soll_Buchungstext": pl.Utf8, "Soll_Betrag": pl.Float64,
+            "Haben_Belegdatum": pl.Utf8, "Haben_Buchungstext": pl.Utf8, "Haben_Betrag": pl.Float64,
+        })
+
+    saldo = float(row["Saldo"][0])
+    saldo_typ = row["Saldo Typ"][0]
+    details = _unnest_details(row)
+
+    soll = (
+        details.filter(pl.col("Typ") == "Soll")
+        .select([
+            pl.col("Belegdatum").alias("Soll_Belegdatum"),
+            pl.col("Buchungstext").alias("Soll_Buchungstext"),
+            pl.col("Betrag").alias("Soll_Betrag"),
+        ])
+        .with_row_index("_idx")
+    )
+    haben = (
+        details.filter(pl.col("Typ") == "Haben")
+        .select([
+            pl.col("Belegdatum").alias("Haben_Belegdatum"),
+            pl.col("Buchungstext").alias("Haben_Buchungstext"),
+            pl.col("Betrag").alias("Haben_Betrag"),
+        ])
+        .with_row_index("_idx")
+    )
+
+    # Pad the shorter side so we get a clean zip
+    max_rows = max(soll.height, haben.height)
+    if soll.height < max_rows:
+        pad = pl.DataFrame({"_idx": list(range(soll.height, max_rows))}).cast({"_idx": pl.UInt32})
+        soll = pl.concat([soll, pad], how="diagonal_relaxed")
+    if haben.height < max_rows:
+        pad = pl.DataFrame({"_idx": list(range(haben.height, max_rows))}).cast({"_idx": pl.UInt32})
+        haben = pl.concat([haben, pad], how="diagonal_relaxed")
+
+    merged = soll.join(haben, on="_idx", how="left").drop("_idx")
+
+    # Append saldo row on the opposite side to balance the account
+    if round(saldo, 2) != 0:
+        on_soll = saldo_typ == "Soll"  # credit balance → saldo on Soll side to balance
+        saldo_row = pl.DataFrame({
+            "Soll_Belegdatum": [""],
+            "Soll_Buchungstext": ["Saldo"] if on_soll else [""],
+            "Soll_Betrag": [saldo] if on_soll else [None],
+            "Haben_Belegdatum": [""],
+            "Haben_Buchungstext": [""] if on_soll else ["Saldo"],
+            "Haben_Betrag": [None] if on_soll else [saldo],
+        })
+        merged = pl.concat([merged, saldo_row], how="diagonal_relaxed")
+
+    return merged
+
+
+def t_konten(
+    journal_file: str, konten_file: str, start: str, ende: str,
+    hebesatz: int,
+) -> list[dict]:
+    """Return T-account data for all accounts with non-zero balances.
+
+    Returns list of dicts: {konto, bezeichnung, saldo, saldo_typ, detail: DataFrame}.
+    """
+    start_d, ende_d = _parse_date(start), _parse_date(ende)
+    konten = _get_konten_mit_steuer(journal_file, konten_file, start_d, ende_d, hebesatz)
+    konten = konten.filter(pl.col("Saldo").round(2) != 0)
+
+    result = []
+    for row in konten.iter_rows(named=True):
+        detail = t_konto(journal_file, konten_file, start, ende, hebesatz, row["Konto"])
+        result.append({
+            "konto": row["Konto"],
+            "bezeichnung": row["Bezeichnung"],
+            "saldo": row["Saldo"],
+            "saldo_typ": row["Saldo Typ"],
+            "detail": detail,
+        })
+    return result
+
+
+# ---------------------------------------------------------------------------
 # Jahresabschluss (year-end closing)
 # ---------------------------------------------------------------------------
 

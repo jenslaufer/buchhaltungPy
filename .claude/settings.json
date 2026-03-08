@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(quarto-frontmatter)",
+      "Skill(quarto-frontmatter:*)",
+      "Bash(python -c \":*)",
+      "Bash(jupyter kernelspec list)",
+      "Read(//home/jens/.local/share/jupyter/kernels/python3/**)",
+      "Bash(QUARTO_PYTHON=/usr/bin/python3 quarto render notebooks/guv.qmd -P folder:../tests/fixtures -P jahr:2024 -P hebesatz:380 --output-dir /tmp)",
+      "Bash(/usr/bin/python3 -c \"import papermill; print\\(''OK''\\)\")",
+      "Bash(ln -sf /home/jens/Repos/buchhaltung/tests/fixtures/real_2024.csv /tmp/journal_2024.csv)",
+      "Bash(chmod +x /home/jens/Repos/buchhaltung/render_solytics.sh)",
+      "Bash(./render_solytics.sh)",
+      "Bash(python3 -c \":*)"
+    ]
+  }
+}
