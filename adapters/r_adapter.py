@@ -96,3 +96,15 @@ def get_konten(
     journal: str, konten: str, start: str, ende: str
 ) -> pl.DataFrame:
     return _run_csv("konten", [journal, konten, start, ende])
+
+
+def jahresabschluss(
+    journal: str, konten: str, start: str, hebesatz: int,
+) -> None:
+    _run("jahresabschluss", [journal, konten, start, str(hebesatz)])
+
+
+def jahreseroeffnung(
+    journal: str, konten: str, ende: str, hebesatz: int,
+) -> str:
+    return _run("jahreseroeffnung", [journal, konten, ende, str(hebesatz)])

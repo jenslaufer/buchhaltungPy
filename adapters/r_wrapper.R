@@ -12,6 +12,8 @@
 #   bilanz            <journal> <konten> <start> <ende> <hebesatz> <output_csv>
 #   validiere_bilanz  <journal> <konten> <start> <ende> <hebesatz>
 #   konten            <journal> <konten> <start> <ende> <output_csv>
+#   jahresabschluss   <journal> <konten> <start> <hebesatz>
+#   jahreseroeffnung  <journal> <konten> <ende> <hebesatz>
 
 suppressPackageStartupMessages({
   library(tidyverse)
@@ -80,6 +82,17 @@ result <- tryCatch({
       result <- result %>% select(-data)
       write_csv(result, args[6])
       cat("OK\n")
+    },
+    "jahresabschluss" = {
+      jahresabschluss(args[2], args[3], parse_date(args[4]), as.numeric(args[5]))
+      cat("OK\n")
+    },
+    "jahreseroeffnung" = {
+      jahreseroeffnung(args[2], args[3], parse_date(args[4]), as.numeric(args[5]))
+      # R function doesn't return the path, construct it
+      new_year <- year(parse_date(args[4])) + 1
+      new_file <- str_sub(args[2], 1, -5) %>% str_c(glue("_{new_year}.csv"))
+      cat(new_file, "\n")
     },
     stop(paste("Unknown command:", command))
   )
