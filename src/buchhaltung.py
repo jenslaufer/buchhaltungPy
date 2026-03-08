@@ -13,58 +13,25 @@ DATA_DIR = Path(__file__).parent.parent / "data"
 # Reference data loaders
 # ---------------------------------------------------------------------------
 
-def _read_guvposten(path: str | None = None) -> pl.DataFrame:
-    p = path or str(DATA_DIR / "guvposten.csv")
-    return pl.read_csv(p).with_row_index("Zeile", offset=1)
+def _read_guvposten() -> pl.DataFrame:
+    return pl.read_csv(str(DATA_DIR / "guvposten.csv")).with_row_index("Zeile", offset=1)
 
 
-def _read_bilanzposten(path: str | None = None) -> pl.DataFrame:
-    p = path or str(DATA_DIR / "bilanzposten.csv")
-    df = pl.read_csv(p).with_row_index("Zeile", offset=1)
-    return df
-
-
-def _get_bilanzposten(path: str | None = None) -> pl.DataFrame:
-    """Replicate R's .get_bilanzposten(): pivot Ebene columns to find the
-    most specific Bilanzposten label per row, then right-join back."""
-    bp = _read_bilanzposten(path)
-
-    # Unpivot Bilanzseite/Ebene1/Ebene2 into long form
-    long = bp.unpivot(
-        on=["Bilanzseite", "Ebene1", "Ebene2"],
-        index="Zeile",
-        variable_name="Ebene",
-        value_name="Bilanzposten",
-    ).drop_nulls(subset=["Bilanzposten"]).filter(
-        pl.col("Bilanzposten") != ""
-    )
-
-    # Keep last non-null per Zeile (most specific level)
-    last_per_row = long.group_by("Zeile").agg(
-        pl.col("Bilanzposten").last()
-    )
-
-    # Right-join back to get all original columns + Bilanzposten
-    result = last_per_row.join(bp, on="Zeile", how="right")
-    return result
+def _read_bilanzposten() -> pl.DataFrame:
+    return pl.read_csv(str(DATA_DIR / "bilanzposten.csv")).with_row_index("Zeile", offset=1)
 
 
 # ---------------------------------------------------------------------------
 # Journal reading
 # ---------------------------------------------------------------------------
 
-def _read_journal(
-    journal_file: str,
-    filter_kontoschliessung: bool = False,
-) -> pl.DataFrame:
+def _read_journal(journal_file: str, exclude_jeb: bool = False) -> pl.DataFrame:
     journal = pl.read_csv(
         journal_file,
         schema_overrides={"Konto": pl.Utf8, "Journalnummer": pl.Int64},
     )
-    if filter_kontoschliessung:
-        journal = journal.filter(
-            ~pl.col("Belegnummer").str.contains("JEB")
-        )
+    if exclude_jeb:
+        journal = journal.filter(~pl.col("Belegnummer").str.contains("JEB"))
     return journal
 
 
@@ -74,7 +41,7 @@ def _read_journal(
 
 def _summarise(df: pl.DataFrame) -> pl.DataFrame:
     """Group by account, compute signed saldo, determine Soll/Haben type."""
-    saldo = (
+    return (
         df.with_columns(
             pl.when(pl.col("Typ") == "Soll")
             .then(-pl.col("Betrag"))
@@ -84,7 +51,6 @@ def _summarise(df: pl.DataFrame) -> pl.DataFrame:
         .group_by(["Konto", "Bezeichnung", "GuV Posten", "Bilanzposten"])
         .agg([
             pl.col("Vorzeichenbetrag").sum().alias("Saldo"),
-            # Collect all detail rows for potential unnesting later
             pl.struct(
                 pl.exclude(["Konto", "Bezeichnung", "GuV Posten", "Bilanzposten", "Vorzeichenbetrag"])
             ).alias("detail"),
@@ -96,33 +62,29 @@ def _summarise(df: pl.DataFrame) -> pl.DataFrame:
             .alias("Saldo Typ"),
             pl.col("Saldo").abs(),
         ])
-        .with_columns(
-            pl.col("Konto").cast(pl.Int64).alias("Konto numerisch")
-        )
-        .sort("Konto numerisch")
+        .with_columns(pl.col("Konto").cast(pl.Int64).alias("_sort"))
+        .sort("_sort")
         .select(["Konto", "Bezeichnung", "Saldo", "Saldo Typ", "Bilanzposten", "GuV Posten", "detail"])
     )
-    return saldo
 
 
-def _get_konten_fuer_buchungssaetze(
+def _join_and_summarise(
     journal: pl.DataFrame,
     konten_file: str,
-    periode_start: date,
-    periode_ende: date,
+    start: date,
+    ende: date,
 ) -> pl.DataFrame:
+    """Join journal with konten mapping, filter by date, summarise per account."""
     konten = pl.read_csv(konten_file, schema_overrides={"Konto": pl.Utf8})
     joined = journal.join(konten, on="Konto", how="left")
-
-    # Parse dates and filter by period
     filtered = (
         joined
-        .with_columns([
+        .with_columns(
             pl.col("Belegdatum").str.strptime(pl.Date, "%d.%m.%Y").alias("Belegdatum_Datum"),
-        ])
+        )
         .filter(
-            (pl.col("Belegdatum_Datum") >= periode_start)
-            & (pl.col("Belegdatum_Datum") <= periode_ende)
+            (pl.col("Belegdatum_Datum") >= start)
+            & (pl.col("Belegdatum_Datum") <= ende)
         )
     )
     return _summarise(filtered)
@@ -131,12 +93,29 @@ def _get_konten_fuer_buchungssaetze(
 def _get_konten(
     journal_file: str,
     konten_file: str,
-    periode_start: date,
-    periode_ende: date,
-    filter_kontoschliessung: bool = False,
+    start: date,
+    ende: date,
+    exclude_jeb: bool = False,
 ) -> pl.DataFrame:
-    journal = _read_journal(journal_file, filter_kontoschliessung)
-    return _get_konten_fuer_buchungssaetze(journal, konten_file, periode_start, periode_ende)
+    journal = _read_journal(journal_file, exclude_jeb)
+    return _join_and_summarise(journal, konten_file, start, ende)
+
+
+def _unnest_details(df: pl.DataFrame) -> pl.DataFrame:
+    """Explode detail structs back to individual booking rows."""
+    if df.is_empty():
+        return pl.DataFrame(schema={
+            "Konto": pl.Utf8, "Bezeichnung": pl.Utf8,
+            "GuV Posten": pl.Utf8, "Bilanzposten": pl.Utf8,
+            "Journalnummer": pl.Int64, "Buchungssatznummer": pl.Int64,
+            "Belegnummer": pl.Utf8, "Belegdatum": pl.Utf8,
+            "Buchungsdatum": pl.Utf8, "Buchungstext": pl.Utf8,
+            "Typ": pl.Utf8, "Betrag": pl.Float64,
+            "Belegdatum_Datum": pl.Date,
+        })
+    return df.explode("detail").unnest("detail").drop(
+        ["Saldo", "Saldo Typ", "XBRL Taxonomie"], strict=False
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -144,21 +123,16 @@ def _get_konten(
 # ---------------------------------------------------------------------------
 
 def _make_buchungssatz(
-    buchungsdatum: str,
-    belegdatum: str,
-    belegnummer: str,
-    buchungstext: str,
-    sollkonto: str,
-    habenkonto: str,
-    betrag: float,
+    datum: str, belegnummer: str, buchungstext: str,
+    sollkonto: str, habenkonto: str, betrag: float,
 ) -> pl.DataFrame:
     """Create a 2-row Soll/Haben booking pair."""
     return pl.DataFrame({
         "Journalnummer": [0, 0],
         "Buchungssatznummer": [0, 0],
         "Belegnummer": [belegnummer, belegnummer],
-        "Belegdatum": [belegdatum, belegdatum],
-        "Buchungsdatum": [buchungsdatum, buchungsdatum],
+        "Belegdatum": [datum, datum],
+        "Buchungsdatum": [datum, datum],
         "Buchungstext": [buchungstext, buchungstext],
         "Konto": [sollkonto, habenkonto],
         "Typ": ["Soll", "Haben"],
@@ -167,77 +141,43 @@ def _make_buchungssatz(
 
 
 def _get_steuerbuchungen(
-    journal_file: str,
-    konten_file: str,
-    periode_start: date,
-    periode_ende: date,
-    hebesatz: int,
+    journal_file: str, konten_file: str,
+    start: date, ende: date, hebesatz: int,
 ) -> pl.DataFrame:
-    gwst = berechne_gewerbesteuer(hebesatz, journal_file, konten_file, periode_start, periode_ende)
-    kst = berechne_koerperschaftssteuer(journal_file, konten_file, periode_start, periode_ende)
-    soli = berechne_soli(journal_file, konten_file, periode_start, periode_ende)
+    gwst = berechne_gewerbesteuer(hebesatz, journal_file, konten_file, start, ende)
+    kst = berechne_koerperschaftssteuer(journal_file, konten_file, start, ende)
+    soli = berechne_soli(journal_file, konten_file, start, ende)
 
-    buchungsdatum = periode_ende.strftime("%d.%m.%Y")
-
+    datum = ende.strftime("%d.%m.%Y")
     bookings = []
     if gwst > 0:
-        bookings.append(_make_buchungssatz(buchungsdatum, buchungsdatum, "JEB", "Gewerbesteuer", "7610", "3035", gwst))
+        bookings.append(_make_buchungssatz(datum, "JEB", "Gewerbesteuer", "7610", "3035", gwst))
     if kst > 0:
-        bookings.append(_make_buchungssatz(buchungsdatum, buchungsdatum, "JEB", "Körperschaftsteuer", "7600", "3040", kst))
+        bookings.append(_make_buchungssatz(datum, "JEB", "Körperschaftsteuer", "7600", "3040", kst))
     if soli > 0:
-        bookings.append(_make_buchungssatz(buchungsdatum, buchungsdatum, "JEB", "Solidaritätszuschlag", "7608", "3020", soli))
+        bookings.append(_make_buchungssatz(datum, "JEB", "Solidaritätszuschlag", "7608", "3020", soli))
 
     if not bookings:
-        # Return empty DataFrame with correct schema
         return pl.DataFrame(schema={
-            "Journalnummer": pl.Int64,
-            "Buchungssatznummer": pl.Int64,
-            "Belegnummer": pl.Utf8,
-            "Belegdatum": pl.Utf8,
-            "Buchungsdatum": pl.Utf8,
-            "Buchungstext": pl.Utf8,
-            "Konto": pl.Utf8,
-            "Typ": pl.Utf8,
-            "Betrag": pl.Float64,
+            "Journalnummer": pl.Int64, "Buchungssatznummer": pl.Int64,
+            "Belegnummer": pl.Utf8, "Belegdatum": pl.Utf8,
+            "Buchungsdatum": pl.Utf8, "Buchungstext": pl.Utf8,
+            "Konto": pl.Utf8, "Typ": pl.Utf8, "Betrag": pl.Float64,
         })
     return pl.concat(bookings)
 
 
 def _get_konten_mit_steuer(
-    journal_file: str,
-    konten_file: str,
-    periode_start: date,
-    periode_ende: date,
-    hebesatz: int,
-    filter_kontoschliessung: bool = False,
+    journal_file: str, konten_file: str,
+    start: date, ende: date, hebesatz: int,
 ) -> pl.DataFrame:
-    """Get account balances including tax bookings."""
-    steuer_buchungen = _get_steuerbuchungen(
-        journal_file, konten_file, periode_start, periode_ende, hebesatz
-    )
-    steuer_konten = _get_konten_fuer_buchungssaetze(
-        steuer_buchungen, konten_file, periode_start, periode_ende
+    """Get account balances including computed tax bookings."""
+    steuer_buchungen = _get_steuerbuchungen(journal_file, konten_file, start, ende, hebesatz)
+    steuer_konten = _join_and_summarise(
+        steuer_buchungen, konten_file, start, ende
     ).filter(pl.col("Saldo").round(2) > 0)
 
-    base_konten = _get_konten(
-        journal_file, konten_file, periode_start, periode_ende, True
-    )
-
-    # Unnest detail structs, combine, re-summarise
-    def _unnest_details(df: pl.DataFrame) -> pl.DataFrame:
-        if df.is_empty():
-            return pl.DataFrame(schema={
-                "Konto": pl.Utf8, "Bezeichnung": pl.Utf8,
-                "GuV Posten": pl.Utf8, "Bilanzposten": pl.Utf8,
-                "Journalnummer": pl.Int64, "Buchungssatznummer": pl.Int64,
-                "Belegnummer": pl.Utf8, "Belegdatum": pl.Utf8,
-                "Buchungsdatum": pl.Utf8, "Buchungstext": pl.Utf8,
-                "Typ": pl.Utf8, "Betrag": pl.Float64,
-                "Belegdatum_Datum": pl.Date,
-            })
-        return df.explode("detail").unnest("detail").drop(
-            ["Saldo", "Saldo Typ", "XBRL Taxonomie"], strict=False
-        )
+    base_konten = _get_konten(journal_file, konten_file, start, ende, True)
 
     base_rows = _unnest_details(base_konten)
     steuer_rows = _unnest_details(steuer_konten)
@@ -251,50 +191,50 @@ def _get_konten_mit_steuer(
 # ---------------------------------------------------------------------------
 
 def _parse_date(s: str | date) -> date:
-    if isinstance(s, date):
-        return s
-    return date.fromisoformat(s)
+    return s if isinstance(s, date) else date.fromisoformat(s)
+
+
+def _build_guv_base(konten: pl.DataFrame) -> pl.DataFrame:
+    """Join account saldos with GuV template, apply sign convention."""
+    guvposten = _read_guvposten()
+    guv_konten = konten.filter(pl.col("GuV Posten").is_not_null())
+    betrag_per_posten = guv_konten.group_by("GuV Posten").agg(
+        pl.col("Saldo").sum().alias("Betrag")
+    )
+    return (
+        betrag_per_posten.join(
+            guvposten, left_on="GuV Posten", right_on="Posten", how="right"
+        )
+        .rename({"Posten": "GuV Posten"})
+        .sort("Zeile")
+        .with_columns(pl.col("Betrag").fill_null(0.0))
+        .with_columns(
+            pl.when(pl.col("Vorzeichen") == "-")
+            .then(-pl.col("Betrag"))
+            .otherwise(pl.col("Betrag"))
+            .alias("Betrag mit Vorzeichen")
+        )
+    )
 
 
 def berechne_betriebsergebnis(
     journal_file: str, konten_file: str, start: str, ende: str
 ) -> float:
-    ps, pe = _parse_date(start), _parse_date(ende)
-    konten = _get_konten(journal_file, konten_file, ps, pe, True)
-    guvposten = _read_guvposten()
-
-    # Filter to accounts with GuV mapping, group by GuV Posten
-    guv_konten = konten.filter(pl.col("GuV Posten").is_not_null())
-    betrag_per_posten = guv_konten.group_by("GuV Posten").agg(
-        pl.col("Saldo").sum().alias("Betrag")
-    )
-
-    # Right-join with guvposten
-    joined = betrag_per_posten.join(
-        guvposten, left_on="GuV Posten", right_on="Posten", how="right"
-    ).rename({"Posten": "GuV Posten"}).with_columns(
-        pl.col("Betrag").fill_null(0.0)
-    ).with_columns(
-        pl.when(pl.col("Vorzeichen") == "-")
-        .then(-pl.col("Betrag"))
-        .otherwise(pl.col("Betrag"))
-        .alias("Betrag mit Vorzeichen")
-    )
-
-    # Sum only Betriebsergebnis components
-    be = joined.filter(
+    start_d, ende_d = _parse_date(start), _parse_date(ende)
+    konten = _get_konten(journal_file, konten_file, start_d, ende_d, True)
+    guv_base = _build_guv_base(konten)
+    betriebsergebnis = guv_base.filter(
         pl.col("Summierungsposten") == "Betriebsergebnis"
     )["Betrag mit Vorzeichen"].sum()
-
-    return float(be)
+    return float(betriebsergebnis)
 
 
 def berechne_koerperschaftssteuer(
     journal_file: str, konten_file: str, start: str, ende: str
 ) -> float:
-    be = berechne_betriebsergebnis(journal_file, konten_file, start, ende)
-    if round(be, 2) > 0:
-        return round(math.floor(be) * 0.15, 2)
+    betriebsergebnis = berechne_betriebsergebnis(journal_file, konten_file, start, ende)
+    if round(betriebsergebnis, 2) > 0:
+        return round(math.floor(betriebsergebnis) * 0.15, 2)
     return 0.0
 
 
@@ -308,19 +248,17 @@ def berechne_soli(
 def berechne_gewerbesteuer(
     hebesatz: int, journal_file: str, konten_file: str, start: str, ende: str
 ) -> float:
-    be = berechne_betriebsergebnis(journal_file, konten_file, start, ende)
-    if round(be, 2) > 0:
-        return round(math.floor(be / 100) * 100 * hebesatz * 3.5 / 10000, 2)
+    betriebsergebnis = berechne_betriebsergebnis(journal_file, konten_file, start, ende)
+    if round(betriebsergebnis, 2) > 0:
+        return round(math.floor(betriebsergebnis / 100) * 100 * hebesatz * 3.5 / 10000, 2)
     return 0.0
 
 
 def steuern(
     journal_file: str, konten_file: str, start: str, ende: str, hebesatz: int
 ) -> float:
-    ps, pe = _parse_date(start), _parse_date(ende)
-    konten = _get_konten_mit_steuer(
-        journal_file, konten_file, ps, pe, hebesatz, True
-    )
+    start_d, ende_d = _parse_date(start), _parse_date(ende)
+    konten = _get_konten_mit_steuer(journal_file, konten_file, start_d, ende_d, hebesatz)
     tax_konten = konten.filter(
         pl.col("GuV Posten") == "14. Steuern vom Einkommen und vom Ertrag"
     )
@@ -334,9 +272,9 @@ def steuern(
 # ---------------------------------------------------------------------------
 
 def validiere_journal(
-    journal_file: str, konten_file: str, start: str, ende: str
+    journal_file: str, konten_file: str = "", start: str = "", ende: str = ""
 ) -> str:
-    journal = _read_journal(journal_file, filter_kontoschliessung=True)
+    journal = _read_journal(journal_file, exclude_jeb=True)
 
     # Check 1: Soll/Haben balance per Buchungssatz
     balance = (
@@ -350,7 +288,7 @@ def validiere_journal(
         .group_by("Buchungssatznummer")
         .agg(pl.col("VorzeichenBetrag").sum().round(2).alias("Betrag"))
     )
-    summe_null = float(balance["Betrag"].sum()) == 0
+    summe_null = abs(float(balance["Betrag"].sum())) < 1e-9
 
     # Check 2: Journalnummer sequential
     jn = journal["Journalnummer"].to_list()
@@ -376,33 +314,11 @@ def validiere_journal(
 def guv(
     journal_file: str, konten_file: str, start: str, ende: str, hebesatz: int
 ) -> pl.DataFrame:
-    ps, pe = _parse_date(start), _parse_date(ende)
-    konten = _get_konten(journal_file, konten_file, ps, pe, True)
-    guvposten = _read_guvposten()
+    start_d, ende_d = _parse_date(start), _parse_date(ende)
+    konten = _get_konten(journal_file, konten_file, start_d, ende_d, True)
+    guv_df = _build_guv_base(konten)
 
-    guv_konten = konten.filter(pl.col("GuV Posten").is_not_null())
-    betrag_per_posten = guv_konten.group_by("GuV Posten").agg(
-        pl.col("Saldo").sum().alias("Betrag")
-    )
-
-    guv_df = (
-        betrag_per_posten.join(
-            guvposten, left_on="GuV Posten", right_on="Posten", how="right"
-        )
-        .rename({"Posten": "GuV Posten"})
-        .sort("Zeile")
-        .with_columns(pl.col("Betrag").fill_null(0.0))
-        .with_columns(
-            pl.when(pl.col("Vorzeichen") == "-")
-            .then(-pl.col("Betrag"))
-            .otherwise(pl.col("Betrag"))
-            .alias("Betrag mit Vorzeichen")
-        )
-    )
-
-    # Helper to compute summation row
     def summiere(df: pl.DataFrame, summierungsposten: str) -> pl.DataFrame:
-        # Recalculate Betrag mit Vorzeichen from current Betrag
         df = df.with_columns(
             pl.when(pl.col("Vorzeichen") == "-")
             .then(-pl.col("Betrag"))
@@ -421,7 +337,6 @@ def guv(
 
     guv_df = summiere(guv_df, "Betriebsergebnis")
 
-    # Insert actual tax amount
     tax_total = steuern(journal_file, konten_file, start, ende, hebesatz)
     guv_df = guv_df.with_columns(
         pl.when(pl.col("GuV Posten") == "14. Steuern vom Einkommen und vom Ertrag")
@@ -440,28 +355,16 @@ def guv(
 # Bilanz
 # ---------------------------------------------------------------------------
 
-def bilanz(
-    journal_file: str, konten_file: str, start: str, ende: str, hebesatz: int
-) -> pl.DataFrame:
-    ps, pe = _parse_date(start), _parse_date(ende)
-    konten = _get_konten_mit_steuer(journal_file, konten_file, ps, pe, hebesatz, True)
-
-    # Get Jahresüberschuss from GuV
-    guv_df = guv(journal_file, konten_file, start, ende, hebesatz)
-    ju_row = guv_df.filter(pl.col("GuV Posten") == "17. Jahresüberschuss/Jahresfehlbetrag")
-    jahresueberschuss = float(ju_row["Betrag"][0]) if not ju_row.is_empty() else 0.0
-
-    # Build lookup: map any Bilanzposten name (Ebene1 or Ebene2) to structure
+def _build_bilanzposten_lookup() -> pl.DataFrame:
+    """Map any Bilanzposten name (Ebene1 or Ebene2) to its Bilanzseite/Ebene1/Ebene2."""
     bp_raw = _read_bilanzposten()
-    # Ebene2 entries: Bilanzposten is Ebene2, keep Ebene2 as both Bilanzposten and Ebene2
     ebene2_lookup = (
         bp_raw.filter(pl.col("Ebene2").is_not_null())
         .select(["Bilanzseite", "Ebene1", "Ebene2"])
         .with_columns(pl.col("Ebene2").alias("Bilanzposten"))
         .unique()
     )
-    # Ebene1-only lookup for accounts mapped to Ebene1 names
-    ebene1_as_bp = (
+    ebene1_lookup = (
         bp_raw.filter(pl.col("Ebene1").is_not_null())
         .select(["Bilanzseite", "Ebene1"])
         .unique()
@@ -470,22 +373,21 @@ def bilanz(
             pl.lit(None).cast(pl.Utf8).alias("Ebene2"),
         ])
     )
-    bp_lookup = pl.concat([ebene2_lookup, ebene1_as_bp], how="diagonal_relaxed").unique(subset=["Bilanzposten"])
+    return pl.concat(
+        [ebene2_lookup, ebene1_lookup], how="diagonal_relaxed"
+    ).unique(subset=["Bilanzposten"])
 
-    # Filter to bilanz accounts (those with Bilanzposten mapping)
-    bilanz_konten = konten.filter(pl.col("Bilanzposten").is_not_null())
 
-    # Join with bp_lookup to get Bilanzseite
-    bilanz_konten = bilanz_konten.join(bp_lookup, on="Bilanzposten", how="left")
+def _bilanz_signed_betrag(bilanz_konten: pl.DataFrame) -> pl.DataFrame:
+    """Apply bilanz sign convention to account saldos.
 
-    # Reconstruct signed saldo: _summarise stores abs(sum) as Saldo.
-    # Saldo Typ "Haben" → original sum was negative (more Soll/debit bookings)
-    # Saldo Typ "Soll" → original sum was non-negative (more Haben/credit bookings)
-    # For Aktiva: debit balance = asset exists → Saldo Typ "Haben" → +Saldo
-    #             credit balance = asset reduced → Saldo Typ "Soll" → -Saldo
-    # For Passiva: credit balance = liability exists → Saldo Typ "Soll" → +Saldo
-    #              debit balance = liability reduced → Saldo Typ "Haben" → -Saldo
-    bilanz_konten = bilanz_konten.with_columns(
+    _summarise stores abs(sum) as Saldo with a Saldo Typ indicator.
+    Saldo Typ "Haben" → more Soll/debit bookings → debit balance.
+    Saldo Typ "Soll" → more Haben/credit bookings → credit balance.
+    Aktiva: debit balance = +Saldo, credit balance = -Saldo.
+    Passiva: credit balance = +Saldo, debit balance = -Saldo.
+    """
+    return bilanz_konten.with_columns(
         pl.when(
             (pl.col("Bilanzseite") == "Aktiva") & (pl.col("Saldo Typ") == "Haben")
         ).then(pl.col("Saldo"))
@@ -499,35 +401,50 @@ def bilanz(
             (pl.col("Bilanzseite") == "Passiva") & (pl.col("Saldo Typ") == "Haben")
         ).then(-pl.col("Saldo"))
         .otherwise(pl.col("Saldo"))
-        .alias("Signed Betrag")
+        .alias("Betrag")
     )
 
-    bilanz_by_posten = (
-        bilanz_konten
-        .group_by("Bilanzposten")
-        .agg(pl.col("Signed Betrag").sum().alias("Betrag"))
+
+def bilanz(
+    journal_file: str, konten_file: str, start: str, ende: str, hebesatz: int
+) -> pl.DataFrame:
+    start_d, ende_d = _parse_date(start), _parse_date(ende)
+    konten = _get_konten_mit_steuer(journal_file, konten_file, start_d, ende_d, hebesatz)
+
+    guv_df = guv(journal_file, konten_file, start, ende, hebesatz)
+    ju_row = guv_df.filter(pl.col("GuV Posten") == "17. Jahresüberschuss/Jahresfehlbetrag")
+    jahresueberschuss = float(ju_row["Betrag"][0]) if not ju_row.is_empty() else 0.0
+
+    bp_lookup = _build_bilanzposten_lookup()
+
+    # Join accounts with bilanzposten structure, apply sign convention
+    bilanz_konten = (
+        konten.filter(pl.col("Bilanzposten").is_not_null())
+        .join(bp_lookup, on="Bilanzposten", how="left")
+    )
+    bilanz_konten = _bilanz_signed_betrag(bilanz_konten)
+
+    bilanz_by_posten = bilanz_konten.group_by("Bilanzposten").agg(
+        pl.col("Betrag").sum()
     )
 
-    # Add Jahresüberschuss row
-    ju_df = pl.DataFrame({
-        "Bilanzposten": ["V. Jahresüberschuß/Jahresfehlbetrag"],
-        "Betrag": [jahresueberschuss],
-    })
-    bilanz_by_posten = pl.concat([bilanz_by_posten, ju_df])
+    # Add Jahresüberschuss
+    bilanz_by_posten = pl.concat([
+        bilanz_by_posten,
+        pl.DataFrame({
+            "Bilanzposten": ["V. Jahresüberschuß/Jahresfehlbetrag"],
+            "Betrag": [jahresueberschuss],
+        }),
+    ])
 
-    # Join with lookup to get Bilanzseite/Ebene1/Ebene2
+    # Map back to Bilanzseite/Ebene1/Ebene2
     bilanz_structured = bilanz_by_posten.join(
         bp_lookup, on="Bilanzposten", how="left"
-    ).select(
-        ["Bilanzseite", "Ebene1", "Ebene2", "Betrag"]
-    ).unique()
+    ).select(["Bilanzseite", "Ebene1", "Ebene2", "Betrag"]).unique()
 
-    # Build output from template, computing Betrag at each level
-    bp_template = _read_bilanzposten()
-    # Sort: within each Bilanzseite, total (null Ebene1) first,
-    # then within each Ebene1, summary (null Ebene2) first, then Ebene2 details
-    rows = (
-        bp_template
+    # Build output from template: total → Ebene1 → Ebene2
+    template = (
+        _read_bilanzposten()
         .unique(subset=["Bilanzseite", "Ebene1", "Ebene2"], keep="first")
         .with_columns([
             pl.col("Ebene1").is_null().alias("_e1_null"),
@@ -540,88 +457,60 @@ def bilanz(
         .drop(["_e1_null", "_e2_null"])
     )
 
-    # For each template row, compute its Betrag
     result_rows = []
-    for row in rows.iter_rows(named=True):
-        bs = row["Bilanzseite"]
-        e1 = row["Ebene1"]
-        e2 = row["Ebene2"]
-
-        if e2 is not None:
-            # Ebene2 row: sum data matching this exact Ebene2
-            betrag = float(
-                bilanz_structured
-                .filter(
-                    (pl.col("Bilanzseite") == bs)
-                    & (pl.col("Ebene1") == e1)
-                    & (pl.col("Ebene2") == e2)
-                )["Betrag"].sum()
-            )
-        elif e1 is not None:
-            # Ebene1 row: sum all data under this Ebene1
-            betrag = float(
-                bilanz_structured
-                .filter(
-                    (pl.col("Bilanzseite") == bs)
-                    & (pl.col("Ebene1") == e1)
-                )["Betrag"].sum()
-            )
+    for row in template.iter_rows(named=True):
+        bilanzseite, ebene1, ebene2 = row["Bilanzseite"], row["Ebene1"], row["Ebene2"]
+        if ebene2 is not None:
+            betrag = float(bilanz_structured.filter(
+                (pl.col("Bilanzseite") == bilanzseite)
+                & (pl.col("Ebene1") == ebene1)
+                & (pl.col("Ebene2") == ebene2)
+            )["Betrag"].sum())
+        elif ebene1 is not None:
+            betrag = float(bilanz_structured.filter(
+                (pl.col("Bilanzseite") == bilanzseite)
+                & (pl.col("Ebene1") == ebene1)
+            )["Betrag"].sum())
         else:
-            # Bilanzseite total: sum all data for this side
-            betrag = float(
-                bilanz_structured
-                .filter(pl.col("Bilanzseite") == bs)["Betrag"].sum()
-            )
-
+            betrag = float(bilanz_structured.filter(
+                pl.col("Bilanzseite") == bilanzseite
+            )["Betrag"].sum())
         result_rows.append({
-            "Bilanzseite": bs,
-            "Ebene1": e1,
-            "Ebene2": e2,
+            "Bilanzseite": bilanzseite,
+            "Ebene1": ebene1,
+            "Ebene2": ebene2,
             "Betrag": betrag,
         })
 
     result = pl.DataFrame(result_rows)
-
-    # Replace null with "NA" to match R output
     result = result.with_columns([
         pl.col("Ebene1").fill_null("NA"),
         pl.col("Ebene2").fill_null("NA"),
     ])
-
-    # Format Betrag as German number
     result = result.with_columns(
         pl.col("Betrag").map_elements(
             lambda x: _format_german_number(x), return_dtype=pl.Utf8
         ).alias("Betrag")
     )
-
     return result
 
 
 def _format_german_number(value: float) -> str:
     """Format a number in German style: 1.234,56"""
-    rounded = round(value, 2)
-    # Use Python formatting, then swap delimiters
-    formatted = f"{rounded:,.2f}"
-    # Swap , and . for German format
-    formatted = formatted.replace(",", "X").replace(".", ",").replace("X", ".")
-    return formatted
+    formatted = f"{round(value, 2):,.2f}"
+    return formatted.replace(",", "X").replace(".", ",").replace("X", ".")
 
 
 def validiere_bilanz(
     journal_file: str, konten_file: str, start: str, ende: str, hebesatz: int
 ) -> str:
-    b = bilanz(journal_file, konten_file, start, ende, hebesatz)
+    bilanz_df = bilanz(journal_file, konten_file, start, ende, hebesatz)
 
     def get_betrag(bilanzseite: str) -> str:
-        filtered = b.with_columns([
-            pl.col("Bilanzseite").fill_null(""),
-            pl.col("Ebene1").fill_null(""),
-            pl.col("Ebene2").fill_null(""),
-        ]).filter(
+        filtered = bilanz_df.filter(
             (pl.col("Bilanzseite") == bilanzseite)
-            & (pl.col("Ebene1") == "")
-            & (pl.col("Ebene2") == "")
+            & (pl.col("Ebene1") == "NA")
+            & (pl.col("Ebene2") == "NA")
         )
         if filtered.is_empty():
             return "0,00"
@@ -637,6 +526,5 @@ def validiere_bilanz(
 def get_konten(
     journal_file: str, konten_file: str, start: str, ende: str
 ) -> pl.DataFrame:
-    ps, pe = _parse_date(start), _parse_date(ende)
-    result = _get_konten(journal_file, konten_file, ps, pe, True)
-    return result.drop("detail")
+    start_d, ende_d = _parse_date(start), _parse_date(ende)
+    return _get_konten(journal_file, konten_file, start_d, ende_d, True).drop("detail")

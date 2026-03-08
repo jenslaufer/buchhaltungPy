@@ -1,5 +1,6 @@
 """R backend adapter — calls Rscript with the CLI wrapper."""
 
+import os
 import subprocess
 import tempfile
 from pathlib import Path
@@ -20,6 +21,17 @@ def _run(command: str, args: list[str]) -> str:
     if result.returncode != 0:
         raise RuntimeError(f"R command '{command}' failed:\n{result.stderr}")
     return result.stdout.strip()
+
+
+def _run_csv(command: str, args: list[str]) -> pl.DataFrame:
+    """Run an R command that writes CSV output, return as DataFrame."""
+    with tempfile.NamedTemporaryFile(suffix=".csv", delete=False) as f:
+        out = f.name
+    try:
+        _run(command, [*args, out])
+        return pl.read_csv(out)
+    finally:
+        os.unlink(out)
 
 
 def berechne_betriebsergebnis(
@@ -63,19 +75,13 @@ def validiere_journal(
 def guv(
     journal: str, konten: str, start: str, ende: str, hebesatz: int
 ) -> pl.DataFrame:
-    with tempfile.NamedTemporaryFile(suffix=".csv", delete=False) as f:
-        out = f.name
-    _run("guv", [journal, konten, start, ende, str(hebesatz), out])
-    return pl.read_csv(out)
+    return _run_csv("guv", [journal, konten, start, ende, str(hebesatz)])
 
 
 def bilanz(
     journal: str, konten: str, start: str, ende: str, hebesatz: int
 ) -> pl.DataFrame:
-    with tempfile.NamedTemporaryFile(suffix=".csv", delete=False) as f:
-        out = f.name
-    _run("bilanz", [journal, konten, start, ende, str(hebesatz), out])
-    return pl.read_csv(out)
+    return _run_csv("bilanz", [journal, konten, start, ende, str(hebesatz)])
 
 
 def validiere_bilanz(
@@ -89,7 +95,4 @@ def validiere_bilanz(
 def get_konten(
     journal: str, konten: str, start: str, ende: str
 ) -> pl.DataFrame:
-    with tempfile.NamedTemporaryFile(suffix=".csv", delete=False) as f:
-        out = f.name
-    _run("konten", [journal, konten, start, ende, out])
-    return pl.read_csv(out)
+    return _run_csv("konten", [journal, konten, start, ende])

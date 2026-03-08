@@ -1,6 +1,5 @@
 """Shared fixtures and backend parametrization."""
 
-import json
 from pathlib import Path
 
 import pytest
@@ -8,10 +7,8 @@ import pytest
 PROJECT_ROOT = Path(__file__).parent.parent
 FIXTURES_DIR = PROJECT_ROOT / "tests" / "fixtures"
 GOLDEN_DIR = PROJECT_ROOT / "tests" / "golden"
-DATA_DIR = PROJECT_ROOT / "data"
-KONTEN_FILE = str(DATA_DIR / "konten.csv")
+KONTEN_FILE = str(PROJECT_ROOT / "data" / "konten.csv")
 
-# Default test period and Hebesatz
 DEFAULT_START = "2024-01-01"
 DEFAULT_ENDE = "2024-12-31"
 DEFAULT_HEBESATZ = 380
@@ -55,8 +52,3 @@ def konten():
 def fixture_path(name: str) -> str:
     """Return absolute path to a fixture CSV."""
     return str(FIXTURES_DIR / name)
-
-
-def golden_path(name: str) -> str:
-    """Return absolute path to a golden output file."""
-    return str(GOLDEN_DIR / name)

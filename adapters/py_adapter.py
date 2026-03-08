@@ -1,73 +1,27 @@
-"""Python backend adapter — calls the Python implementation directly."""
+"""Python backend adapter — re-exports from the Python implementation."""
 
-import polars as pl
 from src.buchhaltung import (
-    berechne_betriebsergebnis as _be,
-    berechne_koerperschaftssteuer as _kst,
-    berechne_soli as _soli,
-    berechne_gewerbesteuer as _gwst,
-    steuern as _steuern,
-    validiere_journal as _vj,
-    guv as _guv,
-    bilanz as _bilanz,
-    validiere_bilanz as _vb,
-    get_konten as _gk,
+    berechne_betriebsergebnis,
+    berechne_gewerbesteuer,
+    berechne_koerperschaftssteuer,
+    berechne_soli,
+    bilanz,
+    get_konten,
+    guv,
+    steuern,
+    validiere_bilanz,
+    validiere_journal,
 )
 
-
-def berechne_betriebsergebnis(
-    journal: str, konten: str, start: str, ende: str
-) -> float:
-    return _be(journal, konten, start, ende)
-
-
-def berechne_koerperschaftssteuer(
-    journal: str, konten: str, start: str, ende: str
-) -> float:
-    return _kst(journal, konten, start, ende)
-
-
-def berechne_soli(journal: str, konten: str, start: str, ende: str) -> float:
-    return _soli(journal, konten, start, ende)
-
-
-def berechne_gewerbesteuer(
-    hebesatz: int, journal: str, konten: str, start: str, ende: str
-) -> float:
-    return _gwst(hebesatz, journal, konten, start, ende)
-
-
-def steuern(
-    journal: str, konten: str, start: str, ende: str, hebesatz: int
-) -> float:
-    return _steuern(journal, konten, start, ende, hebesatz)
-
-
-def validiere_journal(
-    journal: str, konten: str, start: str, ende: str
-) -> str:
-    return _vj(journal, konten, start, ende)
-
-
-def guv(
-    journal: str, konten: str, start: str, ende: str, hebesatz: int
-) -> pl.DataFrame:
-    return _guv(journal, konten, start, ende, hebesatz)
-
-
-def bilanz(
-    journal: str, konten: str, start: str, ende: str, hebesatz: int
-) -> pl.DataFrame:
-    return _bilanz(journal, konten, start, ende, hebesatz)
-
-
-def validiere_bilanz(
-    journal: str, konten: str, start: str, ende: str, hebesatz: int
-) -> str:
-    return _vb(journal, konten, start, ende, hebesatz)
-
-
-def get_konten(
-    journal: str, konten: str, start: str, ende: str
-) -> pl.DataFrame:
-    return _gk(journal, konten, start, ende)
+__all__ = [
+    "berechne_betriebsergebnis",
+    "berechne_gewerbesteuer",
+    "berechne_koerperschaftssteuer",
+    "berechne_soli",
+    "bilanz",
+    "get_konten",
+    "guv",
+    "steuern",
+    "validiere_bilanz",
+    "validiere_journal",
+]
