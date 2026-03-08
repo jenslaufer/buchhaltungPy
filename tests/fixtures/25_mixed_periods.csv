@@ -1,0 +1,7 @@
+Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungstext,Konto,Typ,Betrag
+1,1,RE001,15.12.2023,15.12.2023,Umsatz Vorjahr,1810,Soll,5000
+2,1,RE001,15.12.2023,15.12.2023,Umsatz Vorjahr,4400,Haben,5000
+3,2,RE002,15.01.2024,15.01.2024,Umsatz aktuell,1810,Soll,10000
+4,2,RE002,15.01.2024,15.01.2024,Umsatz aktuell,4400,Haben,10000
+5,3,RE003,15.01.2025,15.01.2025,Umsatz Folgejahr,1810,Soll,8000
+6,3,RE003,15.01.2025,15.01.2025,Umsatz Folgejahr,4400,Haben,8000

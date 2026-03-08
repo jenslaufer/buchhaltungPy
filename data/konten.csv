@@ -1,0 +1,81 @@
+Konto,Bezeichnung,Bilanzposten,GuV Posten,XBRL Taxonomie
+00000,Guv Konto,,,
+0670,Geringwertige Wirtschaftsgüter,II. Sachanlagen,,bs.ass.fixAss.tan.otherEquipm.gwg
+0690,Sonstige Betriebs- und Geschäftsausstattung,II. Sachanlagen,,bs.ass.fixAss.tan.otherEquipm.office
+0900,Wertpapiere des Anlagevermögens,III. Finanzanlagen,,bs.ass.fixAss.fin.securities.shares
+10000,Bank A,II. Forderungen und sonstige Vermögensgegenstände,,bs.ass.currAss.receiv.trade.other
+10001,Kunde A,II. Forderungen und sonstige Vermögensgegenstände,,bs.ass.currAss.receiv.trade.other
+10002,Kunde B,II. Forderungen und sonstige Vermögensgegenstände,,bs.ass.currAss.receiv.trade.other
+10003,Kunde C,II. Forderungen und sonstige Vermögensgegenstände,,bs.ass.currAss.receiv.trade.other
+10004,Finanzamt,II. Forderungen und sonstige Vermögensgegenstände,,bs.ass.currAss.receiv.trade.other
+1200,Forderungen aus Lieferungen und Leistungen,II. Forderungen und sonstige Vermögensgegenstände,,bs.ass.currAss.receiv.trade.other
+1298,"Ausstehende Einlagen auf das gezeichnete Kapital, eingefordert",,,bs.ass.currAss.receiv.unpaidCapital
+1401,Abziehbare Vorsteuer 7 %,II. Forderungen und sonstige Vermögensgegenstände,,bs.ass.currAss.receiv.other.vat
+1406,Abziehbare Vorsteuer 19 %,II. Forderungen und sonstige Vermögensgegenstände,,bs.ass.currAss.receiv.other.vat
+1407,Abziehbare Vorsteuer nach § 13b UStG 19 %,II. Forderungen und sonstige Vermögensgegenstände,,bs.ass.currAss.receiv.other.vat
+1420,Forderungen aus Umsatzsteuervorauszahlungen,II. Forderungen und sonstige Vermögensgegenstände,,bs.ass.currAss.receiv.other.vat
+1435,Forderungen aus Gewerbesteuerüberzahlungen,II. Forderungen und sonstige Vermögensgegenstände,,bs.ass.currAss.receiv.other.tradeTaxOverpayment
+1450,Körperschaftsteuerrückforderung,II. Forderungen und sonstige Vermögensgegenstände,,bs.ass.currAss.receiv.other.corpTaxOverpayment
+1800,Bank,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",,bs.ass.currAss.cashEquiv.bank
+1810,Bankkonto Bank B DE12 3456 7890 1234 5678 01,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",,bs.ass.currAss.cashEquiv.bank
+1811,Bankkonto (Steuerrückstellungen) Bank B DE12 3456 7890 1234 5678 02,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",,bs.ass.currAss.cashEquiv.bank
+1820,Bankkonto Bank A DE12 3456 7890 1234 5678 03,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",,bs.ass.currAss.cashEquiv.bank
+1821,Bankkonto (Steuerrückstellungen) Bank A DE12 3456 7890 1234 5678 04,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",,bs.ass.currAss.cashEquiv.bank
+1830,Bankkonto (Investments) Bank C DE12 3456 7890 1234 5678 05,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",,bs.ass.currAss.cashEquiv.bank
+1840,Bankkonto Bank A DE12 3456 7890 1234 5678 06,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",,bs.ass.currAss.cashEquiv.bank
+1841,Bankkonto (Steuerrückstellungen) Bank A DE12 3456 7890 1234 5678 07,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",,bs.ass.currAss.cashEquiv.bank
+2900,Gezeichnetes Kapital,I. Gezeichnetes Kapital,,bs.eqLiab.equity.subscribed.corp
+2970,Gewinnvortrag vor Verwendung,IV. Gewinnvortrag/Verlustvortrag,,bs.eqLiab.equity.retainedEarnings
+3020,Steuerrückstellungen,B. Rückstellungen,,bs.eqLiab.accruals.tax.misc
+3035,Gewerbesteuerrückstellung nach § 4 Abs. 5b EStG,B. Rückstellungen,,bs.eqLiab.accruals.tax.gewst
+3040,Körperschaftsteuerrückstellung,B. Rückstellungen,,bs.eqLiab.accruals.tax.kst
+3300,Verbindlichkeiten aus Lieferungen und Leistungen,C. Verbindlichkeiten,,bs.eqLiab.liab.trade.genOther
+3720,Verbindlichkeiten aus Lohn und Gehalt,C. Verbindlichkeiten,,bs.eqLiab.liab.other.employees
+3730,Verbindlichkeiten aus Lohn- und Kirchensteuer,C. Verbindlichkeiten,,bs.eqLiab.liab.other.thereoffSocSec
+3790,Lohn- und Gehaltsverrechnungskonto,C. Verbindlichkeiten,,bs.eqLiab.liab.other.other
+3800,Umsatzsteuer,C. Verbindlichkeiten,,bs.eqLiab.liab.other.theroffTax.vat
+3806,Umsatzsteuer 19 %,C. Verbindlichkeiten,,bs.eqLiab.liab.other.theroffTax.vat
+3820,Umsatzsteuer – Vorauszahlungen / Erstattungen,C. Verbindlichkeiten,,bs.eqLiab.liab.other.theroffTax.vat
+3837,Umsatzsteuer nach § 13b UStG 19 %,C. Verbindlichkeiten,,bs.eqLiab.liab.other.theroffTax.vat
+3841,Umsatzsteuerverbindlichkeiten Vorjahr,C. Verbindlichkeiten,,bs.eqLiab.liab.other.theroffTax.vat
+3860,Verbindlichkeiten aus Umsatzsteuer-Vorauszahlungen,C. Verbindlichkeiten,,bs.eqLiab.liab.other.theroffTax.vat
+4400,Erlöse 19 % USt,,1. Umsatzerlöse,is.netIncome.regular.operatingTC.grossTradingProfit.totalOutput.netSales.grossSales.generalRateVAT
+4560,Provisionsumsätze,,4. Sonstige betriebliche Erträge,is.netIncome.regular.operatingTC.grossTradingProfit.totalOutput.netSales.grossSales.unknownVAT
+4930,Erträge aus der Auflösung von Rückstellungen,,4. Sonstige betriebliche Erträge,is.netIncome.regular.operatingTC.otherOpRevenue.releaseProv
+4932,"Erträge aus der Herabsetzung von Verbindlichkeiten",,4. Sonstige betriebliche Erträge,is.netIncome.regular.operatingTC.otherOpRevenue.releasLiab
+6024,Geschäftsführergehälter der GmbH-Gesellschafter,,6. Personalaufwand,is.netIncome.regular.operatingTC.staff.salaries.managerPartner
+6035,Löhne für Minijobs,,6. Personalaufwand,is.netIncome.regular.operatingTC.staff.salaries.minijobs
+6036,Pauschale Steuer für Minijobber,,6. Personalaufwand,is.netIncome.regular.operatingTC.staff.salaries.minijobs
+6040,Pauschale Steuer für Aushilfen,,6. Personalaufwand,is.netIncome.regular.operatingTC.staff.salaries.misc
+6110,Gesetzliche soziale Aufwendungen,,6. Personalaufwand,is.netIncome.regular.operatingTC.staff.social.socExp.misc
+6130,"Freiwillige soziale Aufwendungen, lohnsteuerfrei",,6. Personalaufwand,is.netIncome.regular.operatingTC.staff.social.socExp.misc
+6262,"Abschreibungen auf aktivierte, geringwertige Wirtschaftsgüter",,7. Abschreibungen,is.netIncome.regular.operatingTC.deprAmort.fixAss.tan.other
+6300,"Sonstige betriebliche Aufwendungen",,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.miscellaneous
+6420,Beiträge,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.miscellaneous
+6430,Sonstige Abgaben,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.miscellaneous
+6436,Steuerlich abzugsfähige Verspätungszuschläge und Zwangsgelder,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.miscellaneous
+6600,Werbekosten,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.marketing
+6660,Reisekosten Arbeitnehmer Übernachtungsaufwand,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.employee
+6663,Reisekosten Arbeitnehmer Fahrtkosten,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.employee
+6664,Reisekosten Arbeitnehmer Verpflegungsmehraufwand,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.employee
+6810,Telefax und Internetkosten,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.communication
+6820,"Zeitschriften, Bücher, digitale Medien (Fachliteratur)",,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.training
+6825,Rechts- und Beratungskosten,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.legalConsulting
+6837,"Aufwendungen für die zeitlich befristete Überlassung von Rechten (Lizenzen, Konzessionen)",,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.concessLicenses
+6850,Sonstiger Betriebsbedarf,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.legalConsulting
+6855,Nebenkosten des Geldverkehrs,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.otherOrdinary
+6880,Aufwendungen aus der Währungsumrechnung,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.currLoss
+6930,Forderungsverluste (übliche Höhe),,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.regAllowance
+7100,Sonstige Zinsen und ähnliche Erträge,,"4. Sonstige betriebliche Erträge",is.netIncome.regular.fin.netInterest.income.deposits
+7600,Körperschaftsteuer,,14. Steuern vom Einkommen und vom Ertrag,is.netIncome.tax.kst
+7603,Körperschaftsteuer für Vorjahre,,14. Steuern vom Einkommen und vom Ertrag,is.netIncome.tax.kst
+7604,Körperschaftsteuererstattungen für Vorjahre,,14. Steuern vom Einkommen und vom Ertrag,is.netIncome.tax.kst
+7607,Solidaritätszuschlagerstattungen für Vorjahre,,14. Steuern vom Einkommen und vom Ertrag,is.netIncome.tax.soli.kestNoncreditable
+7608,Solidaritätszuschlag,,14. Steuern vom Einkommen und vom Ertrag,is.netIncome.tax.soli.kestNoncreditable
+7609,Solidaritätszuschlag für Vorjahre,,14. Steuern vom Einkommen und vom Ertrag,is.netIncome.tax.soli.kestNoncreditable
+7610,Gewerbesteuer,,14. Steuern vom Einkommen und vom Ertrag,is.netIncome.tax.gewst
+7639,Anrechnung/Abzug ausländischer Quellensteuer,,14. Steuern vom Einkommen und vom Ertrag,is.netIncome.tax.deductableForeignIncomeTaxes
+9000,"Saldenvorträge, Sachkonten",,,
+99997,Lieferant A,C. Verbindlichkeiten,,bs.eqLiab.liab.trade.genOther
+99998,Kunde A,C. Verbindlichkeiten,,bs.eqLiab.liab.trade.genOther
+99999,Sonstige Kreditoren,C. Verbindlichkeiten,,bs.eqLiab.liab.trade.genOther

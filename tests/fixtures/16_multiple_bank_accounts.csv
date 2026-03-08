@@ -1,0 +1,7 @@
+Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungstext,Konto,Typ,Betrag
+1,1,RE001,15.01.2024,15.01.2024,Umsatz Bank B,1810,Soll,8000
+2,1,RE001,15.01.2024,15.01.2024,Umsatz Bank B,4400,Haben,8000
+3,2,RE002,20.02.2024,20.02.2024,Umsatz Bank A,1820,Soll,12000
+4,2,RE002,20.02.2024,20.02.2024,Umsatz Bank A,4400,Haben,12000
+5,3,UM001,28.02.2024,28.02.2024,Umbuchung Bank A to Bank B,1810,Soll,5000
+6,3,UM001,28.02.2024,28.02.2024,Umbuchung Bank A to Bank B,1820,Haben,5000

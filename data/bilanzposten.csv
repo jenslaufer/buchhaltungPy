@@ -1,0 +1,32 @@
+Bilanzseite,Ebene1,Ebene2
+Aktiva,A. Anlagevermögen,I. Immaterielle Vermögensgegenstände
+Aktiva,A. Anlagevermögen,II. Sachanlagen
+Aktiva,A. Anlagevermögen,III. Finanzanlagen
+Aktiva,A. Anlagevermögen,
+Aktiva,B. Umlaufvermögen,I. Vorräte
+Aktiva,B. Umlaufvermögen,II. Forderungen und sonstige Vermögensgegenstände
+Aktiva,B. Umlaufvermögen,III. Wertpapiere
+Aktiva,B. Umlaufvermögen,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks"
+Aktiva,B. Umlaufvermögen,
+Aktiva,C. Rechnungsabgrenzungsposten,
+Aktiva,C. Rechnungsabgrenzungsposten,
+Aktiva,D. Aktive latente Steuern,
+Aktiva,D. Aktive latente Steuern,
+Aktiva,E. Aktiver Unterschiedsbetrag aus der Vermögensverrechnung,
+Aktiva,E. Aktiver Unterschiedsbetrag aus der Vermögensverrechnung,
+Aktiva,,
+Passiva,A. Eigenkapital,I. Gezeichnetes Kapital
+Passiva,A. Eigenkapital,II. Kapitalrücklage
+Passiva,A. Eigenkapital,III. Gewinnrücklagen
+Passiva,A. Eigenkapital,IV. Gewinnvortrag/Verlustvortrag
+Passiva,A. Eigenkapital,V. Jahresüberschuß/Jahresfehlbetrag
+Passiva,A. Eigenkapital,
+Passiva,B. Rückstellungen,
+Passiva,B. Rückstellungen,
+Passiva,C. Verbindlichkeiten,
+Passiva,C. Verbindlichkeiten,
+Passiva,D. Rechnungsabgrenzungsposten,
+Passiva,D. Rechnungsabgrenzungsposten,
+Passiva,E. Passive latente Steuern,
+Passiva,E. Passive latente Steuern,
+Passiva,,

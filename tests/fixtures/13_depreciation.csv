@@ -1,0 +1,7 @@
+Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungstext,Konto,Typ,Betrag
+1,1,RE001,01.01.2024,01.01.2024,Umsatz,1810,Soll,20000
+2,1,RE001,01.01.2024,01.01.2024,Umsatz,4400,Haben,20000
+3,2,GWG001,15.03.2024,15.03.2024,Laptop Kauf,0670,Soll,800
+4,2,GWG001,15.03.2024,15.03.2024,Laptop Kauf,1810,Haben,800
+5,3,AFA001,31.12.2024,31.12.2024,AfA GWG,6262,Soll,800
+6,3,AFA001,31.12.2024,31.12.2024,AfA GWG,0670,Haben,800

@@ -1,0 +1,89 @@
+Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungstext,Konto,Typ,Betrag
+1,1,JAB1,01.01.2026,01.01.2026,Übertrag aus Vorjahr,0900,Soll,42595.34
+2,1,JAB1,01.01.2026,01.01.2026,Übertrag aus Vorjahr,9000,Haben,42595.34
+3,2,JAB2,01.01.2026,01.01.2026,Übertrag aus Vorjahr,1401,Soll,8.62
+4,2,JAB2,01.01.2026,01.01.2026,Übertrag aus Vorjahr,9000,Haben,8.62
+5,3,JAB3,01.01.2026,01.01.2026,Übertrag aus Vorjahr,1406,Soll,2.99
+6,3,JAB3,01.01.2026,01.01.2026,Übertrag aus Vorjahr,9000,Haben,2.99
+7,4,JAB4,01.01.2026,01.01.2026,Übertrag aus Vorjahr,1407,Soll,3.27
+8,4,JAB4,01.01.2026,01.01.2026,Übertrag aus Vorjahr,9000,Haben,3.27
+9,5,JAB5,01.01.2026,01.01.2026,Übertrag aus Vorjahr,1435,Soll,4174.50
+10,5,JAB5,01.01.2026,01.01.2026,Übertrag aus Vorjahr,9000,Haben,4174.50
+11,6,JAB6,01.01.2026,01.01.2026,Übertrag aus Vorjahr,1830,Soll,50000.00
+12,6,JAB6,01.01.2026,01.01.2026,Übertrag aus Vorjahr,9000,Haben,50000.00
+13,7,JAB7,01.01.2026,01.01.2026,Übertrag aus Vorjahr,1840,Soll,8286.68
+14,7,JAB7,01.01.2026,01.01.2026,Übertrag aus Vorjahr,9000,Haben,8286.68
+15,8,JAB8,01.01.2026,01.01.2026,Übertrag aus Vorjahr,9000,Soll,25000.00
+16,8,JAB8,01.01.2026,01.01.2026,Übertrag aus Vorjahr,2900,Haben,25000.00
+17,9,JAB9,01.01.2026,01.01.2026,Übertrag aus Vorjahr,9000,Soll,453.62
+18,9,JAB9,01.01.2026,01.01.2026,Übertrag aus Vorjahr,3730,Haben,453.62
+19,10,JAB10,01.01.2026,01.01.2026,Übertrag aus Vorjahr,9000,Soll,3.27
+20,10,JAB10,01.01.2026,01.01.2026,Übertrag aus Vorjahr,3837,Haben,3.27
+21,11,JAB11,01.01.2026,01.01.2026,Übertrag aus Vorjahr,9000,Soll,79614.51
+22,11,JAB11,01.01.2026,01.01.2026,Übertrag aus Vorjahr,2970,Haben,79614.51
+23,12,E1,01.01.2026,01.01.2026,Hosting Digital Ocean,6810,Soll,15.52
+24,12,E1,01.01.2026,01.01.2026,Hosting Digital Ocean,1406,Soll,2.95
+25,12,E1,01.01.2026,01.01.2026,Hosting Digital Ocean,99999,Haben,18.47
+26,13,KO1,01.01.2026,01.01.2026,Hosting Digital Ocean,99999,Soll,18.47
+27,13,KO1,01.01.2026,01.01.2026,Hosting Digital Ocean,1840,Haben,18.47
+28,14,S02,05.01.2026,05.01.2026,Lohnsteuer Geschäftsführer,3730,Soll,453.62
+29,14,S02,05.01.2026,05.01.2026,Lohnsteuer Geschäftsführer,1840,Haben,453.62
+30,15,S01,07.01.2026,07.01.2026,Umsatzsteuervoranmeldung,3820,Soll,2.99
+31,15,S01,07.01.2026,07.01.2026,Umsatzsteuervoranmeldung,1406,Haben,2.99
+32,16,S01,07.01.2026,07.01.2026,Umsatzsteuervoranmeldung,3820,Soll,3.27
+33,16,S01,07.01.2026,07.01.2026,Umsatzsteuervoranmeldung,1407,Haben,3.27
+34,17,S01,07.01.2026,07.01.2026,Umsatzsteuervoranmeldung,3837,Soll,3.27
+35,17,S01,07.01.2026,07.01.2026,Umsatzsteuervoranmeldung,3820,Haben,3.27
+36,18,E2,07.01.2026,07.01.2026,Chat GPT Abo,6837,Soll,17.12
+37,18,E2,07.01.2026,07.01.2026,Chat GPT Abo,99999,Haben,17.12
+38,19,E2,07.01.2026,07.01.2026,Chat GPT Abo,1407,Soll,3.25
+39,19,E2,07.01.2026,07.01.2026,Chat GPT Abo,3837,Haben,3.25
+40,20,KO1,07.01.2026,07.01.2026,Chat GPT Abo,99999,Soll,17.12
+41,20,KO1,07.01.2026,07.01.2026,Chat GPT Abo,1840,Haben,17.12
+42,21,KO1,12.01.2026,12.01.2026,Rückerstattung aus Umsatzsteuervoranmeldung,1840,Soll,2.99
+43,21,KO1,12.01.2026,12.01.2026,Rückerstattung aus Umsatzsteuervoranmeldung,3820,Haben,2.99
+44,22,KO1,21.01.2026,21.01.2026,Gewerbesteuer 2024,1840,Soll,4174.50
+45,22,KO1,21.01.2026,21.01.2026,Gewerbesteuer 2024,1435,Haben,4174.50
+46,23,L01,28.01.2026,28.01.2026,Lohn Geschäftsführer,6024,Soll,3500.00
+47,23,L01,28.01.2026,28.01.2026,Lohn Geschäftsführer,3790,Haben,3500.00
+48,24,L01,28.01.2026,28.01.2026,Lohn Geschäftsführer,3790,Soll,2879.84
+49,24,L01,28.01.2026,28.01.2026,Lohn Geschäftsführer,3720,Haben,2879.84
+50,25,L01,28.01.2026,28.01.2026,Lohnsteuer Geschäftsführer,3790,Soll,620.16
+51,25,L01,28.01.2026,28.01.2026,Lohnsteuer Geschäftsführer,3730,Haben,620.16
+52,26,KO1,28.01.2026,28.01.2026,Lohn Geschäftsführer,3720,Soll,2879.84
+53,26,KO1,28.01.2026,28.01.2026,Lohn Geschäftsführer,1840,Haben,2879.84
+54,27,E3,07.02.2026,07.02.2026,Hosting Digital Ocean,6810,Soll,15.36
+55,27,E3,07.02.2026,07.02.2026,Hosting Digital Ocean,1406,Soll,2.92
+56,27,E3,07.02.2026,07.02.2026,Hosting Digital Ocean,99999,Haben,18.28
+57,28,KO4,07.02.2026,07.02.2026,Hosting Digital Ocean,99999,Soll,18.28
+58,28,KO4,07.02.2026,07.02.2026,Hosting Digital Ocean,1840,Haben,18.28
+59,29,S03,05.02.2026,05.02.2026,Lohnsteuer Geschäftsführer,3730,Soll,620.14
+60,29,S03,05.02.2026,05.02.2026,Lohnsteuer Geschäftsführer,1840,Haben,620.14
+61,30,E4,06.02.2026,06.02.2026,IHK Beitrag,6420,Soll,209.12
+62,30,E4,06.02.2026,06.02.2026,IHK Beitrag,99999,Haben,209.12
+63,31,E5,07.02.2026,07.02.2026,Chat GPT Abo,6837,Soll,17.00
+64,31,E5,07.02.2026,07.02.2026,Chat GPT Abo,99999,Haben,17.00
+65,32,E5,07.02.2026,07.02.2026,Chat GPT Abo,1407,Soll,3.23
+66,32,E5,07.02.2026,07.02.2026,Chat GPT Abo,3837,Haben,3.23
+67,33,KO4,08.02.2026,08.02.2026,Chat GPT Abo,99999,Soll,17.00
+68,33,KO4,08.02.2026,08.02.2026,Chat GPT Abo,1840,Haben,17.00
+69,34,KO4,21.02.2026,21.02.2026,IHK Beitrag,99999,Soll,209.12
+70,34,KO4,21.02.2026,21.02.2026,IHK Beitrag,1840,Haben,209.12
+71,35,E6,26.02.2026,26.02.2026,Anthropic API Credits,6837,Soll,4.25
+72,35,E6,26.02.2026,26.02.2026,Anthropic API Credits,1406,Soll,0.81
+73,35,E6,26.02.2026,26.02.2026,Anthropic API Credits,99999,Haben,5.06
+74,36,KO4,26.02.2026,26.02.2026,Anthropic API Credits,99999,Soll,5.06
+75,36,KO4,26.02.2026,26.02.2026,Anthropic API Credits,1840,Haben,5.06
+76,37,E7,26.02.2026,26.02.2026,Claude Pro Abo,6837,Soll,180.00
+77,37,E7,26.02.2026,26.02.2026,Claude Pro Abo,99999,Haben,180.00
+78,38,E7,26.02.2026,26.02.2026,Claude Pro Abo,1407,Soll,34.20
+79,38,E7,26.02.2026,26.02.2026,Claude Pro Abo,3837,Haben,34.20
+80,39,KO4,26.02.2026,26.02.2026,Claude Pro Abo,99999,Soll,180.00
+81,39,KO4,26.02.2026,26.02.2026,Claude Pro Abo,1840,Haben,180.00
+82,40,E8,01.03.2026,01.03.2026,Hosting Digital Ocean,6810,Soll,15.44
+83,40,E8,01.03.2026,01.03.2026,Hosting Digital Ocean,1406,Soll,2.93
+84,40,E8,01.03.2026,01.03.2026,Hosting Digital Ocean,99999,Haben,18.37
+85,41,KO7,01.03.2026,01.03.2026,Hosting Digital Ocean,99999,Soll,18.37
+86,41,KO7,01.03.2026,01.03.2026,Hosting Digital Ocean,1840,Haben,18.37
+87,42,S04,04.03.2026,04.03.2026,Lohnsteuer Geschäftsführer,3730,Soll,620.14
+88,42,S04,04.03.2026,05.03.2026,Lohnsteuer Geschäftsführer,1840,Haben,620.14

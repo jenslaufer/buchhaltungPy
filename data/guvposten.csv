@@ -1,0 +1,19 @@
+Posten,Vorzeichen,Summierungsposten
+1. Umsatzerlöse,+,Betriebsergebnis
+2. Erhöhung oder Verminderung des Bestands an fertigen und unfertigen Erzeugnissen,+,Betriebsergebnis
+3. Andere aktivierte Eigenleistungen,+,Betriebsergebnis
+4. Sonstige betriebliche Erträge,+,Betriebsergebnis
+5. Materialaufwand,-,Betriebsergebnis
+6. Personalaufwand,-,Betriebsergebnis
+7. Abschreibungen,-,Betriebsergebnis
+8. Sonstige betriebliche Aufwendungen,-,Betriebsergebnis
+Betriebsergebnis,=,15. Ergebnis nach Steuern
+"9. Erträge aus Beteiligungen, davon aus verbundenen Unternehmen",+,15. Ergebnis nach Steuern
+"10. Erträge aus anderen Wertpapieren und Ausleihungen des Finanzanlagevermögens, davon aus verbundenen Unternehmen",+,15. Ergebnis nach Steuern
+"11. Sonstige Zinsen und ähnliche Erträge, davon aus verbundenen Unternehmen",+,15. Ergebnis nach Steuern
+12. Abschreibungen auf Finanzanlagen und auf Wertpapiere des Umlaufvermögens,-,15. Ergebnis nach Steuern
+"13. Zinsen und ähnliche Aufwendungen, davon an verbundene Unternehmen",-,15. Ergebnis nach Steuern
+14. Steuern vom Einkommen und vom Ertrag,-,15. Ergebnis nach Steuern
+15. Ergebnis nach Steuern,=,17. Jahresüberschuss/Jahresfehlbetrag
+16. Sonstige Steuern,-,17. Jahresüberschuss/Jahresfehlbetrag
+17. Jahresüberschuss/Jahresfehlbetrag,=,

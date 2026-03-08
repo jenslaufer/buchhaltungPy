@@ -1,0 +1,440 @@
+Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungstext,Konto,Typ,Betrag
+1,1,JAB1,01.01.2023,01.01.2023,Übertrag aus Vorjahr,1401,Soll,23.55
+2,1,JAB1,01.01.2023,01.01.2023,Übertrag aus Vorjahr,9000,Haben,23.55
+3,2,JAB2,01.01.2023,01.01.2023,Übertrag aus Vorjahr,1406,Soll,225.30
+4,2,JAB2,01.01.2023,01.01.2023,Übertrag aus Vorjahr,9000,Haben,225.30
+5,3,JAB3,01.01.2023,01.01.2023,Übertrag aus Vorjahr,1810,Soll,51858.31
+6,3,JAB3,01.01.2023,01.01.2023,Übertrag aus Vorjahr,9000,Haben,51858.31
+7,4,JAB4,01.01.2023,01.01.2023,Übertrag aus Vorjahr,1811,Soll,17660.81
+8,4,JAB4,01.01.2023,01.01.2023,Übertrag aus Vorjahr,9000,Haben,17660.81
+9,5,JAB5,01.01.2023,01.01.2023,Übertrag aus Vorjahr,9000,Soll,25000.00
+10,5,JAB5,01.01.2023,01.01.2023,Übertrag aus Vorjahr,2900,Haben,25000.00
+11,6,JAB6,01.01.2023,01.01.2023,Übertrag aus Vorjahr,9000,Soll,9151.36
+12,6,JAB6,01.01.2023,01.01.2023,Übertrag aus Vorjahr,3806,Haben,9151.36
+13,7,JAB7,01.01.2023,01.01.2023,Übertrag aus Vorjahr,10001,Soll,10457.13
+14,7,JAB7,01.01.2023,01.01.2023,Übertrag aus Vorjahr,9000,Haben,10457.13
+15,8,JAB8,01.01.2023,01.01.2023,Übertrag aus Vorjahr,9000,Soll,380.11
+16,8,JAB8,01.01.2023,01.01.2023,Übertrag aus Vorjahr,3020,Haben,380.11
+17,9,JAB9,01.01.2023,01.01.2023,Übertrag aus Vorjahr,9000,Soll,4999.00
+18,9,JAB9,01.01.2023,01.01.2023,Übertrag aus Vorjahr,3035,Haben,4999.00
+19,10,JAB10,01.01.2023,01.01.2023,Übertrag aus Vorjahr,9000,Soll,6911.06
+20,10,JAB10,01.01.2023,01.01.2023,Übertrag aus Vorjahr,3040,Haben,6911.06
+21,11,JAB11,01.01.2023,01.01.2023,Übertrag aus Vorjahr,9000,Soll,33783.57
+22,11,JAB11,01.01.2023,01.01.2023,Übertrag aus Vorjahr,2970,Haben,33783.57
+23,12,KO2,06.01.2023,06.01.2023,Auszahlung A5,1810,Soll,10457.13
+24,12,KO2,06.01.2023,06.01.2023,Auszahlung A5,10001,Haben,10457.13
+25,13,E1,09.01.2023,09.01.2023,Kontoführungsgebühren,6855,Soll,19.00
+26,13,E1,09.01.2023,09.01.2023,Kontoführungsgebühren,1406,Soll,3.61
+27,13,E1,09.01.2023,09.01.2023,Kontoführungsgebühren,99999,Haben,22.61
+28,14,KO1,09.01.2023,09.01.2023,Steuerrückstellung,1811,Soll,3400.61
+29,14,KO2,09.01.2023,09.01.2023,Steuerrückstellung,1810,Haben,3400.61
+30,15,KO2,09.01.2023,09.01.2023,Bezahlung E1,99999,Soll,22.61
+31,15,KO2,09.01.2023,09.01.2023,Bezahlung E1,1810,Haben,22.61
+32,16,S1,31.01.2023,31.01.2023,Gewerbesteuervorauszahlung,3035,Soll,1085.00
+33,16,S1,31.01.2023,31.01.2023,Gewerbesteuervorauszahlung,1811,Haben,1085.00
+34,17,S3,06.02.2023,06.02.2023,Umsatzsteuervoranmeldung,3820,Soll,8902.50
+35,17,S3,06.02.2023,06.02.2023,Umsatzsteuervoranmeldung,1811,Haben,8902.50
+36,18,S3,06.02.2023,06.02.2023,Umsatzsteuervoranmeldung,3806,Soll,9151.34
+37,18,S3,06.02.2023,06.02.2023,Umsatzsteuervoranmeldung,3820,Haben,9151.34
+38,19,S3,06.02.2023,06.02.2023,Umsatzsteuervoranmeldung,3820,Soll,23.55
+39,19,S3,06.02.2023,06.02.2023,Umsatzsteuervoranmeldung,1401,Haben,23.55
+40,20,S3,06.02.2023,06.02.2023,Umsatzsteuervoranmeldung,3820,Soll,225.30
+41,20,S3,06.02.2023,06.02.2023,Umsatzsteuervoranmeldung,1406,Haben,225.30
+42,22,E2,06.02.2023,06.02.2023,Säumniszuschlag Verspätung Umsatzsteuervoranmeldung,6436,Soll,89.00
+43,22,E2,06.02.2023,06.02.2023,Säumniszuschlag Verspätung Umsatzsteuervoranmeldung,1810,Haben,89.00
+44,21,A7,17.02.2023,17.02.2023,Softwareberatung Brunata,10001,Soll,15713.95
+45,21,A7,17.02.2023,17.02.2023,Softwareberatung Brunata,3806,Haben,2508.95
+46,21,A7,17.02.2023,17.02.2023,Softwareberatung Brunata,4400,Haben,13205.00
+47,23,A6,20.02.2023,20.02.2023,Erlass Säumniszuschlag,1811,Soll,89.00
+48,23,A6,20.02.2023,20.02.2023,Erlass Säumniszuschlag,6436,Haben,89.00
+49,24,KO4,20.02.2023,20.02.2023,Auszahlung A7,1810,Soll,15713.95
+50,24,KO4,20.02.2023,20.02.2023,Auszahlung A7,10001,Haben,15713.95
+51,25,E3,24.02.2023,24.02.2023,IHK Beitrag,6420,Soll,380.00
+52,25,E3,24.02.2023,24.02.2023,IHK Beitrag,99999,Haben,380.00
+53,26,E4,27.02.2023,27.02.2023,Bahnfahrt Hamburg,6663,Soll,89.53
+54,26,E4,27.02.2023,27.02.2023,Bahnfahrt Hamburg,1401,Soll,6.27
+55,26,E4,27.02.2023,27.02.2023,Bahnfahrt Hamburg,99999,Haben,95.80
+56,27,KO3,28.02.2023,28.02.2023,Steuerrückstellung,1811,Soll,5969.16
+57,27,KO4,28.02.2023,28.02.2023,Steuerrückstellung,1810,Haben,5969.16
+58,28,KO4,28.02.2023,28.02.2023,Bezahlung E4,99999,Soll,95.80
+59,28,KO4,28.02.2023,28.02.2023,Bezahlung E4,1810,Haben,95.80
+60,29,E5,02.03.2023,02.03.2023,Lenovo Notebook Z13 Gen 1,0690,Soll,2209.24
+61,29,E5,02.03.2023,02.03.2023,Lenovo Notebook Z13 Gen 1,1406,Soll,419.76
+62,29,E5,02.03.2023,02.03.2023,Lenovo Notebook Z13 Gen 1,99999,Haben,2629.00
+63,30,KO6,02.03.2023,02.03.2023,Bezahlung E5,99999,Soll,2629.00
+64,30,KO6,02.03.2023,02.03.2023,Bezahlung E5,1810,Haben,2629.00
+65,31,E4,02.03.2023,02.03.2023,Sofortabschreibung Lenovo Notebook Z13 Gen 1,6262,Soll,2209.24
+66,31,E4,02.03.2023,02.03.2023,Sofortabschreibung Lenovo Notebook Z13 Gen 1,0690,Haben,2209.24
+67,32,KO5,02.03.2023,02.03.2023,Steuerrückstellung,1811,Soll,65.66
+68,32,KO6,02.03.2023,02.03.2023,Steuerrückstellung,1810,Haben,65.66
+69,33,S4,05.03.2023,05.03.2023,Körperschaftsteuervorauszahlung,3040,Soll,1875.00
+70,33,S4,05.03.2023,05.03.2023,Körperschaftsteuervorauszahlung,1811,Haben,1875.00
+71,34,S4,05.03.2023,05.03.2023,Solidaritätszuschlagvorauszahlung,3020,Soll,103.12
+72,34,S4,05.03.2023,05.03.2023,Solidaritätszuschlagvorauszahlung,1811,Haben,103.12
+73,35,KO6,08.03.2023,08.03.2023,Bezahlung E3,99999,Soll,380.00
+74,35,KO6,08.03.2023,08.03.2023,Bezahlung E3,1810,Haben,380.00
+75,36,A8,09.03.2023,09.03.2023,Softwareberatung Brunata,10001,Soll,13905.15
+76,36,A8,09.03.2023,09.03.2023,Softwareberatung Brunata,3806,Haben,2220.15
+77,36,A8,09.03.2023,09.03.2023,Softwareberatung Brunata,4400,Haben,11685.00
+78,37,KO6,15.03.2023,15.03.2023,Softwareberatung Brunata,1810,Soll,13905.15
+79,37,KO6,15.03.2023,15.03.2023,Softwareberatung Brunata,10001,Haben,13905.15
+80,38,KO5,15.03.2023,15.03.2023,Steuerrückstellung,1811,Soll,4226.68
+81,38,KO6,15.03.2023,15.03.2023,Steuerrückstellung,1810,Haben,4226.68
+82,39,E6,15.03.2023,15.03.2023,Gewerbesteuervorauszahlung,3035,Soll,271.00
+83,39,E6,15.03.2023,15.03.2023,Gewerbesteuervorauszahlung,1811,Haben,271.00
+84,40,E7,18.03.2023,18.03.2023,Hotelkosten Hamburg,6660,Soll,261.41
+85,40,E7,18.03.2023,18.03.2023,Hotelkosten Hamburg,1401,Soll,17.83
+86,40,E7,18.03.2023,18.03.2023,Hotelkosten Hamburg,1406,Soll,1.28
+87,40,E7,18.03.2023,18.03.2023,Hotelkosten Hamburg,99999,Haben,280.52
+88,41,KO6,18.03.2023,18.03.2023,Bezahlung E7,99999,Soll,280.52
+89,41,KO6,18.03.2023,18.03.2023,Bezahlung E7,1810,Haben,280.52
+90,42,E8,18.03.2023,18.03.2023,Nahverkehrsticket Hamburg,6663,Soll,6.17
+91,42,E8,18.03.2023,18.03.2023,Nahverkehrsticket Hamburg,1401,Soll,0.43
+92,42,E8,18.03.2023,18.03.2023,Nahverkehrsticket Hamburg,99999,Haben,6.60
+93,43,KO6,18.03.2023,18.03.2023,Bezahlung E8,99999,Soll,6.60
+94,43,KO6,18.03.2023,18.03.2023,Bezahlung E8,1810,Haben,6.60
+95,44,E6,19.03.2023,19.03.2023,Gewerbesteuervorauszahlung,3035,Soll,1085.00
+96,44,E6,19.03.2023,19.03.2023,Säumniszuschlag + Mahngebühr,6436,Soll,37.50
+97,44,E6,19.03.2023,19.03.2023,Gewerbesteuervorauszahlung,1811,Haben,1122.50
+98,45,KO7,25.03.2023,25.03.2023,Transformation auf neues Geschäftskonto,1820,Soll,74768.90
+99,45,KO6,25.03.2023,25.03.2023,Transformation auf neues Geschäftskonto,1810,Haben,74768.90
+100,46,KO9,25.03.2023,25.03.2023,Transformation auf neues Geschäftskonto,1821,Soll,18052.80
+101,46,KO5,25.03.2023,25.03.2023,Transformation auf neues Geschäftskonto,1811,Haben,18052.80
+102,47,KO12,01.04.2023,01.04.2023,Umsatzsteuervoranmeldung,3820,Soll,4279.92
+103,47,KO12,01.04.2023,01.04.2023,Umsatzsteuervoranmeldung,1821,Haben,4279.92
+104,48,S5,01.04.2023,01.04.2023,Umsatzsteuervoranmeldung,3806,Soll,4729.10
+105,48,S5,01.04.2023,01.04.2023,Umsatzsteuervoranmeldung,3820,Haben,4729.10
+106,49,S5,01.04.2023,01.04.2023,Umsatzsteuervoranmeldung,3820,Soll,24.53
+107,49,S5,01.04.2023,01.04.2023,Umsatzsteuervoranmeldung,1401,Haben,24.53
+108,50,S5,01.04.2023,01.04.2023,Umsatzsteuervoranmeldung,3820,Soll,424.65
+109,50,S5,01.04.2023,01.04.2023,Umsatzsteuervoranmeldung,1406,Haben,424.65
+110,51,A9,12.04.2023,12.04.2023,Softwareberatung Brunata,10001,Soll,19331.55
+111,51,A9,12.04.2023,12.04.2023,Softwareberatung Brunata,3806,Haben,3086.55
+112,51,A9,12.04.2023,12.04.2023,Softwareberatung Brunata,4400,Haben,16245.00
+113,52,KO8,17.04.2023,17.04.2023,Auszahlung A9,1810,Soll,19331.55
+114,52,KO8,17.04.2023,17.04.2023,Auszahlung A9,10001,Haben,19331.55
+115,53,KO11,17.04.2023,17.04.2023,Transformation auf neues Geschäftskonto,1820,Soll,19331.55
+116,53,KO8,17.04.2023,17.04.2023,Transformation auf neues Geschäftskonto,1810,Haben,19331.55
+117,54,KO12,17.04.2023,17.04.2023,Steuerrückstellung,1821,Soll,7356.48
+118,54,KO11,17.04.2023,17.04.2023,Steuerrückstellung,1820,Haben,7356.48
+119,55,E9,23.04.2023,23.04.2023,Kontoführungsgebühren,6855,Soll,84.00
+120,55,E9,23.04.2023,23.04.2023,Kontoführungsgebühren,99999,Haben,84.00
+121,56,KO11,23.04.2023,23.04.2023,Bezahlung E9,99999,Soll,84.00
+122,56,KO11,23.04.2023,23.04.2023,Bezahlung E9,1820,Haben,84.00
+123,57,A10,29.04.2023,29.04.2023,Provision Vermittlung Bank A Konto,10000,Soll,50.00
+124,57,A10,29.04.2023,29.04.2023,Provision Vermittlung Bank A Konto,4560,Haben,50.00
+125,58,KO11,29.04.2023,29.04.2023,Auszahlung A10,1820,Soll,50.00
+126,58,KO11,29.04.2023,29.04.2023,Auszahlung A10,10000,Haben,50.00
+127,59,KO13,04.05.2023,04.05.2023,Umsatzsteuervoranmeldung,3820,Soll,3086.55
+128,59,KO13,04.05.2023,04.05.2023,Umsatzsteuervoranmeldung,1821,Haben,3086.55
+129,60,S6,04.05.2023,04.05.2023,Umsatzsteuervoranmeldung,3806,Soll,3086.55
+130,60,S6,04.05.2023,04.05.2023,Umsatzsteuervoranmeldung,3820,Haben,3086.55
+131,61,A11,13.05.2023,13.05.2023,Softwareberatung Brunata,10001,Soll,13339.90
+132,61,A11,13.05.2023,13.05.2023,Softwareberatung Brunata,3806,Haben,2129.90
+133,61,A11,13.05.2023,13.05.2023,Softwareberatung Brunata,4400,Haben,11210.00
+134,62,E10,16.05.2023,16.05.2023,LEI,6825,Soll,80.00
+135,62,E10,16.05.2023,16.05.2023,LEI,1406,Soll,15.20
+136,62,E10,16.05.2023,16.05.2023,LEI,99999,Haben,95.20
+137,63,KO13,16.05.2023,16.05.2023,Bezahlung E10,99999,Soll,95.20
+138,63,KO13,16.05.2023,16.05.2023,Bezahlung E10,1820,Haben,95.20
+139,64,S7,17.05.2023,17.05.2023,Gewerbesteuervorauszahlung,3035,Soll,6500.00
+140,64,S7,17.05.2023,17.05.2023,Gewerbesteuervorauszahlung,1821,Haben,6500.00
+141,65,S8,17.05.2023,17.05.2023,Körperschaftsteuervorauszahlung,3040,Soll,9000.00
+142,65,S8,17.05.2023,17.05.2023,Körperschaftsteuervorauszahlung,1821,Haben,9000.00
+143,66,KO13,21.05.2023,21.05.2023,Bezahlung E11,99999,Soll,14.28
+144,66,KO13,21.05.2023,21.05.2023,Bezahlung E11,1820,Haben,14.28
+145,67,E11,23.05.2023,23.05.2023,Unternehmensregister Identitätsprüfungsgebühr,6825,Soll,12.00
+146,67,E11,23.05.2023,23.05.2023,Unternehmensregister Identitätsprüfungsgebühr,1406,Soll,2.28
+147,67,E11,23.05.2023,23.05.2023,Unternehmensregister Identitätsprüfungsgebühr,99999,Haben,14.28
+148,68,S9,26.05.2023,26.05.2023,Körperschaftsteuervorauszahlung,3040,Soll,1875.00
+149,68,S9,26.05.2023,26.05.2023,Körperschaftsteuervorauszahlung,1821,Haben,1875.00
+150,69,S9,26.05.2023,26.05.2023,Solidaritätszuschlagvorauszahlung,3020,Soll,103.12
+151,69,S9,26.05.2023,26.05.2023,Solidaritätszuschlagvorauszahlung,1821,Haben,103.12
+152,70,S8,26.05.2023,26.05.2023,Rückerstattung Körperschaftsteuervorauszahlung,1821,Soll,9000.00
+153,70,S8,26.05.2023,26.05.2023,Rückerstattung Körperschaftsteuervorauszahlung,3040,Haben,9000.00
+154,71,KO16,01.06.2023,01.06.2023,Umsatzsteuervoranmeldung,3820,Soll,2112.42
+155,71,KO16,01.06.2023,01.06.2023,Umsatzsteuervoranmeldung,1821,Haben,2112.42
+156,72,S12,01.08.2023,01.08.2023,Umsatzsteuervoranmeldung,3806,Soll,2129.90
+157,72,S12,01.08.2023,01.08.2023,Umsatzsteuervoranmeldung,3820,Haben,2129.90
+158,73,S12,01.08.2023,01.08.2023,Umsatzsteuervoranmeldung,3820,Soll,17.48
+159,73,S12,01.08.2023,01.08.2023,Umsatzsteuervoranmeldung,1406,Haben,17.48
+160,74,A12,05.06.2023,05.06.2023,Bank A Konto Cashback,10000,Soll,2.19
+161,74,A12,05.06.2023,05.06.2023,Bank A Konto Cashback,4560,Haben,2.19
+162,75,KO15,05.06.2023,05.06.2023,Auszahlung A12,1820,Soll,2.19
+163,75,KO15,05.06.2023,05.06.2023,Auszahlung A12,10000,Haben,2.19
+164,76,KO15,07.06.2023,07.06.2023,Auszahlung A11,1820,Soll,13339.90
+165,76,KO15,07.06.2023,07.06.2023,Auszahlung A11,10001,Haben,13339.90
+166,77,KO16,12.06.2023,12.06.2023,Steuerrückstellung,1821,Soll,5120.16
+167,77,KO15,12.06.2023,12.06.2023,Steuerrückstellung,1820,Haben,5120.16
+168,78,KO17,14.06.2023,14.06.2023,Transfer zu Geldanlagekonto,1830,Soll,45000.00
+169,78,KO15,14.06.2023,14.06.2023,Transfer zu Geldanlagekonto,1820,Haben,45000.00
+170,79,E12,20.06.2023,20.06.2023,Anlage in ETF,0900,Soll,44844.98
+171,79,E12,20.06.2023,20.06.2023,Anlage in ETF,1830,Haben,44844.98
+172,80,E12,20.06.2023,20.06.2023,Provision Aktienhandel,6855,Soll,62.78
+173,80,E12,20.06.2023,20.06.2023,Provision Aktienhandel,1830,Haben,62.78
+174,81,E13,23.06.2023,23.06.2023,Gebühr unbenutzte Kreditkarte,6855,Soll,1.00
+175,81,E13,23.06.2023,23.06.2023,Gebühr unbenutzte Kreditkarte,99999,Haben,1.00
+176,82,A14,17.07.2023,17.07.2023,Softwareberatung Brunata,10001,Soll,15374.80
+177,82,A14,17.07.2023,17.07.2023,Softwareberatung Brunata,3806,Haben,2454.80
+178,82,A14,17.07.2023,17.07.2023,Softwareberatung Brunata,4400,Haben,12920.00
+179,83,KO15,23.06.2023,23.06.2023,Bezahlung E13,99999,Soll,1.00
+180,83,KO15,23.06.2023,23.06.2023,Bezahlung E13,1820,Haben,1.00
+181,84,A13,06.07.2023,06.07.2023,Anlagezins,1830,Soll,6.21
+182,84,A13,06.07.2023,06.07.2023,Anlagezins,7100,Haben,6.21
+183,85,KO20,06.07.2023,06.07.2023,Ausländische Quellensteuer,7639,Soll,1.24
+184,85,KO20,06.07.2023,06.07.2023,Ausländische Quellensteuer,1830,Haben,1.24
+185,86,KO19,19.07.2023,19.07.2023,Auszahlung A14,1820,Soll,15374.80
+186,86,KO19,19.07.2023,19.07.2023,Auszahlung A14,10001,Haben,15374.80
+187,87,KO18,21.07.2023,21.07.2023,Steuerrückstellung,1821,Soll,5851.17
+188,87,KO19,21.07.2023,21.07.2023,Steuerrückstellung,1820,Haben,5851.17
+189,88,E14,21.07.2023,21.07.2023,Unternehmensregister Veröffentlichung,6300,Soll,63.10
+190,88,E14,21.07.2023,21.07.2023,Unternehmensregister Veröffentlichung,1406,Soll,11.99
+191,88,E14,21.07.2023,21.07.2023,Unternehmensregister Veröffentlichung,99999,Haben,75.09
+192,89,E15,25.07.2023,25.07.2023,Gebühr unbenutzte Kreditkarte,6855,Soll,1.00
+193,89,E15,25.07.2023,25.07.2023,Gebühr unbenutzte Kreditkarte,99999,Haben,1.00
+194,90,KO19,25.07.2023,25.07.2023,Bezahlung E15,99999,Soll,1.00
+195,90,KO19,25.07.2023,25.07.2023,Bezahlung E15,1820,Haben,1.00
+196,91,KO22,01.08.2023,01.08.2023,Umsatzsteuervoranmeldung,3820,Soll,2442.81
+197,91,KO22,01.08.2023,01.08.2023,Umsatzsteuervoranmeldung,1821,Haben,2442.81
+198,92,S12,01.08.2023,01.08.2023,Umsatzsteuervoranmeldung,3806,Soll,2454.80
+199,92,S12,01.08.2023,01.08.2023,Umsatzsteuervoranmeldung,3820,Haben,2454.80
+200,93,S12,01.08.2023,01.08.2023,Umsatzsteuervoranmeldung,3820,Soll,11.99
+201,93,S12,01.08.2023,01.08.2023,Umsatzsteuervoranmeldung,1406,Haben,11.99
+202,94,KO21,09.08.2023,09.08.2023,Bezahlung E14,99999,Soll,75.09
+203,94,KO21,09.08.2023,09.08.2023,Bezahlung E14,1820,Haben,75.09
+204,95,A15,17.08.2023,17.08.2023,Softwareberatung Brunata,10001,Soll,19105.45
+205,95,A15,17.08.2023,17.08.2023,Softwareberatung Brunata,3806,Haben,3050.45
+206,95,A15,17.08.2023,17.08.2023,Softwareberatung Brunata,4400,Haben,16055.00
+207,96,KO21,23.08.2023,23.08.2023,Auszahlung A15,1820,Soll,19105.45
+208,96,KO21,23.08.2023,23.08.2023,Auszahlung A15,10001,Haben,19105.45
+209,97,E16,23.08.2023,23.08.2023,Gebühr unbenutzte Kreditkarte,6855,Soll,1.00
+210,97,E16,23.08.2023,23.08.2023,Gebühr unbenutzte Kreditkarte,99999,Haben,1.00
+211,98,KO21,23.08.2023,23.08.2023,Bezahlung E16,99999,Soll,1.00
+212,98,KO21,23.08.2023,23.08.2023,Bezahlung E16,1820,Haben,1.00
+213,99,S13,24.08.2023,24.08.2023,Körperschaftsteuervorauszahlung,3040,Soll,1875.00
+214,99,S13,24.08.2023,24.08.2023,Körperschaftsteuervorauszahlung,1821,Haben,1875.00
+215,100,S13,24.08.2023,24.08.2023,Solidaritätszuschlagvorauszahlung,3020,Soll,103.12
+216,100,S13,24.08.2023,24.08.2023,Solidaritätszuschlagvorauszahlung,1821,Haben,103.12
+217,101,KO25,05.09.2023,05.09.2023,Umsatzsteuervoranmeldung,3820,Soll,3050.45
+218,101,KO25,05.09.2023,05.09.2023,Umsatzsteuervoranmeldung,1821,Haben,3050.45
+219,102,S14,05.09.2023,05.09.2023,Umsatzsteuervoranmeldung,3806,Soll,3050.45
+220,102,S14,05.09.2023,05.09.2023,Umsatzsteuervoranmeldung,3820,Haben,3050.45
+221,103,KO25,05.09.2023,05.09.2023,Steuerrückstellung,1821,Soll,7286.28
+222,103,KO24,05.09.2023,05.09.2023,Steuerrückstellung,1820,Haben,7286.28
+223,104,A16,13.09.2023,13.06.2023,Softwareberatung Brunata,10001,Soll,15148.70
+224,104,A16,13.09.2023,15.09.2023,Softwareberatung Brunata,3806,Haben,2418.70
+225,104,A16,13.09.2023,15.09.2023,Softwareberatung Brunata,4400,Haben,12730.00
+226,105,KO24,15.09.2023,15.09.2023,Auszahlung A16,1820,Soll,15148.70
+227,105,KO24,15.09.2023,15.09.2023,Auszahlung A16,10001,Haben,15148.70
+228,106,KO25,16.09.2023,16.09.2023,Rückstellung,1821,Soll,5814.44
+229,106,KO26,16.09.2023,16.09.2023,Rückstellung,1820,Haben,5814.44
+230,107,KO26,16.09.2023,16.09.2023,Transfer zu Geldanlagekonto,1830,Soll,40000.00
+231,107,KO24,16.09.2023,16.09.2023,Transfer zu Geldanlagekonto,1820,Haben,40000.00
+232,108,E17,23.09.2023,23.09.2023,Gebühr unbenutzte Kreditkarte,6855,Soll,0.50
+233,108,E17,23.09.2023,23.09.2023,Gebühr unbenutzte Kreditkarte,99999,Haben,0.50
+234,109,KO26,23.09.2023,23.09.2023,Bezahlung E17,99999,Soll,0.50
+235,109,KO26,23.09.2023,23.09.2023,Bezahlung E17,1820,Haben,0.50
+236,110,L01,30.09.2023,30.09.2023,Lohn Geschäftsführer,6024,Soll,3500.00
+237,110,L01,30.09.2023,30.09.2023,Lohn Geschäftsführer,3790,Haben,3500.00
+238,111,L01,30.09.2023,30.09.2023,Lohn Geschäftsführer,3790,Soll,2879.67
+239,111,L01,30.09.2023,30.09.2023,Lohn Geschäftsführer,3720,Haben,2879.67
+240,112,L01,30.09.2023,30.09.2023,Lohnsteuer Geschäftsführer,3790,Soll,620.33
+241,112,L01,30.09.2023,30.09.2023,Lohnsteuer Geschäftsführer,3730,Haben,620.33
+242,113,KO24,30.09.2023,30.09.2023,Lohn Geschäftsführer,3720,Soll,2879.67
+243,113,KO24,30.09.2023,30.09.2023,Lohn Geschäftsführer,1820,Haben,2879.67
+244,114,KO28,03.10.2023,03.10.2023,Umsatzsteuervoranmeldung,3820,Soll,2418.70
+245,114,KO28,03.10.2023,03.10.2023,Umsatzsteuervoranmeldung,1821,Haben,2418.70
+246,115,S15,03.10.2023,03.10.2023,Umsatzsteuervoranmeldung,3806,Soll,2418.70
+247,115,S15,03.10.2023,03.10.2023,Umsatzsteuervoranmeldung,3820,Haben,2418.70
+248,116,KO29,04.10.2023,04.10.2023,Anlagezins,1830,Soll,32.23
+249,116,KO29,04.10.2023,04.10.2023,Anlagezins,7100,Haben,32.23
+250,117,KO29,04.10.2023,04.10.2023,Ausländische Quellensteuer,7639,Soll,6.45
+251,117,KO29,04.10.2023,04.10.2023,Ausländische Quellensteuer,1830,Haben,6.45
+252,118,S16,05.10.2023,05.10.2023,Lohnsteuer Geschäftsführer,3730,Soll,620.33
+253,118,S16,05.10.2023,05.10.2023,Lohnsteuer Geschäftsführer,1821,Haben,620.33
+254,119,A17,24.10.2023,24.10.2023,Softwareberatung Brunata,10001,Soll,13679.05
+255,119,A17,24.10.2023,24.10.2023,Softwareberatung Brunata,3806,Haben,2184.05
+256,119,A17,24.10.2023,24.10.2023,Softwareberatung Brunata,4400,Haben,11495.00
+257,120,E18,24.10.2023,24.10.2023,Gebühr unbenutzte Kreditkarte,6855,Soll,0.50
+258,120,E18,24.10.2023,24.10.2023,Gebühr unbenutzte Kreditkarte,99999,Haben,0.50
+259,121,KO27,24.10.2023,24.10.2023,Bezahlung E18,99999,Soll,0.50
+260,121,KO27,24.10.2023,24.10.2023,Bezahlung E18,1820,Haben,0.50
+261,122,KO27,27.10.2023,27.10.2023,Auszahlung A17,1820,Soll,13679.05
+262,122,KO27,27.10.2023,27.10.2023,Auszahlung A17,10001,Haben,13679.05
+263,123,KO28,27.10.2023,27.10.2023,Rückstellung,1821,Soll,4936.78
+264,123,KO27,27.10.2023,27.10.2023,Rückstellung,1820,Haben,4936.78
+265,124,L01,30.10.2023,30.10.2023,Lohn Geschäftsführer,6024,Soll,3500.00
+266,124,L01,30.10.2023,30.10.2023,Lohn Geschäftsführer,3790,Haben,3500.00
+267,125,L01,30.10.2023,30.10.2023,Lohn Geschäftsführer,3790,Soll,2879.67
+268,125,L01,30.10.2023,30.10.2023,Lohn Geschäftsführer,3720,Haben,2879.67
+269,126,L01,30.10.2023,30.10.2023,Lohnsteuer Geschäftsführer,3790,Soll,620.33
+270,126,L01,30.10.2023,30.10.2023,Lohnsteuer Geschäftsführer,3730,Haben,620.33
+271,127,KO27,30.10.2023,30.10.2023,Lohn Geschäftsführer,3720,Soll,2879.67
+272,127,KO27,30.10.2023,30.10.2023,Lohn Geschäftsführer,1820,Haben,2879.67
+273,128,E19,30.10.2023,30.10.2023,Bahnfahrt Hürth,6663,Soll,46.54
+274,128,E19,30.10.2023,30.10.2023,Bahnfahrt Hürth,1401,Soll,3.26
+275,128,E19,30.10.2023,30.10.2023,Bahnfahrt Hürth,99999,Haben,49.80
+276,129,KO27,30.10.2023,30.10.2023,Bezahlung E19,99999,Soll,49.80
+277,129,KO27,30.10.2023,30.10.2023,Bezahlung E19,1820,Haben,49.80
+278,130,E20,01.11.2023,01.11.2023,Hosting Digital Ocean,6810,Soll,12.29
+279,130,E20,01.11.2023,01.11.2023,Hosting Digital Ocean,1406,Soll,2.33
+280,130,E20,01.11.2023,01.11.2023,Hosting Digital Ocean,99999,Haben,14.62
+281,131,KO30,01.11.2023,01.11.2023,Bezahlung E20,99999,Soll,14.62
+282,131,KO30,01.11.2023,01.11.2023,Bezahlung E20,1820,Haben,14.62
+283,132,KO32,03.11.2023,03.11.2023,Anlagezins,1830,Soll,61.78
+284,132,KO32,03.11.2023,03.11.2023,Anlagezins,7100,Haben,61.78
+285,133,KO32,03.11.2023,03.11.2023,Ausländische Quellensteuer,7639,Soll,12.36
+286,133,KO32,03.11.2023,03.11.2023,Ausländische Quellensteuer,1830,Haben,12.36
+287,134,S17,06.11.2023,06.11.2023,Rückerstattung Gewerbesteuervorauszahlung,10003,Soll,2180.00
+288,134,S17,06.11.2023,06.11.2023,Rückerstattung Gewerbesteuervorauszahlung,3035,Haben,2180.00
+289,135,KO31,15.11.2023,15.11.2023,Umsatzsteuervoranmeldung,3820,Soll,2180.79
+290,135,KO31,15.11.2023,15.11.2023,Umsatzsteuervoranmeldung,1821,Haben,2180.79
+291,136,S20,15.11.2023,15.11.2023,Umsatzsteuervoranmeldung,3806,Soll,2184.05
+292,136,S20,15.11.2023,15.11.2023,Umsatzsteuervoranmeldung,3820,Haben,2184.05
+293,137,S20,15.11.2023,15.11.2023,Umsatzsteuervoranmeldung,3820,Soll,3.26
+294,137,S20,15.11.2023,15.11.2023,Umsatzsteuervoranmeldung,1401,Haben,3.26
+295,138,S19,15.11.2023,15.11.2023,Lohnsteuer Geschäftsführer,3730,Soll,620.33
+296,138,S19,15.11.2023,15.11.2023,Lohnsteuer Geschäftsführer,1821,Haben,620.33
+297,139,A18,17.11.2023,17.11.2023,Softwareberatung Brunata,10001,Soll,16392.25
+298,139,A18,17.11.2023,17.11.2023,Softwareberatung Brunata,3806,Haben,2617.25
+299,139,A18,17.11.2023,17.11.2023,Softwareberatung Brunata,4400,Haben,13775.00
+300,140,KO30,22.11.2023,22.11.2023,Auszahlung A18,1820,Soll,16392.25
+301,140,KO30,22.11.2023,22.11.2023,Auszahlung A18,10001,Haben,16392.25
+302,141,KO31,22.11.2023,22.11.2023,Rückstellung,1821,Soll,6542.22
+303,141,KO30,22.11.2023,22.11.2023,Rückstellung,1820,Haben,6542.22
+304,142,E21,24.11.2023,24.11.2023,Auslandsbezahlung Kreditkarte,6855,Soll,0.29
+305,142,E21,24.11.2023,24.11.2023,Auslandsbezahlung Kreditkarte,99999,Haben,0.29
+306,143,KO30,24.11.2023,24.11.2023,Bezahlung E21,99999,Soll,0.29
+307,143,KO30,24.11.2023,24.11.2023,Bezahlung E21,1820,Haben,0.29
+308,144,L01,28.11.2023,28.11.2023,Lohn Geschäftsführer,6024,Soll,3500.00
+309,144,L01,28.11.2023,28.11.2023,Lohn Geschäftsführer,3790,Haben,3500.00
+310,145,L01,28.11.2023,28.11.2023,Lohn Geschäftsführer,3790,Soll,2879.67
+311,145,L01,28.11.2023,28.11.2023,Lohn Geschäftsführer,3720,Haben,2879.67
+312,146,L01,28.11.2023,28.11.2023,Lohnsteuer Geschäftsführer,3790,Soll,620.33
+313,146,L01,28.11.2023,28.11.2023,Lohnsteuer Geschäftsführer,3730,Haben,620.33
+314,147,KO30,28.11.2023,28.11.2023,Lohn Geschäftsführer,3720,Soll,2879.67
+315,147,KO30,28.11.2023,28.11.2023,Lohn Geschäftsführer,1820,Haben,2879.67
+316,148,S18,28.11.2023,28.11.2023,Körperschaftsteuervorauszahlung,3040,Soll,1875.00
+317,148,S18,28.11.2023,28.11.2023,Körperschaftsteuervorauszahlung,1821,Haben,1875.00
+318,149,S18,28.11.2023,28.11.2023,Solidaritätszuschlagvorauszahlung,3020,Soll,103.12
+319,149,S18,28.11.2023,28.11.2023,Solidaritätszuschlagvorauszahlung,1821,Haben,103.12
+320,150,KO31,01.12.2023,01.12.2023,Umsatzsteuervoranmeldung,3820,Soll,2614.92
+321,150,KO31,01.12.2023,01.12.2023,Umsatzsteuervoranmeldung,1821,Haben,2614.92
+322,151,S21,01.12.2023,01.12.2023,Umsatzsteuervoranmeldung,3806,Soll,2617.25
+323,151,S21,01.12.2023,01.12.2023,Umsatzsteuervoranmeldung,3820,Haben,2617.25
+324,151,S21,01.12.2023,01.12.2023,Umsatzsteuervoranmeldung,3820,Soll,2.33
+325,151,S21,01.12.2023,01.12.2023,Umsatzsteuervoranmeldung,1406,Haben,2.33
+326,152,S22,01.12.2023,01.12.2023,Lohnsteuer Geschäftsführer,3730,Soll,620.33
+327,152,S22,01.12.2023,01.12.2023,Lohnsteuer Geschäftsführer,1821,Haben,620.33
+328,153,E22,01.12.2023,01.12.2023,Hosting Digital Ocean,6810,Soll,11.83
+329,153,E22,01.12.2023,01.12.2023,Hosting Digital Ocean,1406,Soll,2.24
+330,153,E22,01.12.2023,01.12.2023,Hosting Digital Ocean,99999,Haben,14.07
+331,154,KO33,01.12.2023,01.12.2023,Bezahlung E20,99999,Soll,14.07
+332,154,KO33,01.12.2023,01.12.2023,Bezahlung E20,1820,Haben,14.07
+333,155,KO35,05.12.2023,05.12.2023,Anlagezins,1830,Soll,47.71
+334,155,KO35,05.12.2023,05.12.2023,Anlagezins,7100,Haben,47.71
+335,156,KO35,05.12.2023,05.12.2023,Ausländische Quellensteuer,7639,Soll,9.54
+336,156,KO35,05.12.2023,05.12.2023,Ausländische Quellensteuer,1830,Haben,9.54
+337,157,L02,13.12.2023,13.12.2023,Inflationsausgleichprämie Geschäftsführer,6130,Soll,3000.00
+338,157,L02,13.12.2023,13.12.2023,Inflationsausgleichprämie Geschäftsführer,3790,Haben,3000.00
+339,158,L02,13.12.2023,13.12.2023,Inflationsausgleichprämie Geschäftsführer,3790,Soll,3000.00
+340,158,L02,13.12.2023,13.12.2023,Inflationsausgleichprämie Geschäftsführer,3720,Haben,3000.00
+341,159,L02,13.12.2023,13.12.2023,Inflationsausgleichprämie Geschäftsführer,3720,Soll,3000.00
+342,159,L02,13.12.2023,13.12.2023,Inflationsausgleichprämie Geschäftsführer,1820,Haben,3000.00
+343,160,A19,13.12.2023,13.12.2023,Softwareberatung Brunata,10001,Soll,14018.20
+344,160,A19,13.12.2023,13.12.2023,Softwareberatung Brunata,3806,Haben,2238.20
+345,160,A19,13.12.2023,13.12.2023,Softwareberatung Brunata,4400,Haben,11780.00
+346,161,KO33,15.12.2023,15.12.2023,Auszahlung A19,1820,Soll,14018.20
+347,161,KO33,15.12.2023,15.12.2023,Auszahlung A19,10001,Haben,14018.20
+348,162,KO34,17.12.2023,17.12.2023,Rückstellung,1821,Soll,4287.66
+349,162,KO33,17.12.2023,17.12.2023,Rückstellung,1820,Haben,4287.66
+350,163,E23,20.12.2023,20.12.2023,Anlage in ETF,0900,Soll,34276.10
+351,163,E23,20.12.2023,20.12.2023,Anlage in ETF,1830,Haben,34276.10
+352,164,E23,20.12.2023,20.12.2023,Provision Aktienhandel,6855,Soll,47.99
+353,164,E23,20.12.2023,20.12.2023,Provision Aktienhandel,1830,Haben,47.99
+354,165,E24,23.12.2023,23.12.2023,Auslandsbezahlung Kreditkarte,6855,Soll,0.28
+355,165,E24,23.12.2023,23.12.2023,Auslandsbezahlung Kreditkarte,99999,Haben,0.28
+356,166,KO33,28.12.2023,28.12.2023,Bezahlung E24,99999,Soll,0.28
+357,166,KO33,28.12.2023,28.12.2023,Bezahlung E24,1820,Haben,0.28
+358,167,L03,31.12.2023,31.12.2023,Lohn Geschäftsführer,6024,Soll,3500.00
+359,167,L03,31.12.2023,31.12.2023,Lohn Geschäftsführer,3790,Haben,3500.00
+360,168,L03,31.12.2023,31.12.2023,Lohn Geschäftsführer,3790,Soll,2879.67
+361,168,L03,31.12.2023,31.12.2023,Lohn Geschäftsführer,3720,Haben,2879.67
+362,169,L03,31.12.2023,31.12.2023,Lohnsteuer Geschäftsführer,3790,Soll,620.33
+363,169,L03,31.12.2023,31.12.2023,Lohnsteuer Geschäftsführer,3730,Haben,620.33
+364,170,L03,31.12.2023,31.12.2023,Lohnsteuerausgleich,3730,Soll,2461.32
+365,170,L03,31.12.2023,31.12.2023,Lohnsteuerausgleich,3720,Haben,2461.32
+366,171,KO33,31.12.2023,31.12.2023,Lohn Geschäftsführer + Lohnsteuerausgleich,3720,Soll,5340.99
+367,171,KO33,31.12.2023,31.12.2023,Lohn Geschäftsführer + Lohnsteuerausgleich,1820,Haben,5340.99
+368,172,JEB1,31.12.2023,31.12.2023,Gewerbesteuer,7610,Soll,12603.50
+369,172,JEB1,31.12.2023,31.12.2023,Gewerbesteuer,3035,Haben,12603.50
+370,173,JEB2,31.12.2023,31.12.2023,Körperschaftsteuer,7600,Soll,16630.80
+371,173,JEB2,31.12.2023,31.12.2023,Körperschaftsteuer,3040,Haben,16630.80
+372,174,JEB3,31.12.2023,31.12.2023,Solidaritätszuschlag,7608,Soll,914.69
+373,174,JEB3,31.12.2023,31.12.2023,Solidaritätszuschlag,3020,Haben,914.69
+374,175,JEB4,31.12.2023,31.12.2023,III. Finanzanlagen,9000,Soll,79121.08
+375,175,JEB4,31.12.2023,31.12.2023,III. Finanzanlagen,0900,Haben,79121.08
+376,176,JEB5,31.12.2023,31.12.2023,II. Forderungen und sonstige Vermögensgegenstände,9000,Soll,2.24
+377,176,JEB5,31.12.2023,31.12.2023,II. Forderungen und sonstige Vermögensgegenstände,1406,Haben,2.24
+378,177,JEB6,31.12.2023,31.12.2023,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",9000,Soll,51684.17
+379,177,JEB6,31.12.2023,31.12.2023,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",1820,Haben,51684.17
+380,178,JEB7,31.12.2023,31.12.2023,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",9000,Soll,28766.08
+381,178,JEB7,31.12.2023,31.12.2023,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",1821,Haben,28766.08
+382,179,JEB8,31.12.2023,31.12.2023,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",9000,Soll,5886.49
+383,179,JEB8,31.12.2023,31.12.2023,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",1830,Haben,5886.49
+384,180,JEB9,31.12.2023,31.12.2023,I. Gezeichnetes Kapital,2900,Soll,25000.00
+385,180,JEB9,31.12.2023,31.12.2023,I. Gezeichnetes Kapital,9000,Haben,25000.00
+386,181,JEB10,31.12.2023,31.12.2023,IV. Gewinnvortrag/Verlustvortrag,2970,Soll,33783.57
+387,181,JEB10,31.12.2023,31.12.2023,IV. Gewinnvortrag/Verlustvortrag,9000,Haben,33783.57
+388,182,JEB11,31.12.2023,31.12.2023,B. Rückstellungen,3020,Soll,882.32
+389,182,JEB11,31.12.2023,31.12.2023,B. Rückstellungen,9000,Haben,882.32
+390,183,JEB12,31.12.2023,31.12.2023,B. Rückstellungen,3035,Soll,10841.50
+391,183,JEB12,31.12.2023,31.12.2023,B. Rückstellungen,9000,Haben,10841.50
+392,184,JEB13,31.12.2023,31.12.2023,B. Rückstellungen,3040,Soll,16041.86
+393,184,JEB13,31.12.2023,31.12.2023,B. Rückstellungen,9000,Haben,16041.86
+394,185,JEB14,31.12.2023,31.12.2023,C. Verbindlichkeiten,9000,Soll,1840.99
+395,185,JEB14,31.12.2023,31.12.2023,C. Verbindlichkeiten,3730,Haben,1840.99
+396,186,JEB15,31.12.2023,31.12.2023,C. Verbindlichkeiten,3806,Soll,2238.22
+397,186,JEB15,31.12.2023,31.12.2023,C. Verbindlichkeiten,9000,Haben,2238.22
+398,187,JEB16,31.12.2023,31.12.2023,C. Verbindlichkeiten,9000,Soll,0.01
+399,187,JEB16,31.12.2023,31.12.2023,C. Verbindlichkeiten,3820,Haben,0.01
+400,188,JEB17,31.12.2023,31.12.2023,1. Umsatzerlöse,4400,Soll,131100.00
+401,188,JEB17,31.12.2023,31.12.2023,1. Umsatzerlöse,00000,Haben,131100.00
+402,189,JEB18,31.12.2023,31.12.2023,4. Sonstige betriebliche Erträge,4560,Soll,52.19
+403,189,JEB18,31.12.2023,31.12.2023,4. Sonstige betriebliche Erträge,00000,Haben,52.19
+404,190,JEB19,31.12.2023,31.12.2023,6. Personalaufwand,00000,Soll,14000.00
+405,190,JEB19,31.12.2023,31.12.2023,6. Personalaufwand,6024,Haben,14000.00
+406,191,JEB20,31.12.2023,31.12.2023,6. Personalaufwand,00000,Soll,3000.00
+407,191,JEB20,31.12.2023,31.12.2023,6. Personalaufwand,6130,Haben,3000.00
+408,192,JEB21,31.12.2023,31.12.2023,7. Abschreibungen,00000,Soll,2209.24
+409,192,JEB21,31.12.2023,31.12.2023,7. Abschreibungen,6262,Haben,2209.24
+410,193,JEB22,31.12.2023,31.12.2023,8. Sonstige betriebliche Aufwendungen,00000,Soll,63.10
+411,193,JEB22,31.12.2023,31.12.2023,8. Sonstige betriebliche Aufwendungen,6300,Haben,63.10
+412,194,JEB23,31.12.2023,31.12.2023,8. Sonstige betriebliche Aufwendungen,00000,Soll,380.00
+413,194,JEB23,31.12.2023,31.12.2023,8. Sonstige betriebliche Aufwendungen,6420,Haben,380.00
+414,195,JEB24,31.12.2023,31.12.2023,8. Sonstige betriebliche Aufwendungen,00000,Soll,37.50
+415,195,JEB24,31.12.2023,31.12.2023,8. Sonstige betriebliche Aufwendungen,6436,Haben,37.50
+416,196,JEB25,31.12.2023,31.12.2023,8. Sonstige betriebliche Aufwendungen,00000,Soll,261.41
+417,196,JEB25,31.12.2023,31.12.2023,8. Sonstige betriebliche Aufwendungen,6660,Haben,261.41
+418,197,JEB26,31.12.2023,31.12.2023,8. Sonstige betriebliche Aufwendungen,00000,Soll,142.24
+419,197,JEB26,31.12.2023,31.12.2023,8. Sonstige betriebliche Aufwendungen,6663,Haben,142.24
+420,198,JEB27,31.12.2023,31.12.2023,8. Sonstige betriebliche Aufwendungen,00000,Soll,24.12
+421,198,JEB27,31.12.2023,31.12.2023,8. Sonstige betriebliche Aufwendungen,6810,Haben,24.12
+422,199,JEB28,31.12.2023,31.12.2023,8. Sonstige betriebliche Aufwendungen,00000,Soll,92.00
+423,199,JEB28,31.12.2023,31.12.2023,8. Sonstige betriebliche Aufwendungen,6825,Haben,92.00
+424,200,JEB29,31.12.2023,31.12.2023,8. Sonstige betriebliche Aufwendungen,00000,Soll,218.34
+425,200,JEB29,31.12.2023,31.12.2023,8. Sonstige betriebliche Aufwendungen,6855,Haben,218.34
+426,201,JEB30,31.12.2023,31.12.2023,4. Sonstige betriebliche Erträge,7100,Soll,147.93
+427,201,JEB30,31.12.2023,31.12.2023,4. Sonstige betriebliche Erträge,00000,Haben,147.93
+428,202,JEB31,31.12.2023,31.12.2023,14. Steuern vom Einkommen und vom Ertrag,00000,Soll,16630.80
+429,202,JEB31,31.12.2023,31.12.2023,14. Steuern vom Einkommen und vom Ertrag,7600,Haben,16630.80
+430,203,JEB32,31.12.2023,31.12.2023,14. Steuern vom Einkommen und vom Ertrag,00000,Soll,914.69
+431,203,JEB32,31.12.2023,31.12.2023,14. Steuern vom Einkommen und vom Ertrag,7608,Haben,914.69
+432,204,JEB33,31.12.2023,31.12.2023,14. Steuern vom Einkommen und vom Ertrag,00000,Soll,12603.50
+433,204,JEB33,31.12.2023,31.12.2023,14. Steuern vom Einkommen und vom Ertrag,7610,Haben,12603.50
+434,205,JEB34,31.12.2023,31.12.2023,14. Steuern vom Einkommen und vom Ertrag,00000,Soll,29.59
+435,205,JEB34,31.12.2023,31.12.2023,14. Steuern vom Einkommen und vom Ertrag,7639,Haben,29.59
+436,206,JEB35,31.12.2023,31.12.2023,II. Forderungen und sonstige Vermögensgegenstände,9000,Soll,2180.00
+437,206,JEB35,31.12.2023,31.12.2023,II. Forderungen und sonstige Vermögensgegenstände,10003,Haben,2180.00
+438,207,JEB36,31.12.2023,31.12.2023,V. Jahresüberschuß/Jahresfehlbetrag,00000,Soll,80693.59
+439,207,JEB36,31.12.2023,31.12.2023,V. Jahresüberschuß/Jahresfehlbetrag,9000,Haben,80693.59

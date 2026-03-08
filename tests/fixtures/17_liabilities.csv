@@ -1,0 +1,7 @@
+Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungstext,Konto,Typ,Betrag
+1,1,RE001,15.01.2024,15.01.2024,Umsatz,1810,Soll,30000
+2,1,RE001,15.01.2024,15.01.2024,Umsatz,4400,Haben,30000
+3,2,ER001,20.01.2024,20.01.2024,Rechtsberatung unbezahlt,6825,Soll,5000
+4,2,ER001,20.01.2024,20.01.2024,Rechtsberatung unbezahlt,3300,Haben,5000
+5,3,GH001,31.01.2024,31.01.2024,GF-Gehalt,6024,Soll,8000
+6,3,GH001,31.01.2024,31.01.2024,GF-Gehalt Verb,3720,Haben,8000

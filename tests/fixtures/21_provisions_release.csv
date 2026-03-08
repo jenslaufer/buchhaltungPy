@@ -1,0 +1,13 @@
+Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungstext,Konto,Typ,Betrag
+1,1,JAB1,01.01.2024,01.01.2024,Uebertrag Bank,1810,Soll,100000
+2,1,JAB1,01.01.2024,01.01.2024,Uebertrag Bank,9000,Haben,100000
+3,2,JAB2,01.01.2024,01.01.2024,Uebertrag Kapital,9000,Soll,25000
+4,2,JAB2,01.01.2024,01.01.2024,Uebertrag Kapital,2900,Haben,25000
+5,3,JAB3,01.01.2024,01.01.2024,Uebertrag Rueckstellung,9000,Soll,5000
+6,3,JAB3,01.01.2024,01.01.2024,Uebertrag Rueckstellung,3020,Haben,5000
+7,4,JAB4,01.01.2024,01.01.2024,Uebertrag Gewinnvortrag,9000,Soll,70000
+8,4,JAB4,01.01.2024,01.01.2024,Uebertrag Gewinnvortrag,2970,Haben,70000
+9,5,RE001,15.03.2024,15.03.2024,Umsatz,1810,Soll,30000
+10,5,RE001,15.03.2024,15.03.2024,Umsatz,4400,Haben,30000
+11,6,RS001,30.06.2024,30.06.2024,Aufloesung Steuerrueckstellung Vorjahr,3020,Soll,5000
+12,6,RS001,30.06.2024,30.06.2024,Aufloesung Steuerrueckstellung Vorjahr,4930,Haben,5000

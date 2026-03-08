@@ -1,0 +1,678 @@
+Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungstext,Konto,Typ,Betrag
+1,1,JAB1,01.01.2024,01.01.2024,Übertrag aus Vorjahr,0900,Soll,79121.08
+2,1,JAB1,01.01.2024,01.01.2024,Übertrag aus Vorjahr,9000,Haben,79121.08
+3,2,JAB2,01.01.2024,01.01.2024,Übertrag aus Vorjahr,1406,Soll,2.24
+4,2,JAB2,01.01.2024,01.01.2024,Übertrag aus Vorjahr,9000,Haben,2.24
+5,3,JAB3,01.01.2024,01.01.2024,Übertrag aus Vorjahr,1820,Soll,51684.17
+6,3,JAB3,01.01.2024,01.01.2024,Übertrag aus Vorjahr,9000,Haben,51684.17
+7,4,JAB4,01.01.2024,01.01.2024,Übertrag aus Vorjahr,1821,Soll,28766.08
+8,4,JAB4,01.01.2024,01.01.2024,Übertrag aus Vorjahr,9000,Haben,28766.08
+9,5,JAB5,01.01.2024,01.01.2024,Übertrag aus Vorjahr,1830,Soll,5886.49
+10,5,JAB5,01.01.2024,01.01.2024,Übertrag aus Vorjahr,9000,Haben,5886.49
+11,6,JAB6,01.01.2024,01.01.2024,Übertrag aus Vorjahr,9000,Soll,25000.00
+12,6,JAB6,01.01.2024,01.01.2024,Übertrag aus Vorjahr,2900,Haben,25000.00
+13,7,JAB7,01.01.2024,01.01.2024,Übertrag aus Vorjahr,9000,Soll,882.32
+14,7,JAB7,01.01.2024,01.01.2024,Übertrag aus Vorjahr,3020,Haben,882.32
+15,8,JAB8,01.01.2024,01.01.2024,Übertrag aus Vorjahr,9000,Soll,10841.50
+16,8,JAB8,01.01.2024,01.01.2024,Übertrag aus Vorjahr,3035,Haben,10841.50
+17,9,JAB9,01.01.2024,01.01.2024,Übertrag aus Vorjahr,9000,Soll,16041.86
+18,9,JAB9,01.01.2024,01.01.2024,Übertrag aus Vorjahr,3040,Haben,16041.86
+19,10,JAB10,01.01.2024,01.01.2024,Übertrag aus Vorjahr,3730,Soll,1840.99
+20,10,JAB10,01.01.2024,01.01.2024,Übertrag aus Vorjahr,9000,Haben,1840.99
+21,11,JAB11,01.01.2024,01.01.2024,Übertrag aus Vorjahr,9000,Soll,2238.22
+22,11,JAB11,01.01.2024,01.01.2024,Übertrag aus Vorjahr,3806,Haben,2238.22
+23,12,JAB12,01.01.2024,01.01.2024,Übertrag aus Vorjahr,3820,Soll,0.01
+24,12,JAB12,01.01.2024,01.01.2024,Übertrag aus Vorjahr,9000,Haben,0.01
+25,13,JAB13,01.01.2024,01.01.2024,Übertrag aus Vorjahr,10003,Soll,2180.00
+26,13,JAB13,01.01.2024,01.01.2024,Übertrag aus Vorjahr,9000,Haben,2180.00
+27,14,JAB14,01.01.2024,01.01.2024,Übertrag aus Vorjahr,9000,Soll,114477.16
+28,14,JAB14,01.01.2024,01.01.2024,Übertrag aus Vorjahr,2970,Haben,114477.16
+29,15,E1,01.01.2024,01.01.2024,Hosting Digital Ocean,6810,Soll,11.75
+30,15,E1,01.01.2024,01.01.2024,Hosting Digital Ocean,1406,Soll,2.23
+31,15,E1,01.01.2024,01.01.2024,Hosting Digital Ocean,99999,Haben,13.98
+32,16,KO1,01.01.2024,01.01.2024,Bezahlung E1,99999,Soll,13.98
+33,16,KO1,01.01.2024,01.01.2024,Bezahlung E1,1820,Haben,13.98
+34,17,KO2,03.01.2024,03.01.2024,Umsatzsteuervoranmeldung,3820,Soll,2235.96
+35,17,KO2,03.01.2024,03.01.2024,Umsatzsteuervoranmeldung,1821,Haben,2235.96
+36,18,S1,03.01.2024,03.01.2024,Umsatzsteuervoranmeldung,3806,Soll,2238.20
+37,18,S1,03.01.2024,03.01.2024,Umsatzsteuervoranmeldung,3820,Haben,2238.20
+38,19,S1,03.01.2024,03.01.2024,Umsatzsteuervoranmeldung,3820,Soll,2.24
+39,19,S1,03.01.2024,03.01.2024,Umsatzsteuervoranmeldung,1406,Haben,2.24
+40,20,A1,04.01.2024,04.01.2024,Anlagezins,1830,Soll,35.72
+41,20,A1,04.01.2024,04.01.2024,Anlagezins,7100,Haben,35.72
+42,21,E2,04.01.2024,04.01.2024,Ausländische Quellensteuer,7639,Soll,7.14
+43,21,E2,04.01.2024,04.01.2024,Ausländische Quellensteuer,1830,Haben,7.14
+44,22,A2,12.01.2024,12.01.2024,Softwareberatung Brunata,10001,Soll,14696.50
+45,22,A2,12.01.2024,12.01.2024,Softwareberatung Brunata,3806,Haben,2346.50
+46,22,A2,12.01.2024,12.01.2024,Softwareberatung Brunata,4400,Haben,12350.00
+47,23,KO2,15.01.2024,15.01.2024,Verrechnung Gewerbesteuervorauszahlung,1821,Soll,2180.00
+48,23,KO2,15.01.2024,15.01.2024,Verrechnung Gewerbesteuervorauszahlung,10003,Haben,2180.00
+49,24,KO1,17.01.2024,17.01.2024,Auszahlung A2,1820,Soll,14696.50
+50,24,KO1,17.01.2024,17.01.2024,Auszahlung A2,10001,Haben,14696.50
+51,25,KO2,17.01.2024,17.01.2024,Transfer auf Rückstellungskonto,1821,Soll,2412.71
+52,25,KO1,17.01.2024,17.01.2024,Transfer auf Rückstellungskonto,1820,Haben,2412.71
+53,26,KO2,17.01.2024,17.01.2024,Transfer auf Rückstellungskonto,1821,Soll,505.52
+54,26,KO1,17.01.2024,17.01.2024,Transfer auf Rückstellungskonto,1820,Haben,505.52
+55,27,KO1,19.01.2024,19.01.2024,Lohnsteuerverrechnung,1820,Soll,1840.99
+56,27,KO1,19.01.2024,19.01.2024,Lohnsteuerverrechnung,3730,Haben,1840.99
+57,28,E3,23.01.2024,23.01.2024,Auslandsbezahlung Kreditkarte,6855,Soll,0.28
+58,28,E3,23.01.2024,23.01.2024,Auslandsbezahlung Kreditkarte,99999,Haben,0.28
+59,29,KO1,23.01.2024,23.01.2024,Bezahlung E3,99999,Soll,0.28
+60,29,KO1,23.01.2024,23.01.2024,Bezahlung E3,1820,Haben,0.28
+61,30,Lxx,27.01.2024,27.01.2024,Lohn Geschäftsführer,6024,Soll,3500.00
+62,30,Lxx,27.01.2024,27.01.2024,Lohn Geschäftsführer,3790,Haben,3500.00
+63,31,Lxx,27.01.2024,27.01.2024,Lohn Geschäftsführer,3790,Soll,2879.67
+64,31,Lxx,27.01.2024,27.01.2024,Lohn Geschäftsführer,3720,Haben,2879.67
+65,32,Lxx,27.01.2024,27.01.2024,Lohnsteuer Geschäftsführer,3790,Soll,620.33
+66,32,Lxx,27.01.2024,27.01.2024,Lohnsteuer Geschäftsführer,3730,Haben,620.33
+67,33,KO1,27.01.2024,27.01.2024,Lohn Geschäftsführer,3720,Soll,2879.67
+68,33,KO1,27.01.2024,27.01.2024,Lohn Geschäftsführer,1820,Haben,2879.67
+69,34,A3,30.01.2024,30.01.2024,Bank A Konto Cashback,10000,Soll,1.85
+70,34,A3,30.01.2024,30.01.2024,Bank A Konto Cashback,4560,Haben,1.85
+71,35,KO1,30.01.2024,30.01.2024,Auszahlung A3,1820,Soll,1.85
+72,35,KO1,30.01.2024,30.01.2024,Auszahlung A3,10000,Haben,1.85
+73,36,E4,01.02.2024,01.02.2024,Hosting Digital Ocean,6810,Soll,11.98
+74,36,E4,01.02.2024,01.02.2024,Hosting Digital Ocean,1406,Soll,2.28
+75,36,E4,01.02.2024,01.02.2024,Hosting Digital Ocean,99999,Haben,14.26
+76,37,KO4,01.02.2024,01.02.2024,Bezahlung E2,99999,Soll,14.26
+77,37,KO4,01.02.2024,01.02.2024,Bezahlung E2,1820,Haben,14.26
+78,38,KO6,04.02.2024,04.02.2024,Transfer zu Geldanlagekonto,1830,Soll,5000.00
+79,38,KO5,04.02.2024,04.02.2024,Transfer zu Geldanlagekonto,1821,Haben,5000.00
+80,39,KO5,05.02.2024,05.02.2024,Ausgleich Rückstellungskonto,1821,Soll,5000.00
+81,39,KO4,05.02.2024,05.02.2024,Ausgleich Rückstellungskonto,1820,Haben,5000.00
+82,40,E5,05.02.2024,05.02.2024,Anlage in ETF,0900,Soll,10062.00
+83,40,E5,05.02.2024,05.02.2024,Anlage in ETF,1830,Haben,10062.00
+84,41,E5,05.02.2024,05.02.2024,Provision Aktienhandel,6855,Soll,14.09
+85,41,E5,05.02.2024,05.02.2024,Provision Aktienhandel,1830,Haben,14.09
+86,42,KO5,05.02.2024,05.02.2024,Umsatzsteuervoranmeldung,3820,Soll,2344.27
+87,42,KO5,05.02.2024,05.02.2024,Umsatzsteuervoranmeldung,1821,Haben,2344.27
+88,43,S2,05.02.2024,05.02.2024,Umsatzsteuervoranmeldung,3806,Soll,2346.50
+89,43,S2,05.02.2024,05.02.2024,Umsatzsteuervoranmeldung,3820,Haben,2346.50
+90,44,S2,05.02.2024,05.02.2024,Umsatzsteuervoranmeldung,3820,Soll,2.23
+91,44,S2,05.02.2024,05.02.2024,Umsatzsteuervoranmeldung,1406,Haben,2.23
+92,45,E6,05.02.2024,05.02.2024,Anlage in ETF,0900,Soll,2500.00
+93,45,E6,05.02.2024,05.02.2024,Anlage in ETF,1830,Haben,2500.00
+94,46,E6,05.02.2024,05.02.2024,Provision Aktienhandel,6855,Soll,3.90
+95,46,E6,05.02.2024,05.02.2024,Provision Aktienhandel,1830,Haben,3.90
+96,47,KO6,05.02.2024,05.02.2024,Transfer zu Geldanlagekonto,1830,Soll,1664.91
+97,47,KO4,05.02.2024,05.02.2024,Transfer zu Geldanlagekonto,1820,Haben,1664.91
+98,48,KO6,10.02.2024,10.02.2024,Transfer zu Geldanlagekonto,1830,Soll,5000.00
+99,48,KO4,10.02.2024,10.02.2024,Transfer zu Geldanlagekonto,1820,Haben,5000.00
+100,49,A4,13.02.2024,13.02.2024,Softwareberatung Brunata,10001,Soll,15993.60
+101,49,A4,13.02.2024,13.02.2024,Softwareberatung Brunata,3806,Haben,2553.60
+102,49,A4,13.02.2024,13.02.2024,Softwareberatung Brunata,4400,Haben,13440.00
+103,50,E7,13.02.2024,13.02.2024,Anlage in ETF,0900,Soll,2500.00
+104,50,E7,13.02.2024,13.02.2024,Anlage in ETF,1830,Haben,2500.00
+105,51,E7,13.02.2024,13.02.2024,Provision Aktienhandel,6855,Soll,3.90
+106,51,E7,13.02.2024,13.02.2024,Provision Aktienhandel,1830,Haben,3.90
+107,52,KO4,16.02.2024,16.02.2024,Auszahlung A4,1820,Soll,15993.60
+108,52,KO4,16.02.2024,16.02.2024,Auszahlung A4,10001,Haben,15993.60
+109,53,KO5,17.02.2024,17.02.2024,Transfer auf Rückstellungskonto,1821,Soll,7706.76
+110,53,KO4,17.02.2024,17.02.2024,Transfer auf Rückstellungskonto,1820,Haben,7706.76
+111,54,E9,23.02.2024,23.02.2024,Auslandsbezahlung Kreditkarte,6855,Soll,0.29
+112,54,E9,23.02.2024,23.02.2024,Auslandsbezahlung Kreditkarte,99999,Haben,0.29
+113,55,KO1,23.02.2024,23.02.2024,Bezahlung E8,99999,Soll,0.29
+114,55,KO1,23.02.2024,23.02.2024,Bezahlung E8,1820,Haben,0.29
+115,56,E8,16.02.2024,16.02.2024,IHK Beitrag,6420,Soll,170.00
+116,56,E8,16.02.2024,16.02.2024,IHK Beitrag,99999,Haben,170.00
+117,57,KOxx,25.02.2024,25.02.2024,Bezahlung E8,99999,Soll,170.00
+118,57,KOxx,25.02.2024,25.02.2024,Bezahlung E8,1820,Haben,170.00
+119,58,S3,22.02.2024,22.02.2024,Vorauszahlung Körperschaftssteuer,3040,Soll,1875.00
+120,58,S3,22.02.2024,22.02.2024,Vorauszahlung Solidaritätszuschlag,3020,Soll,103.12
+121,58,S3,22.02.2024,22.02.2024,Vorauszahlung Körperschaftssteuer und Soli,99999,Haben,1978.12
+122,59,S3,25.02.2024,25.02.2024,Vorauszahlung Körperschaftssteuer und Soli,99999,Soll,1978.12
+123,59,S3,25.02.2024,25.02.2024,Vorauszahlung Körperschaftssteuer und Soli,1821,Haben,1978.12
+124,60,S4,26.02.2024,26.02.2024,Gewerbesteuervorauszahlung,3035,Soll,1356.00
+125,60,S4,26.02.2024,26.02.2024,Gewerbesteuervorauszahlung,1821,Haben,1356.00
+126,61,KO6,26.02.2024,26.02.2024,Transfer zu Geldanlagekonto,1830,Soll,5.00
+127,61,KO5,26.02.2024,26.02.2024,Transfer zu Geldanlagekonto,1820,Haben,5.00
+128,62,KO6,26.02.2024,26.02.2024,Transfer zu Geldanlagekonto,1830,Soll,5.00
+129,62,KO5,26.02.2024,26.02.2024,Transfer zu Geldanlagekonto,1820,Haben,5.00
+130,63,Lxx,27.02.2024,27.02.2024,Lohn Geschäftsführer,6024,Soll,3500.00
+131,63,Lxx,27.02.2024,27.02.2024,Lohn Geschäftsführer,3790,Haben,3500.00
+132,64,Lxx,27.02.2024,27.02.2024,Lohn Geschäftsführer,3790,Soll,2879.67
+133,64,Lxx,27.02.2024,27.02.2024,Lohn Geschäftsführer,3720,Haben,2879.67
+134,65,Lxx,27.02.2024,27.02.2024,Lohnsteuer Geschäftsführer,3790,Soll,620.33
+135,65,Lxx,27.02.2024,27.02.2024,Lohnsteuer Geschäftsführer,3730,Haben,620.33
+136,66,KO4,27.02.2024,27.02.2024,Lohn Geschäftsführer,3720,Soll,2879.67
+137,66,KO4,27.02.2024,27.02.2024,Lohn Geschäftsführer,1820,Haben,2879.67
+138,67,E11,27.02.2024,27.02.2024,Storno Beleg,4400,Soll,13440.00
+139,67,E11,27.02.2024,27.02.2024,Storno Beleg,3806,Soll,2553.60
+140,67,E11,27.02.2024,27.02.2024,Storno Beleg,10001,Haben,15993.60
+141,68,A5,27.02.2024,27.02.2024,Softwareberatung Brunata,10001,Soll,14470.40
+142,68,A5,27.02.2024,27.02.2024,Softwareberatung Brunata,3806,Haben,2310.40
+143,68,A5,27.02.2024,27.02.2024,Softwareberatung Brunata,4400,Haben,12160.00
+144,69,S4,27.02.2024,27.02.2024,Gewerbesteuervorauszahlung,3035,Soll,63.00
+145,69,S4,27.02.2024,27.02.2024,Gewerbesteuervorauszahlung,1821,Haben,63.00
+146,70,E10,27.02.2024,27.02.2024,Anlage in ETF,0900,Soll,2499.99
+147,70,E10,27.02.2024,27.02.2024,Anlage in ETF,1830,Haben,2499.99
+148,71,E10,27.02.2024,27.02.2024,Provision Aktienhandel,6855,Soll,3.90
+149,71,E10,27.02.2024,27.02.2024,Provision Aktienhandel,1830,Haben,3.90
+150,72,E12,01.03.2024,01.03.2024,Hosting Digital Ocean,6810,Soll,12.00
+151,72,E12,01.03.2024,01.03.2024,Hosting Digital Ocean,1406,Soll,2.28
+152,72,E12,01.03.2024,01.03.2024,Hosting Digital Ocean,99999,Haben,14.28
+153,73,KO7,01.03.2024,01.03.2024,Bezahlung E11,99999,Soll,14.28
+154,73,KO7,01.03.2024,01.03.2024,Bezahlung E11,1820,Haben,14.28
+155,74,A6,05.03.2024,05.03.2024,Anlagezins,1830,Soll,0.20
+156,74,A6,05.03.2024,05.03.2024,Anlagezins,7100,Haben,0.20
+157,75,E13,05.03.2024,05.03.2024,Ausländische Quellensteuer,7639,Soll,0.04
+158,75,E13,05.03.2024,05.03.2024,Ausländische Quellensteuer,1830,Haben,0.04
+159,76,S5,06.03.2024,06.03.2024,Umsatzsteuervoranmeldung,3820,Soll,2551.32
+160,76,S5,06.03.2024,06.03.2024,Umsatzsteuervoranmeldung,1821,Haben,2551.32
+161,77,S5,06.03.2024,06.03.2024,Umsatzsteuervoranmeldung,3806,Soll,2553.60
+162,77,S5,06.03.2024,06.03.2024,Umsatzsteuervoranmeldung,3820,Haben,2553.60
+163,78,S5,06.03.2024,06.03.2024,Umsatzsteuervoranmeldung,3820,Soll,2.28
+164,78,S5,06.03.2024,06.03.2024,Umsatzsteuervoranmeldung,1406,Haben,2.28
+165,79,KO09,10.03.2024,10.03.2024,Transfer zu Geldanlagekonto,1830,Soll,5008.00
+166,79,KO7,10.03.2024,10.03.2024,Transfer zu Geldanlagekonto,1820,Haben,5008.00
+167,80,E14,12.03.2024,12.03.2024,Anlage in ETF,0900,Soll,2500.00
+168,80,E14,12.03.2024,12.03.2024,Anlage in ETF,1830,Haben,2500.00
+169,81,E14,12.03.2024,12.03.2024,Provision Aktienhandel,6855,Soll,3.90
+170,81,E14,12.03.2024,12.03.2024,Provision Aktienhandel,1830,Haben,3.90
+171,82,A7,15.03.2024,15.03.2024,Softwareberatung Brunata,10001,Soll,8365.70
+172,82,A7,15.03.2024,15.03.2024,Softwareberatung Brunata,3806,Haben,1335.70
+173,82,A7,15.03.2024,15.03.2024,Softwareberatung Brunata,4400,Haben,7030.00
+174,83,KO7,20.03.2024,20.03.2024,"Auszahlung A7, Verrechnung E11",1820,Soll,6842.50
+175,83,KO7,20.03.2024,20.03.2024,"Auszahlung A7, Verrechnung E11",10001,Haben,6842.50
+176,84,E15,23.03.2024,23.03.2024,Auslandsbezahlung Kreditkarte,6855,Soll,0.29
+177,84,E15,23.03.2024,23.03.2024,Auslandsbezahlung Kreditkarte,99999,Haben,0.29
+178,85,KO7,23.03.2024,23.03.2024,Bezahlung E15,99999,Soll,0.29
+179,85,KO7,23.03.2024,23.03.2024,Bezahlung E15,1820,Haben,0.29
+180,86,E16,26.03.2024,26.03.2024,Anlage in ETF,0900,Soll,2499.99
+181,86,E16,26.03.2024,26.03.2024,Anlage in ETF,1830,Haben,2499.99
+182,87,E16,26.03.2024,26.03.2024,Provision Aktienhandel,6855,Soll,3.90
+183,87,E16,26.03.2024,26.03.2024,Provision Aktienhandel,1830,Haben,3.90
+184,88,Lxx,27.03.2024,27.03.2024,Lohn Geschäftsführer,6024,Soll,3500.00
+185,88,Lxx,27.03.2024,27.03.2024,Lohn Geschäftsführer,3790,Haben,3500.00
+186,89,Lxx,27.03.2024,27.03.2024,Lohn Geschäftsführer,3790,Soll,2879.67
+187,89,Lxx,27.03.2024,27.03.2024,Lohn Geschäftsführer,3720,Haben,2879.67
+188,90,Lxx,27.03.2024,27.03.2024,Lohnsteuer Geschäftsführer,3790,Soll,620.33
+189,90,Lxx,27.03.2024,27.03.2024,Lohnsteuer Geschäftsführer,3730,Haben,620.33
+190,91,KO7,27.03.2024,27.03.2024,Lohn Geschäftsführer,3720,Soll,2879.67
+191,91,KO7,27.03.2024,27.03.2024,Lohn Geschäftsführer,1820,Haben,2879.67
+192,92,E17,01.04.2024,01.04.2024,Hosting Digital Ocean,6810,Soll,12.03
+193,92,E17,01.04.2024,01.04.2024,Hosting Digital Ocean,1406,Soll,2.29
+194,92,E17,01.04.2024,01.04.2024,Hosting Digital Ocean,99999,Haben,14.32
+195,93,KO10,01.04.2024,01.04.2024,Bezahlung E17,99999,Soll,14.32
+196,93,KO10,01.04.2024,01.04.2024,Bezahlung E17,1820,Haben,14.32
+197,94,KO11,03.04.2024,03.04.2024,Umsatzsteuervoranmeldung,3820,Soll,1333.42
+198,94,KO11,03.04.2024,03.04.2024,Umsatzsteuervoranmeldung,1821,Haben,1333.42
+199,95,S8,03.04.2024,03.04.2024,Umsatzsteuervoranmeldung,3806,Soll,1335.70
+200,95,S8,03.04.2024,03.04.2024,Umsatzsteuervoranmeldung,3820,Haben,1335.70
+201,96,S8,03.04.2024,03.04.2024,Umsatzsteuervoranmeldung,3820,Soll,2.28
+202,96,S8,03.04.2024,03.04.2024,Umsatzsteuervoranmeldung,1406,Haben,2.28
+203,97,KO12,10.04.2024,10.04.2024,Transfer zu Geldanlagekonto,1830,Soll,5008.00
+204,97,KO10,10.04.2024,10.04.2024,Transfer zu Geldanlagekonto,1820,Haben,5008.00
+205,98,A8,10.04.2024,10.04.2024,Softwareberatung Brunata,10001,Soll,17070.55
+206,98,A8,10.04.2024,10.04.2024,Softwareberatung Brunata,3806,Haben,2725.55
+207,98,A8,10.04.2024,10.04.2024,Softwareberatung Brunata,4400,Haben,14345.00
+208,99,KO11,11.04.2024,11.04.2024,Transfer auf Rückstellungskonto,1821,Soll,11114.80
+209,99,KO10,11.04.2024,11.04.2024,Transfer auf Rückstellungskonto,1820,Haben,11114.80
+210,100,KO10,12.04.2024,12.04.2024,Auszahlung A8,1820,Soll,17070.55
+211,100,KO10,12.04.2024,12.04.2024,Auszahlung A8,10001,Haben,17070.55
+212,101,S7,23.04.2024,23.04.2024,Gewerbesteuer 2022,3035,Soll,3906.00
+213,101,S7,23.04.2024,23.04.2024,Gewerbesteuer 2022,7610,Haben,3906.00
+214,102,KO11,23.04.2024,23.04.2024,Gewerbesteuer 2022,7610,Soll,3906.00
+215,102,KO11,23.04.2024,23.04.2024,Gewerbesteuer 2022,1821,Haben,3906.00
+216,103,S6,23.04.2024,23.04.2024,Körperschaftsteuer 2022,3040,Soll,6910.00
+217,103,S6,23.04.2024,23.04.2024,Körperschaftsteuer 2022,7603,Haben,6910.00
+218,104,S6,23.04.2024,23.04.2024,Solidaritätszuschlag 2022,3020,Soll,380.05
+219,104,S6,23.04.2024,23.04.2024,Solidaritätszuschlag 2022,7609,Haben,380.05
+220,105,S6,23.04.2024,23.04.2024,Körperschaftsteuer 2022,7603,Soll,6910.00
+221,105,S6,23.04.2024,23.04.2024,Solidaritätszuschlag 2022,7609,Soll,380.00
+222,105,S6,23.04.2024,23.04.2024,Körperschaftsteuer & Solidaritätszuschlag 2022,1821,Haben,7290.00
+223,106,KO11,23.04.2024,23.04.2024,Solidaritätszuschlag 2022,7609,Soll,0.05
+224,106,KO11,23.04.2024,23.04.2024,Solidaritätszuschlag 2022,1821,Haben,0.05
+225,107,E18,23.04.2024,23.04.2024,Anlage in ETF,0900,Soll,2499.99
+226,107,E18,23.04.2024,23.04.2024,Anlage in ETF,1830,Haben,2499.99
+227,108,E18,23.04.2024,23.04.2024,Provision Aktienhandel,6855,Soll,3.90
+228,108,E18,23.04.2024,23.04.2024,Provision Aktienhandel,1830,Haben,3.90
+229,109,E19,23.04.2024,23.04.2024,Kontoführungsgebühren,6855,Soll,84.00
+230,109,E19,23.04.2024,23.04.2024,Kontoführungsgebühren,99999,Haben,84.00
+231,109,KO10,24.04.2024,24.04.2024,Kontoführungsgebühren,99999,Soll,84.00
+232,109,KO10,24.04.2024,24.04.2024,Kontoführungsgebühren,1820,Haben,84.00
+233,110,E20,23.04.2024,23.04.2024,Auslandsbezahlung Kreditkarte,6855,Soll,0.29
+234,110,E20,23.04.2024,23.04.2024,Kontoführungsgebühren,99999,Haben,0.29
+235,111,KO10,24.04.2024,24.04.2024,Auslandsbezahlung Kreditkarte,99999,Soll,0.29
+236,111,KO10,24.04.2024,24.04.2024,Kontoführungsgebühren,1820,Haben,0.29
+237,112,Lxx,27.04.2024,27.04.2024,Lohn Geschäftsführer,6024,Soll,3500.00
+238,112,Lxx,27.04.2024,27.04.2024,Lohn Geschäftsführer,3790,Haben,3500.00
+239,113,Lxx,27.04.2024,27.04.2024,Lohn Geschäftsführer,3790,Soll,2879.67
+240,113,Lxx,27.04.2024,27.04.2024,Lohn Geschäftsführer,3720,Haben,2879.67
+241,114,Lxx,27.04.2024,27.04.2024,Lohnsteuer Geschäftsführer,3790,Soll,620.33
+242,114,Lxx,27.04.2024,27.04.2024,Lohnsteuer Geschäftsführer,3730,Haben,620.33
+243,115,KO10,27.04.2024,27.04.2024,Lohn Geschäftsführer,3720,Soll,2879.67
+244,115,KO10,27.04.2024,27.04.2024,Lohn Geschäftsführer,1820,Haben,2879.67
+245,116,E21,01.05.2024,01.05.2024,Hosting Digital Ocean,6810,Soll,12.13
+246,116,E21,01.05.2024,01.05.2024,Hosting Digital Ocean,1406,Soll,2.30
+247,116,E21,01.05.2024,01.05.2024,Hosting Digital Ocean,99999,Haben,14.43
+248,117,KO13,02.05.2024,02.05.2024,Bezahlung E21,99999,Soll,14.43
+249,117,KO13,02.05.2024,02.05.2024,Bezahlung E21,1820,Haben,14.43
+250,118,KO14,03.05.2024,03.05.2024,Umsatzsteuervoranmeldung,3820,Soll,2723.26
+251,118,KO14,03.05.2024,03.05.2024,Umsatzsteuervoranmeldung,1821,Haben,2723.26
+252,119,S9,03.05.2024,03.05.2024,Umsatzsteuervoranmeldung,3806,Soll,2725.55
+253,119,S9,03.05.2024,03.05.2024,Umsatzsteuervoranmeldung,3820,Haben,2725.55
+254,120,S9,03.05.2024,03.05.2024,Umsatzsteuervoranmeldung,3820,Soll,2.29
+255,120,S9,03.05.2024,03.05.2024,Umsatzsteuervoranmeldung,1406,Haben,2.29
+256,121,E22,07.05.2024,07.05.2024,Anlage in ETF,0900,Soll,2500.00
+257,121,E22,07.05.2024,07.05.2024,Anlage in ETF,1830,Haben,2500.00
+258,122,E22,07.05.2024,07.05.2024,Provision Aktienhandel,6855,Soll,3.90
+259,122,E22,07.05.2024,07.05.2024,Provision Aktienhandel,1830,Haben,3.90
+260,123,S7,10.05.2024,10.05.2024,Gewerbesteuervorauszahlung,3035,Soll,1419.00
+261,123,S7,10.05.2024,10.05.2024,Gewerbesteuervorauszahlung,1821,Haben,1419.00
+262,124,A9,14.05.2024,14.05.2024,Softwareberatung Brunata,10001,Soll,13566.00
+263,124,A9,14.05.2024,14.05.2024,Softwareberatung Brunata,3806,Haben,2166.00
+264,124,A9,14.05.2024,14.05.2024,Softwareberatung Brunata,4400,Haben,11400.00
+265,125,KO13,17.05.2024,17.05.2024,Auszahlung A9,1820,Soll,13566.00
+266,125,KO13,17.05.2024,17.05.2024,Auszahlung A9,10001,Haben,13566.00
+267,126,KO14,17.05.2024,17.05.2024,Transfer auf Rückstellungskonto,1821,Soll,2351.42
+268,126,KO13,17.05.2024,17.05.2024,Transfer auf Rückstellungskonto,1820,Haben,2351.42
+269,127,KO15,17.05.2024,17.05.2024,Transfer zu Geldanlagekonto,1830,Soll,30000.00
+270,127,KO13,17.05.2024,17.05.2024,Transfer zu Geldanlagekonto,1820,Haben,30000.00
+271,128,S10,22.05.2024,22.05.2024,Vorauszahlung Körperschaftssteuer,3040,Soll,1678.00
+272,128,S10,22.05.2024,22.05.2024,Vorauszahlung Solidaritätszuschlag,3020,Soll,92.29
+273,128,S10,22.05.2024,22.05.2024,Vorauszahlung Körperschaftssteuer und Soli,99999,Haben,1770.29
+274,129,E23,23.05.2024,23.05.2024,Auslandsbezahlung Kreditkarte,6855,Soll,0.29
+275,129,E23,23.05.2024,23.05.2024,Auslandsbezahlung Kreditkarte,99999,Haben,0.29
+276,130,KO13,24.05.2024,24.05.2024,Bezahlung E23,99999,Soll,0.29
+277,130,KO13,24.05.2024,24.05.2024,Bezahlung E23,1820,Haben,0.29
+278,131,A9,24.05.2024,24.05.2024,Auszahlung A3,1820,Soll,1.16
+279,131,A9,24.05.2024,24.05.2024,Auszahlung A3,4560,Haben,1.16
+280,132,Lxx,27.05.2024,27.05.2024,Lohn Geschäftsführer,6024,Soll,3500.00
+281,132,Lxx,27.05.2024,27.05.2024,Lohn Geschäftsführer,3790,Haben,3500.00
+282,133,Lxx,27.05.2024,27.05.2024,Lohn Geschäftsführer,3790,Soll,2879.67
+283,133,Lxx,27.05.2024,27.05.2024,Lohn Geschäftsführer,3720,Haben,2879.67
+284,134,Lxx,27.05.2024,27.05.2024,Lohnsteuer Geschäftsführer,3790,Soll,620.33
+285,134,Lxx,27.05.2024,27.05.2024,Lohnsteuer Geschäftsführer,3730,Haben,620.33
+286,135,KO13,27.05.2024,27.05.2024,Lohn Geschäftsführer,3720,Soll,2879.67
+287,135,KO13,27.05.2024,27.05.2024,Lohn Geschäftsführer,1820,Haben,2879.67
+288,136,E24,01.06.2024,01.06.2024,Hosting Digital Ocean,6810,Soll,12.02
+289,136,E24,01.06.2024,01.06.2024,Hosting Digital Ocean,1406,Soll,2.28
+290,136,E24,01.06.2024,01.06.2024,Hosting Digital Ocean,99999,Haben,14.30
+291,137,KO16,01.06.2024,01.06.2024,Bezahlung E24,99999,Soll,14.30
+292,137,KO16,01.06.2024,01.06.2024,Bezahlung E24,1820,Haben,14.30
+293,138,KO17,03.06.2024,03.06.2024,Umsatzsteuervoranmeldung,3820,Soll,2163.70
+294,138,KO17,03.06.2024,03.06.2024,Umsatzsteuervoranmeldung,1821,Haben,2163.70
+295,139,S11,03.06.2024,03.06.2024,Umsatzsteuervoranmeldung,3806,Soll,2166.00
+296,139,S11,03.06.2024,03.06.2024,Umsatzsteuervoranmeldung,3820,Haben,2166.00
+297,140,S11,03.06.2024,03.06.2024,Umsatzsteuervoranmeldung,3820,Soll,2.30
+298,140,S11,03.06.2024,03.06.2024,Umsatzsteuervoranmeldung,1406,Haben,2.30
+299,141,A10,05.06.2024,05.06.2024,Anlagezins,1830,Soll,18.14
+300,141,A10,05.06.2024,05.06.2024,Anlagezins,7100,Haben,18.14
+301,142,E25,05.06.2024,05.06.2024,Ausländische Quellensteuer,7639,Soll,3.63
+302,142,E25,05.06.2024,05.06.2024,Ausländische Quellensteuer,1830,Haben,3.63
+303,143,KO17,11.06.2024,11.06.2024,Vorauszahlung Körperschaftssteuer und Soli,99999,Soll,1770.29
+304,143,KO17,11.06.2024,11.06.2024,Vorauszahlung Körperschaftssteuer und Soli,1821,Haben,1770.29
+305,144,E26,23.06.2024,23.06.2024,Auslandsbezahlung Kreditkarte,6855,Soll,0.29
+306,144,E26,23.06.2024,23.06.2024,Auslandsbezahlung Kreditkarte,99999,Haben,0.29
+307,145,KO16,25.06.2024,25.06.2024,Bezahlung E26,99999,Soll,0.29
+308,145,KO16,25.06.2024,25.06.2024,Bezahlung E26,1820,Haben,0.29
+309,146,Lxx,27.06.2024,27.06.2024,Lohn Geschäftsführer,6024,Soll,3500.00
+310,146,Lxx,27.06.2024,27.06.2024,Lohn Geschäftsführer,3790,Haben,3500.00
+311,147,Lxx,27.06.2024,27.06.2024,Lohn Geschäftsführer,3790,Soll,2879.67
+312,147,Lxx,27.06.2024,27.06.2024,Lohn Geschäftsführer,3720,Haben,2879.67
+313,148,Lxx,27.06.2024,27.06.2024,Lohnsteuer Geschäftsführer,3790,Soll,620.33
+314,148,Lxx,27.06.2024,27.06.2024,Lohnsteuer Geschäftsführer,3730,Haben,620.33
+315,149,KO16,27.06.2024,27.06.2024,Lohn Geschäftsführer,3720,Soll,2879.67
+316,149,KO16,27.06.2024,27.06.2024,Lohn Geschäftsführer,1820,Haben,2879.67
+317,150,E27,01.07.2024,01.07.2024,Hosting Digital Ocean,6810,Soll,12.13
+318,150,E27,01.07.2024,01.07.2024,Hosting Digital Ocean,1406,Soll,2.30
+319,150,E27,01.07.2024,01.07.2024,Hosting Digital Ocean,99999,Haben,14.43
+320,151,KO19,01.07.2024,01.07.2024,Bezahlung E27,99999,Soll,14.43
+321,151,KO19,01.07.2024,01.07.2024,Bezahlung E27,1820,Haben,14.43
+322,152,S12,01.07.2024,01.07.2024,Umsatzsteuervoranmeldung,3820,Soll,2.30
+323,152,S12,01.07.2024,01.07.2024,Umsatzsteuervoranmeldung,1406,Haben,2.30
+324,152,A11,03.07.2024,03.07.2024,Anlagezins,1830,Soll,33.71
+325,152,A11,03.07.2024,03.07.2024,Anlagezins,7100,Haben,33.71
+326,153,E28,03.07.2024,03.07.2024,Ausländische Quellensteuer,7639,Soll,6.74
+327,153,E28,03.07.2024,03.07.2024,Ausländische Quellensteuer,1830,Haben,6.74
+328,154,S12,04.07.2024,04.07.2024,Rückerstattung aus Umsatzsteuervoranmeldung,1820,Soll,2.30
+329,154,S12,04.07.2024,04.07.2024,Rückerstattung aus Umsatzsteuervoranmeldung,3820,Haben,2.30
+330,155,E29,11.07.2024,11.07.2024,Hotelübernachtung VS,6660,Soll,65.79
+331,155,E29,11.07.2024,11.07.2024,Hotelübernachtung VS,1401,Soll,4.61
+332,155,E29,11.07.2024,11.07.2024,Hotelübernachtung VS,99999,Haben,70.40
+333,156,KO19,11.07.2024,11.07.2024,Bezahlung E29,99999,Soll,70.40
+334,156,KO19,11.07.2024,11.07.2024,Bezahlung E29,1820,Haben,70.40
+335,157,E30,12.07.2024,12.07.2024,Hotel Frühstück VS,6664,Soll,10.84
+336,157,E30,12.07.2024,12.07.2024,Hotel Frühstück VS,1406,Soll,2.06
+337,157,E30,12.07.2024,12.07.2024,Hotel Frühstück VS,99999,Haben,12.90
+338,158,KO19,12.07.2024,12.07.2024,Bezahlung E30,99999,Soll,12.90
+339,158,KO19,12.07.2024,12.07.2024,Bezahlung E30,1820,Haben,12.90
+340,159,A12,15.07.2024,15.07.2024,Bank A Konto Cashback,10000,Soll,2.25
+341,159,A12,15.07.2024,15.07.2024,Bank A Konto Cashback,4560,Haben,2.25
+342,160,KO1,15.07.2024,15.07.2024,Auszahlung A12,1820,Soll,2.25
+343,160,KO1,14.07.2024,15.07.2024,Auszahlung A12,10000,Haben,2.25
+344,161,E31,19.07.2024,19.07.2024,LEIReg - Verlängerung,6825,Soll,70.00
+345,161,E31,19.07.2024,19.07.2024,LEIReg - Verlängerung,1406,Soll,13.30
+346,161,E31,19.07.2024,19.07.2024,LEIReg - Verlängerung,99999,Haben,83.30
+347,162,KO19,17.07.2024,17.07.2024,Bezahlung E31,99999,Soll,83.30
+348,162,KO19,17.07.2024,17.07.2024,Bezahlung E31,1820,Haben,83.30
+349,163,E32,23.07.2024,23.07.2024,Auslandsbezahlung Kreditkarte,6855,Soll,0.29
+350,163,E32,23.07.2024,23.07.2024,Auslandsbezahlung Kreditkarte,99999,Haben,0.29
+351,164,KO19,24.07.2024,24.07.2024,Bezahlung E32,99999,Soll,0.29
+352,164,KO19,24.07.2024,24.07.2024,Bezahlung E32,1820,Haben,0.29
+353,165,KO19,24.07.2024,24.07.2024,Bezahlung E33,99999,Soll,609.00
+354,165,KO19,24.07.2024,24.07.2024,Bezahlung E33,1820,Haben,609.00
+355,166,KO19,24.07.2024,24.07.2024,Bezahlung E34/E35,99999,Soll,23.98
+356,166,KO19,24.07.2024,24.07.2024,Bezahlung E34/E35,1820,Haben,23.98
+357,167,E33,25.07.2024,25.07.2024,Smartphone Lieferant A Pixel 8a,0690,Soll,511.76
+358,167,E33,25.07.2024,25.07.2024,Smartphone Lieferant A Pixel 8a,1406,Soll,97.24
+359,167,E33,25.07.2024,25.07.2024,Smartphone Lieferant A Pixel 8a,99999,Haben,609.00
+360,168,E33,25.07.2024,25.07.2024,Sofortabschreibung Smartphone Lieferant A Pixel 8a,6262,Soll,511.76
+361,168,E33,25.07.2024,25.07.2024,Sofortabschreibung Smartphone Lieferant A Pixel 8a,0690,Haben,511.76
+362,169,E34,25.07.2024,25.07.2024,Smartphone Schutzfolie,0690,Soll,6.71
+363,169,E34,25.07.2024,25.07.2024,Smartphone Schutzfolie,1406,Soll,1.28
+364,169,E34,25.07.2024,25.07.2024,Smartphone Schutzfolie,99999,Haben,7.99
+365,170,E35,25.07.2024,25.07.2024,Sofortabschreibung Smartphone Schutzfolie,6262,Soll,6.71
+366,170,E35,25.07.2024,25.07.2024,Sofortabschreibung Smartphone Schutzfolie,0690,Haben,6.71
+367,171,E35,25.07.2024,25.07.2024,Smartphone Case,0690,Soll,13.44
+368,171,E35,25.07.2024,25.07.2024,Smartphone Case,1406,Soll,2.55
+369,171,E35,25.07.2024,25.07.2024,Smartphone Case,99999,Haben,15.99
+370,172,E35,25.07.2024,25.07.2024,Sofortabschreibung Smartphone Case,6262,Soll,13.44
+371,172,E35,25.07.2024,25.07.2024,Sofortabschreibung Smartphone Case,0690,Haben,13.44
+372,173,Lxx,27.07.2024,27.07.2024,Lohn Geschäftsführer,6024,Soll,3500.00
+373,173,Lxx,27.07.2024,27.07.2024,Lohn Geschäftsführer,3790,Haben,3500.00
+374,174,Lxx,27.07.2024,27.07.2024,Lohn Geschäftsführer,3790,Soll,2906.59
+375,174,Lxx,27.07.2024,27.07.2024,Lohn Geschäftsführer,3720,Haben,2906.59
+376,175,Lxx,27.07.2024,27.07.2024,Lohnsteuer Geschäftsführer,3790,Soll,593.41
+377,175,Lxx,27.07.2024,27.07.2024,Lohnsteuer Geschäftsführer,3730,Haben,593.41
+378,176,KO19,27.07.2024,27.07.2024,Lohn Geschäftsführer,3720,Soll,2906.59
+379,176,KO19,27.07.2024,27.07.2024,Lohn Geschäftsführer,1820,Haben,2906.59
+380,177,E36,25.07.2024,25.07.2024,Geschäftsreise Hamburg,6663,Soll,45.78
+381,177,E36,25.07.2024,25.07.2024,Geschäftsreise Hamburg,1401,Soll,3.21
+382,177,E36,25.07.2024,25.07.2024,Geschäftsreise Hamburg,99999,Haben,48.99
+383,178,KO19,27.07.2024,27.07.2024,Bezahlung E36,99999,Soll,48.99
+384,178,KO19,27.07.2024,27.07.2024,Bezahlung E36,1820,Haben,48.99
+385,179,KO19,29.07.2024,29.07.2024,Versehentliche Bezahlung Firmenkreditkarte,1820,Soll,46.00
+386,179,KO19,29.07.2024,29.07.2024,Versehentliche Bezahlung Firmenkreditkarte,99999,Haben,46.00
+387,180,KO19,31.07.2024,31.07.2024,Ausgleich Versehentliche Bezahlung Firmenkreditkarte,99999,Soll,46.00
+388,180,KO19,31.07.2024,31.07.2024,Ausgleich Versehentliche Bezahlung Firmenkreditkarte,1820,Haben,46.00
+389,181,E37,01.08.2024,01.08.2024,Hosting Digital Ocean,6810,Soll,12.00
+390,181,E37,01.08.2024,01.08.2024,Hosting Digital Ocean,1406,Soll,2.28
+391,181,E37,01.08.2024,01.08.2024,Hosting Digital Ocean,99999,Haben,14.28
+392,182,K22,02.08.2024,02.08.2024,Bezahlung E37,99999,Soll,14.28
+393,182,K22,02.08.2024,02.08.2024,Bezahlung E37,1820,Haben,14.28
+394,183,S13,04.08.2024,04.08.2024,Umsatzsteuervoranmeldung,3820,Soll,7.82
+395,183,S13,04.08.2024,04.08.2024,Umsatzsteuervoranmeldung,1401,Haben,7.82
+396,184,S13,04.08.2024,04.08.2024,Umsatzsteuervoranmeldung,3820,Soll,118.33
+397,184,S13,04.08.2024,04.08.2024,Umsatzsteuervoranmeldung,1406,Haben,118.33
+398,185,E38,05.08.2024,05.08.2024,Zugticket,6663,Soll,125.24
+399,185,E38,05.08.2024,05.08.2024,Zugticket,1401,Soll,8.76
+400,185,E38,05.08.2024,05.08.2024,Zugticket,99999,Haben,134.00
+401,186,KO22,07.08.2024,07.08.2024,Bezahlung E38,99999,Soll,134.00
+402,186,KO22,07.08.2024,07.08.2024,Bezahlung E38,1820,Haben,134.00
+403,187,A13,05.08.2024,05.08.2024,Anlagezins,1830,Soll,33.49
+404,187,A13,05.08.2024,05.08.2024,Anlagezins,7100,Haben,33.49
+405,188,E39,05.08.2024,05.08.2024,Ausländische Quellensteuer,7639,Soll,6.70
+406,188,E39,05.08.2024,05.08.2024,Ausländische Quellensteuer,1830,Haben,6.70
+407,189,S13,07.08.2024,07.08.2024,Rückerstattung aus Umsatzsteuervoranmeldung,1820,Soll,126.15
+408,189,S13,07.08.2024,07.08.2024,Rückerstattung aus Umsatzsteuervoranmeldung,3820,Haben,126.15
+409,190,S4,10.08.2024,10.08.2024,Gewerbesteuervorauszahlung,3035,Soll,1419.00
+410,190,S4,10.08.2024,10.08.2024,Gewerbesteuervorauszahlung,1821,Haben,1419.00
+411,191,S14,22.08.2024,22.08.2024,Vorauszahlung Körperschaftssteuer,3040,Soll,1678.00
+412,191,S14,22.08.2024,22.08.2024,Vorauszahlung Solidaritätszuschlag,3020,Soll,92.29
+413,191,S14,22.08.2024,22.08.2024,Vorauszahlung Körperschaftssteuer und Soli,99999,Haben,1770.29
+414,192,E40,23.08.2024,23.08.2024,Auslandsbezahlung Kreditkarte,6855,Soll,0.29
+415,192,E40,23.08.2024,23.08.2024,Auslandsbezahlung Kreditkarte,99999,Haben,0.29
+416,193,E41,25.08.2024,25.08.2024,Amazon Prime,99999,Soll,89.90
+417,193,E41,25.08.2024,25.08.2024,Amazon Prime,1820,Haben,89.90
+418,194,KO22,26.08.2024,26.08.2024,Bezahlung E40,99999,Soll,0.29
+419,194,KO22,26.08.2024,26.08.2024,Bezahlung E40,1820,Haben,0.29
+420,195,Lxx,27.08.2024,27.08.2024,Lohn Geschäftsführer,6024,Soll,3500.00
+421,195,Lxx,27.08.2024,27.08.2024,Lohn Geschäftsführer,3790,Haben,3500.00
+422,196,Lxx,27.08.2024,27.08.2024,Lohn Geschäftsführer,3790,Soll,2906.59
+423,196,Lxx,27.08.2024,27.08.2024,Lohn Geschäftsführer,3720,Haben,2906.59
+424,197,Lxx,27.08.2024,27.08.2024,Lohnsteuer Geschäftsführer,3790,Soll,593.41
+425,197,Lxx,27.08.2024,27.08.2024,Lohnsteuer Geschäftsführer,3730,Haben,593.41
+426,198,KO22,27.08.2024,27.08.2024,Lohn Geschäftsführer,3720,Soll,2906.59
+427,198,KO22,27.08.2024,27.08.2024,Lohn Geschäftsführer,1820,Haben,2906.59
+428,199,E42,01.09.2024,01.09.2024,Hosting Digital Ocean,6810,Soll,15.76
+429,199,E42,01.09.2024,01.09.2024,Hosting Digital Ocean,1406,Soll,2.99
+430,199,E42,01.09.2024,01.09.2024,Hosting Digital Ocean,99999,Haben,18.75
+431,200,K25,02.09.2024,02.09.2024,Bezahlung E42,99999,Soll,18.75
+432,200,K25,02.09.2024,02.09.2024,Bezahlung E42,1820,Haben,18.75
+433,201,A15,05.09.2024,05.09.2024,Anlagezins,1830,Soll,33.49
+434,201,A15,05.09.2024,05.09.2024,Anlagezins,7100,Haben,33.49
+435,202,E43,05.09.2024,05.09.2024,Ausländische Quellensteuer,7639,Soll,6.70
+436,202,E43,05.09.2024,05.09.2024,Ausländische Quellensteuer,1830,Haben,6.70
+437,203,K25,06.09.2024,06.09.2024,Rückerstattung Amazon Prime,1820,Soll,89.90
+438,203,K25,06.09.2024,06.09.2024,Rückerstattung Amazon Prime,99999,Haben,89.90
+439,204,E44,06.09.2024,06.09.2024,IHK Beitrag,6420,Soll,92.00
+440,204,E44,06.09.2024,06.09.2024,IHK Beitrag,99999,Haben,92.00
+441,205,S16,06.09.2024,06.09.2024,Umsatzsteuervoranmeldung,3820,Soll,2.28
+442,205,S16,06.09.2024,06.09.2024,Umsatzsteuervoranmeldung,1406,Haben,2.28
+443,206,S16,06.09.2024,06.09.2024,Umsatzsteuervoranmeldung,3820,Soll,8.76
+444,206,S16,06.09.2024,06.09.2024,Umsatzsteuervoranmeldung,1401,Haben,8.76
+445,207,KO26,08.09.2024,08.09.2024,Vorauszahlung Körperschaftssteuer und Soli,99999,Soll,1770.29
+446,207,KO26,08.09.2024,08.09.2024,Vorauszahlung Körperschaftssteuer und Soli,1821,Haben,1770.29
+447,208,S15,11.09.2024,11.09.2024,Rückerstattung aus Umsatzsteuervoranmeldung,1820,Soll,11.04
+448,208,S15,11.09.2024,11.09.2024,Rückerstattung aus Umsatzsteuervoranmeldung,3820,Haben,11.04
+449,209,E45,23.09.2024,23.09.2024,Auslandsbezahlung Kreditkarte,6855,Soll,0.38
+450,209,E45,23.09.2024,23.09.2024,Kontoführungsgebühren,99999,Haben,0.38
+451,210,KO25,23.09.2024,23.09.2024,Bezahlung E45,99999,Soll,0.38
+452,210,KO25,23.09.2024,23.09.2024,Bezahlung E45,1820,Haben,0.38
+453,211,Lxx,27.09.2024,27.09.2024,Lohn Geschäftsführer,6024,Soll,3500.00
+454,211,Lxx,27.09.2024,27.09.2024,Lohn Geschäftsführer,3790,Haben,3500.00
+455,212,Lxx,27.09.2024,27.09.2024,Lohn Geschäftsführer,3790,Soll,2906.59
+456,212,Lxx,27.09.2024,27.09.2024,Lohn Geschäftsführer,3720,Haben,2906.59
+457,213,Lxx,27.09.2024,27.09.2024,Lohnsteuer Geschäftsführer,3790,Soll,593.41
+458,213,Lxx,27.09.2024,27.09.2024,Lohnsteuer Geschäftsführer,3730,Haben,593.41
+459,214,KO25,27.09.2024,27.09.2024,Lohn Geschäftsführer,3720,Soll,2906.59
+460,214,KO25,27.09.2024,27.09.2024,Lohn Geschäftsführer,1820,Haben,2906.59
+461,215,E46,01.10.2024,01.10.2024,Hosting Digital Ocean,6810,Soll,16.35
+462,215,E46,01.10.2024,01.10.2024,Hosting Digital Ocean,1406,Soll,3.11
+463,215,E46,01.10.2024,01.10.2024,Hosting Digital Ocean,99999,Haben,19.46
+464,216,KO28,01.10.2024,01.10.2024,Bezahlung E46,99999,Soll,19.46
+465,216,KO28,01.10.2024,01.10.2024,Bezahlung E46,1820,Haben,19.46
+466,217,KO28,03.10.2024,03.10.2024,Bezahlung E44,99999,Soll,92.00
+467,217,KO28,03.10.2024,03.10.2024,Bezahlung E44,1820,Haben,92.00
+468,218,A16,04.10.2024,04.10.2024,Anlagezins,1830,Soll,31.30
+469,218,A16,04.10.2024,04.10.2024,Anlagezins,7100,Haben,31.30
+470,219,E46,04.10.2024,04.10.2024,Ausländische Quellensteuer,7639,Soll,6.26
+471,219,E46,04.10.2024,04.10.2024,Ausländische Quellensteuer,1830,Haben,6.26
+472,220,S16,07.10.2024,07.10.2024,Umsatzsteuervoranmeldung,3820,Soll,2.99
+473,220,S16,07.10.2024,07.10.2024,Umsatzsteuervoranmeldung,1406,Haben,2.99
+474,221,KO28,10.10.2024,10.10.2024,Umsatzsteuervoranmeldung,1820,Soll,2.99
+475,221,KO28,10.10.2024,10.10.2024,Umsatzsteuervoranmeldung,3820,Haben,2.99
+476,222,KO28,18.10.2024,18.10.2024,Hotelbuchung,99999,Soll,341.78
+477,222,KO28,18.10.2024,18.10.2024,Hotelbuchung,1820,Haben,341.78
+478,223,KO28,18.10.2024,18.10.2024,Storno Hotelbuchung,1820,Soll,341.78
+479,223,KO28,18.10.2024,18.10.2024,Storno Hotelbuchung,99999,Haben,341.78
+480,224,A17,18.10.2024,18.10.2024,Bank A Konto Cashback,10000,Soll,21.08
+481,224,A17,18.10.2024,18.10.2024,Bank A Konto Cashback,4560,Haben,21.08
+482,225,KO28,18.10.2024,18.10.2024,Auszahlung A17,1820,Soll,21.08
+483,225,KO28,18.10.2024,18.10.2024,Auszahlung A17,10000,Haben,21.08
+484,226,E48,19.10.2024,19.10.2024,Hotelübernachtung VS,6660,Soll,269.44
+485,226,E48,19.10.2024,19.10.2024,Hotelübernachtung VS,1401,Soll,18.86
+486,226,E48,19.10.2024,19.10.2024,Hotelübernachtung VS,99999,Haben,288.30
+487,227,E48,19.10.2024,19.10.2024,Frühstück Hotel VS,6664,Soll,22.69
+488,227,E48,19.10.2024,19.10.2024,Frühstück Hotel VS,1406,Soll,4.31
+489,227,E48,19.10.2024,19.10.2024,Frühstück Hotel VS,99999,Haben,27.00
+490,228,KO28,21.10.2024,21.10.2024,Bezahlung E48,99999,Soll,315.30
+491,228,KO28,21.10.2024,21.10.2024,Bezahlung E48,1820,Haben,315.30
+492,229,E49,23.10.2024,23.10.2024,Auslandsbezahlung Kreditkarte,6855,Soll,0.39
+493,229,E49,23.10.2024,23.10.2024,Auslandsbezahlung Kreditkarte,99999,Haben,0.39
+494,230,KO1,24.10.2024,24.10.2024,Bezahlung E49,99999,Soll,0.39
+495,230,KO1,24.10.2024,24.10.2024,Bezahlung E49,1820,Haben,0.39
+496,231,KO28,21.10.2024,21.10.2024,Lieferant A Dev Account (versehentliche Abbuchung),99999,Soll,4.63
+497,231,KO28,21.10.2024,21.10.2024,Lieferant A Dev Account (versehentliche Abbuchung),1820,Haben,4.63
+498,232,E50,23.10.2024,23.10.2024,Hotelübernachtung VS,6660,Soll,147.66
+499,232,E50,23.10.2024,23.10.2024,Hotelübernachtung VS,1401,Soll,10.34
+500,232,E50,23.10.2024,23.10.2024,Hotelübernachtung VS,99999,Haben,158.00
+501,233,E50,23.10.2024,23.10.2024,Frühstück Hotel VS,6664,Soll,15.13
+502,233,E50,23.10.2024,23.10.2024,Frühstück Hotel VS,1406,Soll,2.87
+503,233,E50,23.10.2024,23.10.2024,Frühstück Hotel VS,99999,Haben,18.00
+504,234,KO28,25.10.2024,25.10.2024,Bezahlung E50,99999,Soll,176.00
+505,234,KO28,25.10.2024,25.10.2024,Bezahlung E50,1820,Haben,176.00
+506,235,Lxx,27.10.2024,27.10.2024,Lohn Geschäftsführer,6024,Soll,3500.00
+507,235,Lxx,27.10.2024,27.10.2024,Lohn Geschäftsführer,3790,Haben,3500.00
+508,236,Lxx,27.10.2024,27.10.2024,Lohn Geschäftsführer,3790,Soll,2906.59
+509,236,Lxx,27.10.2024,27.10.2024,Lohn Geschäftsführer,3720,Haben,2906.59
+510,237,Lxx,27.10.2024,27.10.2024,Lohnsteuer Geschäftsführer,3790,Soll,593.41
+511,237,Lxx,27.10.2024,27.10.2024,Lohnsteuer Geschäftsführer,3730,Haben,593.41
+512,238,KO28,27.10.2024,27.10.2024,Lohn Geschäftsführer,3720,Soll,2906.59
+513,238,KO28,27.10.2024,27.10.2024,Lohn Geschäftsführer,1820,Haben,2906.59
+514,239,S17,31.10.2024,31.10.2024,Rückerstattung falsch verrechnete Lohnsteuer aus Dezember 2023 an Finanzamt,3730,Soll,2461.32
+515,239,S17,31.10.2024,31.10.2024,Rückerstattung falsch verrechnete Lohnsteuer aus Dezember 2023 an Finanzamt,1821,Haben,2461.32
+516,240,E51,01.11.2024,01.11.2024,Hosting Digital Ocean,6810,Soll,16.78
+517,240,E51,01.11.2024,01.11.2024,Hosting Digital Ocean,1406,Soll,3.19
+518,240,E51,01.11.2024,01.11.2024,Hosting Digital Ocean,99999,Haben,19.97
+519,241,KO31,03.11.2024,03.11.2024,Bezahlung E51,99999,Soll,19.97
+520,241,KO31,03.11.2024,03.11.2024,Bezahlung E51,1820,Haben,19.97
+521,242,S18,04.11.2024,04.11.2024,Umsatzsteuervoranmeldung,3820,Soll,10.29
+522,242,S18,04.11.2024,04.11.2024,Umsatzsteuervoranmeldung,1406,Haben,10.29
+523,243,S18,04.11.2024,04.11.2024,Umsatzsteuervoranmeldung,3820,Soll,29.20
+524,243,S18,04.11.2024,04.11.2024,Umsatzsteuervoranmeldung,1401,Haben,29.20
+525,244,KO31,04.11.2024,04.11.2024,Lieferant A Dev Account (versehentliche Abbuchung) Rückerstattung,1820,Soll,4.63
+526,244,KO31,04.11.2024,04.11.2024,Lieferant A Dev Account (versehentliche Abbuchung) Rückerstattung,99999,Haben,4.63
+527,245,A16,05.11.2024,05.11.2024,Anlagezins,1830,Soll,27.85
+528,245,A16,05.11.2024,05.11.2024,Anlagezins,7100,Haben,27.85
+529,246,E46,05.11.2024,05.11.2024,Ausländische Quellensteuer,7639,Soll,5.57
+530,246,E46,05.11.2024,05.11.2024,Ausländische Quellensteuer,1830,Haben,5.57
+531,247,KO31,06.11.2024,06.11.2024,Umsatzsteuervoranmeldung,1820,Soll,39.49
+532,247,KO31,06.11.2024,06.11.2024,Umsatzsteuervoranmeldung,3820,Haben,39.49
+533,248,S17,08.11.2024,08.11.2024,Rückerstattung falsch verrechnete Lohnsteuer aus Dezember 2023 von Geschäftsführer,1821,Soll,2461.32
+534,248,S17,08.11.2024,08.11.2024,Rückerstattung falsch verrechnete Lohnsteuer aus Dezember 2023 von Geschäftsführer,3730,Haben,2461.32
+535,249,S4,10.11.2024,10.11.2024,Gewerbesteuervorauszahlung,3035,Soll,1419.00
+536,249,S4,10.11.2024,10.11.2024,Gewerbesteuervorauszahlung,1821,Haben,1419.00
+537,250,KO17,26.11.2024,26.11.2024,Vorauszahlung Körperschaftssteuer,3040,Soll,1678.00
+538,250,KO17,26.11.2024,26.11.2024,Vorauszahlung Solidaritätszuschlag,3020,Soll,92.29
+539,250,KO17,26.11.2024,26.11.2024,Vorauszahlung Körperschaftssteuer und Soli,99999,Haben,1770.29
+540,251,Lxx,27.11.2024,27.11.2024,Lohn Geschäftsführer,6024,Soll,3500.00
+541,251,Lxx,27.11.2024,27.11.2024,Lohn Geschäftsführer,3790,Haben,3500.00
+542,252,Lxx,27.11.2024,27.11.2024,Lohn Geschäftsführer,3790,Soll,2906.59
+543,252,Lxx,27.11.2024,27.11.2024,Lohn Geschäftsführer,3720,Haben,2906.59
+544,253,Lxx,27.11.2024,27.11.2024,Lohnsteuer Geschäftsführer,3790,Soll,593.41
+545,253,Lxx,27.11.2024,27.11.2024,Lohnsteuer Geschäftsführer,3730,Haben,593.41
+546,254,KO31,27.11.2024,27.11.2024,Lohn Geschäftsführer,3720,Soll,2906.59
+547,254,KO31,27.11.2024,27.11.2024,Lohn Geschäftsführer,1820,Haben,2906.59
+548,255,A19,27.11.2024,27.11.2024,Bank A Konto Cashback,10000,Soll,6.78
+549,255,A19,27.11.2024,27.11.2024,Bank A Konto Cashback,4560,Haben,6.78
+550,256,KO1,27.11.2024,27.11.2024,Auszahlung A19,1820,Soll,6.78
+551,256,KO1,27.11.2024,27.11.2024,Auszahlung A19,10000,Haben,6.78
+552,257,E53,30.11.2024,30.11.2024,Hotelübernachtung VS,6660,Soll,129.76
+553,257,E53,30.11.2024,30.11.2024,Hotelübernachtung VS,1401,Soll,9.08
+554,257,E53,30.11.2024,30.11.2024,Hotelübernachtung VS,99999,Haben,138.84
+555,258,KO31,30.11.2024,30.11.2024,Bezahlung E53,99999,Soll,138.84
+556,258,KO31,30.11.2024,30.11.2024,Bezahlung E53,1820,Haben,138.84
+557,259,E54,01.12.2024,01.12.2024,Hosting Digital Ocean,6810,Soll,17.27
+558,259,E54,01.12.2024,01.12.2024,Hosting Digital Ocean,1406,Soll,3.28
+559,259,E54,01.12.2024,01.12.2024,Hosting Digital Ocean,99999,Haben,20.55
+560,260,S20,01.02.2024,01.02.2024,Umsatzsteuervoranmeldung,3820,Soll,3.19
+561,260,S20,01.02.2024,01.02.2024,Umsatzsteuervoranmeldung,1406,Haben,3.19
+562,261,KO34,02.12.2024,02.12.2024,Bezahlung E54,99999,Soll,20.55
+563,261,KO34,02.12.2024,02.12.2024,Bezahlung E54,1820,Haben,20.55
+564,262,S20,04.12.2024,04.12.2024,Rückerstattung aus Umsatzsteuervoranmeldung,1820,Soll,3.19
+565,262,S20,04.12.2024,04.12.2024,Rückerstattung aus Umsatzsteuervoranmeldung,3820,Haben,3.19
+566,263,A19,04.12.2024,04.12.2024,Anlagezins,1830,Soll,24.47
+567,263,A19,04.12.2024,04.12.2024,Anlagezins,7100,Haben,24.47
+568,264,E55,04.12.2024,04.12.2024,Ausländische Quellensteuer,7639,Soll,4.89
+569,264,E55,04.12.2024,04.12.2024,Ausländische Quellensteuer,1830,Haben,4.89
+570,265,E56,07.12.2024,07.12.2024,Chat GPT Abo,6837,Soll,18.97
+571,265,E56,07.12.2024,07.12.2024,Chat GPT Abo,99999,Haben,18.97
+572,266,KO34,07.12.2024,07.12.2024,Bezahlung E56,99999,Soll,18.97
+573,266,KO34,07.12.2024,07.12.2024,Bezahlung E56,1820,Haben,18.97
+574,267,KO35,08.12.2024,08.12.2024,Vorauszahlung Körperschaftssteuer und Soli,99999,Soll,1770.29
+575,267,KO35,08.12.2024,08.12.2024,Vorauszahlung Körperschaftssteuer und Soli,1821,Haben,1770.29
+576,268,E57,14.12.2024,14.12.2024,Hotelübernachtung VS,6660,Soll,70.97
+577,268,E57,14.12.2024,14.12.2024,Hotelübernachtung VS,1401,Soll,4.97
+578,268,E57,14.12.2024,14.12.2024,Hotelübernachtung VS,99999,Haben,75.94
+579,269,KO34,14.12.2024,14.12.2024,Bezahlung E57,99999,Soll,75.94
+580,269,KO34,14.12.2024,14.12.2024,Bezahlung E57,1820,Haben,75.94
+581,270,E58,16.12.2024,16.12.2024,Hotelübernachtung VS,6660,Soll,192.45
+582,270,E58,16.12.2024,16.12.2024,Hotelübernachtung VS,1401,Soll,13.47
+583,270,E58,16.12.2024,16.12.2024,Hotelübernachtung VS,99999,Haben,205.92
+584,271,KO34,16.12.2024,16.12.2024,Bezahlung E58,99999,Soll,205.92
+585,271,KO34,16.12.2024,16.12.2024,Bezahlung E58,1820,Haben,205.92
+586,272,Lxx,23.12.2024,23.12.2024,Lohn Geschäftsführer,6024,Soll,3500.00
+587,272,Lxx,23.12.2024,23.12.2024,Lohn Geschäftsführer,3790,Haben,3500.00
+588,273,Lxx,23.12.2024,23.12.2024,Lohn Geschäftsführer,3790,Soll,3068.03
+589,273,Lxx,23.12.2024,23.12.2024,Lohn Geschäftsführer,3720,Haben,3068.03
+590,274,Lxx,23.12.2024,23.12.2024,Lohnsteuer Geschäftsführer,3790,Soll,431.97
+591,274,Lxx,23.12.2024,23.12.2024,Lohnsteuer Geschäftsführer,3730,Haben,431.97
+592,275,KO31,23.12.2024,23.12.2024,Lohn Geschäftsführer,3720,Soll,3068.03
+593,275,KO31,23.12.2024,23.12.2024,Lohn Geschäftsführer,1820,Haben,3068.03
+594,276,S8,31.12.2024,31.12.2024,Forderung aus überzahlter Gewerbesteuervorauszahlung 2024,1435,Soll,4174.50
+595,276,S8,31.12.2024,31.12.2024,Forderung aus überzahlter Gewerbesteuervorauszahlung 2024,3035,Haben,4174.50
+596,277,S8,31.12.2024,31.12.2024,Forderung aus überzahlter Umsatzsteuervoranmeldung 2024,1420,Soll,252.66
+597,277,S8,31.12.2024,31.12.2024,Forderung aus überzahlter Umsatzsteuervoranmeldung 2024,3806,Haben,252.66
+598,278,S8,31.12.2024,31.12.2024,Forderung aus überzahlter Umsatzsteuervoranmeldung 2024,1420,Soll,0.01
+599,278,S8,31.12.2024,31.12.2024,Forderung aus überzahlter Umsatzsteuervoranmeldung 2024,3820,Haben,0.01
+600,279,S8,31.12.2024,31.12.2024,Forderung aus überzahlter Körperschaftssteuervorauszahlung 2024,1450,Soll,4915.95
+601,279,S8,31.12.2024,31.12.2024,Forderung aus überzahlter Körperschaftssteuervorauszahlung 2024,3040,Haben,4915.95
+602,280,S8,31.12.2024,31.12.2024,Forderung aus überzahlter Vorauszahlung Solidaritätszuschlag 2024,1450,Soll,270.37
+603,280,S8,31.12.2024,31.12.2024,Forderung aus überzahlter Vorauszahlung Solidaritätszuschlag 2024,3020,Haben,270.37
+604,281,JEB1,31.12.2024,31.12.2024,Gewerbesteuer,7610,Soll,1501.50
+605,281,JEB1,31.12.2024,31.12.2024,Gewerbesteuer,3035,Haben,1501.50
+606,282,JEB2,31.12.2024,31.12.2024,Körperschaftsteuer,7600,Soll,1993.05
+607,282,JEB2,31.12.2024,31.12.2024,Körperschaftsteuer,3040,Haben,1993.05
+608,283,JEB3,31.12.2024,31.12.2024,Solidaritätszuschlag,7608,Soll,109.62
+609,283,JEB3,31.12.2024,31.12.2024,Solidaritätszuschlag,3020,Haben,109.62
+610,284,JEB4,31.12.2024,31.12.2024,III. Finanzanlagen,9000,Soll,106683.05
+611,284,JEB4,31.12.2024,31.12.2024,III. Finanzanlagen,0900,Haben,106683.05
+612,285,JEB5,31.12.2024,31.12.2024,II. Forderungen und sonstige Vermögensgegenstände,9000,Soll,27.52
+613,285,JEB5,31.12.2024,31.12.2024,II. Forderungen und sonstige Vermögensgegenstände,1401,Haben,27.52
+614,286,JEB6,31.12.2024,31.12.2024,II. Forderungen und sonstige Vermögensgegenstände,9000,Soll,3.66
+615,286,JEB6,31.12.2024,31.12.2024,II. Forderungen und sonstige Vermögensgegenstände,1406,Haben,3.66
+616,287,JEB7,31.12.2024,31.12.2024,II. Forderungen und sonstige Vermögensgegenstände,9000,Soll,252.67
+617,287,JEB7,31.12.2024,31.12.2024,II. Forderungen und sonstige Vermögensgegenstände,1420,Haben,252.67
+618,288,JEB8,31.12.2024,31.12.2024,II. Forderungen und sonstige Vermögensgegenstände,9000,Soll,4174.50
+619,288,JEB8,31.12.2024,31.12.2024,II. Forderungen und sonstige Vermögensgegenstände,1435,Haben,4174.50
+620,289,JEB9,31.12.2024,31.12.2024,II. Forderungen und sonstige Vermögensgegenstände,9000,Soll,5186.32
+621,289,JEB9,31.12.2024,31.12.2024,II. Forderungen und sonstige Vermögensgegenstände,1450,Haben,5186.32
+622,290,JEB10,31.12.2024,31.12.2024,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",9000,Soll,8795.84
+623,290,JEB10,31.12.2024,31.12.2024,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",1820,Haben,8795.84
+624,291,JEB11,31.12.2024,31.12.2024,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",9000,Soll,17524.32
+625,291,JEB11,31.12.2024,31.12.2024,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",1821,Haben,17524.32
+626,292,JEB12,31.12.2024,31.12.2024,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",9000,Soll,30164.74
+627,292,JEB12,31.12.2024,31.12.2024,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",1830,Haben,30164.74
+628,293,JEB13,31.12.2024,31.12.2024,I. Gezeichnetes Kapital,2900,Soll,25000.00
+629,293,JEB13,31.12.2024,31.12.2024,I. Gezeichnetes Kapital,9000,Haben,25000.00
+630,294,JEB14,31.12.2024,31.12.2024,IV. Gewinnvortrag/Verlustvortrag,2970,Soll,114477.16
+631,294,JEB14,31.12.2024,31.12.2024,IV. Gewinnvortrag/Verlustvortrag,9000,Haben,114477.16
+632,295,JEB15,31.12.2024,31.12.2024,B. Rückstellungen,3020,Soll,502.27
+633,295,JEB15,31.12.2024,31.12.2024,B. Rückstellungen,9000,Haben,502.27
+634,296,JEB16,31.12.2024,31.12.2024,B. Rückstellungen,3035,Soll,6935.50
+635,296,JEB16,31.12.2024,31.12.2024,B. Rückstellungen,9000,Haben,6935.50
+636,297,JEB17,31.12.2024,31.12.2024,B. Rückstellungen,3040,Soll,9131.86
+637,297,JEB17,31.12.2024,31.12.2024,B. Rückstellungen,9000,Haben,9131.86
+638,298,JEB18,31.12.2024,31.12.2024,C. Verbindlichkeiten,3730,Soll,7121.00
+639,298,JEB18,31.12.2024,31.12.2024,C. Verbindlichkeiten,9000,Haben,7121.00
+640,299,JEB19,31.12.2024,31.12.2024,C. Verbindlichkeiten,3806,Soll,9.48
+641,299,JEB19,31.12.2024,31.12.2024,C. Verbindlichkeiten,9000,Haben,9.48
+642,300,JEB20,31.12.2024,31.12.2024,1. Umsatzerlöse,4400,Soll,57285.00
+643,300,JEB20,31.12.2024,31.12.2024,1. Umsatzerlöse,00000,Haben,57285.00
+644,301,JEB21,31.12.2024,31.12.2024,4. Sonstige betriebliche Erträge,4560,Soll,33.12
+645,301,JEB21,31.12.2024,31.12.2024,4. Sonstige betriebliche Erträge,00000,Haben,33.12
+646,302,JEB22,31.12.2024,31.12.2024,6. Personalaufwand,00000,Soll,42000.00
+647,302,JEB22,31.12.2024,31.12.2024,6. Personalaufwand,6024,Haben,42000.00
+648,303,JEB23,31.12.2024,31.12.2024,7. Abschreibungen,00000,Soll,531.91
+649,303,JEB23,31.12.2024,31.12.2024,7. Abschreibungen,6262,Haben,531.91
+650,304,JEB24,31.12.2024,31.12.2024,8. Sonstige betriebliche Aufwendungen,00000,Soll,262.00
+651,304,JEB24,31.12.2024,31.12.2024,8. Sonstige betriebliche Aufwendungen,6420,Haben,262.00
+652,305,JEB25,31.12.2024,31.12.2024,8. Sonstige betriebliche Aufwendungen,00000,Soll,876.07
+653,305,JEB25,31.12.2024,31.12.2024,8. Sonstige betriebliche Aufwendungen,6660,Haben,876.07
+654,306,JEB26,31.12.2024,31.12.2024,8. Sonstige betriebliche Aufwendungen,00000,Soll,171.02
+655,306,JEB26,31.12.2024,31.12.2024,8. Sonstige betriebliche Aufwendungen,6663,Haben,171.02
+656,307,JEB27,31.12.2024,31.12.2024,8. Sonstige betriebliche Aufwendungen,00000,Soll,48.66
+657,307,JEB27,31.12.2024,31.12.2024,8. Sonstige betriebliche Aufwendungen,6664,Haben,48.66
+658,308,JEB28,31.12.2024,31.12.2024,8. Sonstige betriebliche Aufwendungen,00000,Soll,162.20
+659,308,JEB28,31.12.2024,31.12.2024,8. Sonstige betriebliche Aufwendungen,6810,Haben,162.20
+660,309,JEB29,31.12.2024,31.12.2024,8. Sonstige betriebliche Aufwendungen,00000,Soll,70.00
+661,309,JEB29,31.12.2024,31.12.2024,8. Sonstige betriebliche Aufwendungen,6825,Haben,70.00
+662,310,JEB30,31.12.2024,31.12.2024,8. Sonstige betriebliche Aufwendungen,00000,Soll,18.97
+663,310,JEB30,31.12.2024,31.12.2024,8. Sonstige betriebliche Aufwendungen,6837,Haben,18.97
+664,311,JEB31,31.12.2024,31.12.2024,8. Sonstige betriebliche Aufwendungen,00000,Soll,128.47
+665,311,JEB31,31.12.2024,31.12.2024,8. Sonstige betriebliche Aufwendungen,6855,Haben,128.47
+666,312,JEB32,31.12.2024,31.12.2024,4. Sonstige betriebliche Erträge,7100,Soll,238.37
+667,312,JEB32,31.12.2024,31.12.2024,4. Sonstige betriebliche Erträge,00000,Haben,238.37
+668,313,JEB33,31.12.2024,31.12.2024,14. Steuern vom Einkommen und vom Ertrag,00000,Soll,1993.05
+669,313,JEB33,31.12.2024,31.12.2024,14. Steuern vom Einkommen und vom Ertrag,7600,Haben,1993.05
+670,314,JEB34,31.12.2024,31.12.2024,14. Steuern vom Einkommen und vom Ertrag,00000,Soll,109.62
+671,314,JEB34,31.12.2024,31.12.2024,14. Steuern vom Einkommen und vom Ertrag,7608,Haben,109.62
+672,315,JEB35,31.12.2024,31.12.2024,14. Steuern vom Einkommen und vom Ertrag,00000,Soll,1501.50
+673,315,JEB35,31.12.2024,31.12.2024,14. Steuern vom Einkommen und vom Ertrag,7610,Haben,1501.50
+674,316,JEB36,31.12.2024,31.12.2024,14. Steuern vom Einkommen und vom Ertrag,00000,Soll,47.67
+675,316,JEB36,31.12.2024,31.12.2024,14. Steuern vom Einkommen und vom Ertrag,7639,Haben,47.67
+676,317,JEB37,31.12.2024,31.12.2024,V. Jahresüberschuß/Jahresfehlbetrag,00000,Soll,9635.35
+677,317,JEB37,31.12.2024,31.12.2024,V. Jahresüberschuß/Jahresfehlbetrag,9000,Haben,9635.35

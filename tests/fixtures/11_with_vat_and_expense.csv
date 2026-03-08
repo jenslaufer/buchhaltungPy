@@ -1,0 +1,7 @@
+Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungstext,Konto,Typ,Betrag
+1,1,RE001,15.01.2024,15.01.2024,Umsatz brutto,1810,Soll,11900
+2,1,RE001,15.01.2024,15.01.2024,Umsatz netto,4400,Haben,10000
+3,1,RE001,15.01.2024,15.01.2024,USt 19%,3806,Haben,1900
+4,2,RE002,20.01.2024,20.01.2024,Software Lizenz netto,6837,Soll,500
+5,2,RE002,20.01.2024,20.01.2024,VSt 19%,1406,Soll,95
+6,2,RE002,20.01.2024,20.01.2024,Software Lizenz brutto,1810,Haben,595

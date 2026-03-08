@@ -1,0 +1,3 @@
+Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungstext,Konto,Typ,Betrag
+1,1,RE001,01.06.2024,01.06.2024,Beratung,1810,Soll,1234.56
+2,1,RE001,01.06.2024,01.06.2024,Beratung,4400,Haben,1234.56

@@ -1,0 +1,6 @@
+Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungstext,Konto,Typ,Betrag
+1,1,RE001,15.01.2024,15.01.2024,Rechnung gestellt,1200,Soll,11900
+2,1,RE001,15.01.2024,15.01.2024,Umsatz,4400,Haben,10000
+3,1,RE001,15.01.2024,15.01.2024,USt,3806,Haben,1900
+4,2,ZE001,15.02.2024,15.02.2024,Zahlung erhalten,1810,Soll,11900
+5,2,ZE001,15.02.2024,15.02.2024,Forderung beglichen,1200,Haben,11900

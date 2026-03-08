@@ -1,0 +1,146 @@
+Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungstext,Konto,Typ,Betrag
+1,1,E1,29.09.2022,03.11.2022,Stammkapital Solytics GmbH,1298,Soll,25000.00
+2,1,E1,29.09.2022,03.11.2022,Stammkapital Solytics GmbH,2900,Haben,25000.00
+3,2,E2,29.09.2022,03.11.2022,Notarkosten Beurkundung GmbH,6825,Soll,683.00
+4,2,E2,29.09.2022,03.11.2022,Notarkosten Beurkundung GmbH,1406,Soll,129.77
+5,2,E2,29.09.2022,03.11.2022,Notarkosten Beurkundung GmbH,99999,Haben,812.77
+6,3,E3,21.10.2022,03.11.2022,Gewerbeanmeldung,6430,Soll,25.00
+7,3,E3,21.10.2022,03.11.2022,Gewerbeanmeldung,99999,Haben,25.00
+8,4,E4,22.10.2022,03.11.2022,Hotelkosten VS,6660,Soll,336.45
+9,4,E4,22.10.2022,03.11.2022,Hotelkosten VS,1401,Soll,23.55
+10,4,E4,22.10.2022,03.11.2022,Hotelkosten VS,99999,Haben,360.00
+11,5,KO1,05.10.2022,03.11.2022,Einzahlung Stammkapital Gesellschafter,1810,Soll,25000.00
+12,5,KO1,05.10.2022,03.11.2022,Einzahlung Stammkapital Gesellschafter,1298,Haben,25000.00
+13,6,KO1,13.10.2022,03.11.2022,Bezahlung E2,99999,Soll,812.77
+14,6,KO1,13.10.2022,03.11.2022,Bezahlung E2,1810,Haben,812.77
+15,7,KO1,13.10.2022,03.11.2022,Bezahlung E4,99999,Soll,360.00
+16,7,KO1,24.10.2022,03.11.2022,Bezahlung E4,1810,Haben,360.00
+17,8,KO1,30.10.2022,03.11.2022,Bezahlung E3,99999,Soll,25.00
+18,8,KO1,30.10.2022,03.11.2022,Bezahlung E3,1810,Haben,25.00
+19,9,E5,17.11.2022,10.12.2022,Bronze Logo Design Paket,6600,Soll,269.00
+20,9,E5,17.11.2022,10.12.2022,Bronze Logo Design Paket,99999,Haben,269.00
+21,10,E6,25.11.2022,10.12.2022,Eintrag Handelsregister,6430,Soll,200.00
+22,10,E6,25.11.2022,10.12.2022,Eintrag Handelsregister,99999,Haben,200.00
+23,11,E7,26.11.2022,10.12.2022,Sony Headset,0670,Soll,276.47
+24,11,E7,26.11.2022,10.12.2022,Sony Headset,1406,Soll,52.53
+25,11,E7,26.11.2022,10.12.2022,Sony Headset,99999,Haben,329.00
+26,12,E8,28.11.2022,10.12.2022,Styleguide,6600,Soll,69.00
+27,12,E8,28.11.2022,10.12.2022,Styleguide,99999,Haben,69.00
+28,13,E9,02.12.2022,10.12.2022,Kontoführungsgebühren,6855,Soll,15.83
+29,13,E9,02.12.2022,10.12.2022,Kontoführungsgebühren,1406,Soll,3.01
+30,13,E9,02.12.2022,10.12.2022,Kontoführungsgebühren,99999,Haben,18.84
+31,14,A1,31.10.2022,10.12.2022,Softwareberatung Brunata,10001,Soll,12096.35
+32,14,A1,31.10.2022,10.12.2022,Softwareberatung Brunata,3806,Haben,1931.35
+33,14,A1,31.10.2022,10.12.2022,Softwareberatung Brunata,4400,Haben,10165.00
+34,15,A2,31.10.2022,10.12.2022,Softwareberatung Brunata,10001,Soll,14696.50
+35,15,A2,31.10.2022,10.12.2022,Softwareberatung Brunata,3806,Haben,2346.50
+36,15,A2,31.10.2022,10.12.2022,Softwareberatung Brunata,4400,Haben,12350.00
+37,16,A3,16.11.2022,10.12.2022,Gutschrift Kontoprüfung Kunde B,10002,Soll,0.01
+38,16,A3,16.11.2022,10.12.2022,Gutschrift Kontoprüfung Kunde B,4400,Haben,0.01
+39,17,KO3,04.11.2022,10.12.2022,Auszahlung A1,1810,Soll,12096.35
+40,17,KO3,04.11.2022,10.12.2022,Auszahlung A1,10001,Haben,12096.35
+41,18,KO2,04.11.2022,10.12.2022,Steuerrückstellung,1811,Soll,1931.35
+42,18,KO3,04.11.2022,10.12.2022,Steuerrückstellung,1810,Haben,1931.35
+43,19,KO2,04.11.2022,10.12.2022,Steuerrückstellung,1811,Soll,1524.75
+44,19,KO3,04.11.2022,10.12.2022,Steuerrückstellung,1810,Haben,1524.75
+45,20,KO2,04.11.2022,10.12.2022,Steuerrückstellung,1811,Soll,1102.90
+46,20,KO3,04.11.2022,10.12.2022,Steuerrückstellung,1810,Haben,1102.90
+47,21,KO3,09.11.2022,10.12.2022,Auszahlung A2,1810,Soll,14696.50
+48,21,KO3,09.11.2022,10.12.2022,Auszahlung A2,10001,Haben,14696.50
+49,22,KO2,09.11.2022,10.12.2022,Steuerrückstellung,1811,Soll,2346.50
+50,22,KO3,09.11.2022,10.12.2022,Steuerrückstellung,1810,Haben,2346.50
+51,23,KO2,09.11.2022,10.12.2022,Steuerrückstellung,1811,Soll,1852.50
+52,23,KO3,09.11.2022,10.12.2022,Steuerrückstellung,1810,Haben,1852.50
+53,24,KO2,09.11.2022,10.12.2022,Steuerrückstellung,1811,Soll,1339.98
+54,24,KO3,09.11.2022,10.12.2022,Steuerrückstellung,1810,Haben,1339.98
+55,25,KO3,16.11.2022,10.12.2022,Auszahlung A3,1810,Soll,0.01
+56,25,KO3,16.11.2022,10.12.2022,Auszahlung A3,10002,Haben,0.01
+57,26,KO3,19.11.2022,10.12.2022,Bezahlung E5,99999,Soll,269.00
+58,26,KO3,19.11.2022,10.12.2022,Bezahlung E5,1810,Haben,269.00
+59,27,KO3,27.11.2022,10.12.2022,Bezahlung E7,99999,Soll,329.00
+60,27,KO3,27.11.2022,10.12.2022,Bezahlung E7,1810,Haben,329.00
+61,28,KO3,30.11.2022,10.12.2022,Bezahlung E8,99999,Soll,69.00
+62,28,KO3,30.11.2022,10.12.2022,Bezahlung E8,1810,Haben,69.00
+63,29,E10,02.12.2022,01.01.2023,Telefonische Beratung Steuerberater,6825,Soll,200.00
+64,29,E10,02.12.2022,01.01.2023,Telefonische Beratung Steuerberater,1406,Soll,38.00
+65,29,E10,02.12.2022,01.01.2023,Telefonische Beratung Steuerberater,99999,Haben,238.00
+66,30,E11,14.12.2022,01.01.2023,Twitter Werbekampagne,6600,Soll,7.74
+67,30,E11,14.12.2022,01.01.2023,Twitter Werbekampagne,1406,Soll,1.47
+68,30,E11,14.12.2022,01.01.2023,Twitter Werbekampagne,99999,Haben,9.21
+69,31,E12,21.12.2022,01.01.2023,Twitter Werbekampagne,6600,Soll,2.72
+70,31,E12,21.12.2022,01.01.2023,Twitter Werbekampagne,1406,Soll,0.52
+71,31,E12,21.12.2022,01.01.2023,Twitter Werbekampagne,99999,Haben,3.24
+72,32,E13,27.12.2022,01.01.2023,Domainregistrierung,6600,Soll,6.06
+73,32,E13,27.12.2022,01.01.2023,Domainregistrierung,99999,Haben,6.06
+74,33,A4,30.11.2022,01.01.2023,Softwareberatung Brunata,10001,Soll,20066.38
+75,33,A4,30.11.2022,01.01.2023,Softwareberatung Brunata,3806,Haben,3203.88
+76,33,A4,30.11.2022,01.01.2023,Softwareberatung Brunata,4400,Haben,16862.50
+77,34,KO5,04.12.2022,01.01.2023,Bezahlung E6,99999,Soll,200.00
+78,34,KO5,04.12.2022,01.01.2023,Bezahlung E6,1810,Haben,200.00
+79,35,KO5,07.12.2022,01.01.2023,Bezahlung E9,99999,Soll,18.84
+80,35,KO5,07.12.2022,01.01.2023,Bezahlung E9,1810,Haben,18.84
+81,36,KO5,12.12.2022,01.01.2023,Auszahlung A4,1810,Soll,20066.38
+82,36,KO5,12.12.2022,01.01.2023,Auszahlung A4,10001,Haben,20066.38
+83,37,KO4,12.12.2022,01.01.2023,Steuerrückstellung,1811,Soll,7562.83
+84,37,KO5,12.12.2022,01.01.2023,Steuerrückstellung,1810,Haben,7562.83
+85,38,KO5,14.12.2022,01.01.2023,Bezahlung E10,99999,Soll,238.00
+86,38,KO5,14.12.2022,01.01.2023,Bezahlung E10,1810,Haben,238.00
+87,39,KO5,15.12.2022,01.01.2023,Bezahlung E11,99999,Soll,9.21
+88,39,KO5,15.12.2022,01.01.2023,Bezahlung E11,1810,Haben,9.21
+89,40,KO5,22.12.2022,01.01.2023,Bezahlung E12,99999,Soll,3.24
+90,40,KO5,22.12.2022,01.01.2023,Bezahlung E12,1810,Haben,3.24
+91,41,KO5,29.12.2022,01.01.2023,Bezahlung E13,99999,Soll,6.06
+92,41,KO5,29.12.2022,01.01.2023,Bezahlung E13,1810,Haben,6.06
+93,42,E7,31.12.2022,01.01.2023,Sofortabschreibung Sony Headset,6262,Soll,276.47
+94,42,E7,31.12.2022,01.01.2023,Sofortabschreibung Sony Headset,0670,Haben,276.47
+95,43,A5,31.12.2022,01.01.2023,Softwareberatung Brunata,10001,Soll,10457.13
+96,43,A5,31.12.2022,01.01.2023,Softwareberatung Brunata,3806,Haben,1669.63
+97,43,A5,31.12.2022,01.01.2023,Softwareberatung Brunata,4400,Haben,8787.50
+98,44,JEB1,31.12.2022,31.12.2022,Gewerbesteuer,7610,Soll,4999.00
+99,44,JEB1,31.12.2022,31.12.2022,Gewerbesteuer,3035,Haben,4999.00
+100,45,JEB2,31.12.2022,31.12.2022,Körperschaftsteuer,7600,Soll,6911.06
+101,45,JEB2,31.12.2022,31.12.2022,Körperschaftsteuer,3040,Haben,6911.06
+102,46,JEB3,31.12.2022,31.12.2022,Solidaritätszuschlag,7608,Soll,380.11
+103,46,JEB3,31.12.2022,31.12.2022,Solidaritätszuschlag,3020,Haben,380.11
+104,47,JEB4,31.12.2022,31.12.2022,II. Forderungen und sonstige Vermögensgegenstände,9000,Soll,23.55
+105,47,JEB4,31.12.2022,31.12.2022,II. Forderungen und sonstige Vermögensgegenstände,1401,Haben,23.55
+106,48,JEB5,31.12.2022,31.12.2022,II. Forderungen und sonstige Vermögensgegenstände,9000,Soll,225.30
+107,48,JEB5,31.12.2022,31.12.2022,II. Forderungen und sonstige Vermögensgegenstände,1406,Haben,225.30
+108,49,JEB6,31.12.2022,31.12.2022,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",9000,Soll,51858.31
+109,49,JEB6,31.12.2022,31.12.2022,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",1810,Haben,51858.31
+110,50,JEB7,31.12.2022,31.12.2022,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",9000,Soll,17660.81
+111,50,JEB7,31.12.2022,31.12.2022,"IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",1811,Haben,17660.81
+112,51,JEB8,31.12.2022,31.12.2022,I. Gezeichnetes Kapital,2900,Soll,25000.00
+113,51,JEB8,31.12.2022,31.12.2022,I. Gezeichnetes Kapital,9000,Haben,25000.00
+114,52,JEB9,31.12.2022,31.12.2022,C. Verbindlichkeiten,3806,Soll,9151.36
+115,52,JEB9,31.12.2022,31.12.2022,C. Verbindlichkeiten,9000,Haben,9151.36
+116,53,JEB10,31.12.2022,31.12.2022,1. Umsatzerlöse,4400,Soll,48165.01
+117,53,JEB10,31.12.2022,31.12.2022,1. Umsatzerlöse,00000,Haben,48165.01
+118,54,JEB11,31.12.2022,31.12.2022,8. Sonstige betriebliche Aufwendungen,00000,Soll,15.83
+119,54,JEB11,31.12.2022,31.12.2022,8. Sonstige betriebliche Aufwendungen,6855,Haben,15.83
+120,55,JEB12,31.12.2022,31.12.2022,7. Abschreibungen,00000,Soll,276.47
+121,55,JEB12,31.12.2022,31.12.2022,7. Abschreibungen,6262,Haben,276.47
+122,56,JEB13,31.12.2022,31.12.2022,8. Sonstige betriebliche Aufwendungen,00000,Soll,225.00
+123,56,JEB13,31.12.2022,31.12.2022,8. Sonstige betriebliche Aufwendungen,6430,Haben,225.00
+124,57,JEB14,31.12.2022,31.12.2022,8. Sonstige betriebliche Aufwendungen,00000,Soll,354.52
+125,57,JEB14,31.12.2022,31.12.2022,8. Sonstige betriebliche Aufwendungen,6600,Haben,354.52
+126,58,JEB15,31.12.2022,31.12.2022,8. Sonstige betriebliche Aufwendungen,00000,Soll,336.45
+127,58,JEB15,31.12.2022,31.12.2022,8. Sonstige betriebliche Aufwendungen,6660,Haben,336.45
+128,59,JEB16,31.12.2022,31.12.2022,8. Sonstige betriebliche Aufwendungen,00000,Soll,883.00
+129,59,JEB16,31.12.2022,31.12.2022,8. Sonstige betriebliche Aufwendungen,6825,Haben,883.00
+130,60,JEB17,31.12.2022,31.12.2022,II. Forderungen und sonstige Vermögensgegenstände,9000,Soll,10457.13
+131,60,JEB17,31.12.2022,31.12.2022,II. Forderungen und sonstige Vermögensgegenstände,10001,Haben,10457.13
+132,61,JEB18,31.12.2022,31.12.2022,B. Rückstellungen,3020,Soll,380.11
+133,61,JEB18,31.12.2022,31.12.2022,B. Rückstellungen,9000,Haben,380.11
+134,62,JEB19,31.12.2022,31.12.2022,B. Rückstellungen,3035,Soll,4999.00
+135,62,JEB19,31.12.2022,31.12.2022,B. Rückstellungen,9000,Haben,4999.00
+136,63,JEB20,31.12.2022,31.12.2022,B. Rückstellungen,3040,Soll,6911.06
+137,63,JEB20,31.12.2022,31.12.2022,B. Rückstellungen,9000,Haben,6911.06
+138,64,JEB21,31.12.2022,31.12.2022,14. Steuern vom Einkommen und vom Ertrag,00000,Soll,6911.06
+139,64,JEB21,31.12.2022,31.12.2022,14. Steuern vom Einkommen und vom Ertrag,7600,Haben,6911.06
+140,65,JEB22,31.12.2022,31.12.2022,14. Steuern vom Einkommen und vom Ertrag,00000,Soll,380.11
+141,65,JEB22,31.12.2022,31.12.2022,14. Steuern vom Einkommen und vom Ertrag,7608,Haben,380.11
+142,66,JEB23,31.12.2022,31.12.2022,14. Steuern vom Einkommen und vom Ertrag,00000,Soll,4999.00
+143,66,JEB23,31.12.2022,31.12.2022,14. Steuern vom Einkommen und vom Ertrag,7610,Haben,4999.00
+144,67,JEB24,31.12.2022,31.12.2022,V. Jahresüberschuß/Jahresfehlbetrag,00000,Soll,33783.57
+145,67,JEB24,31.12.2022,31.12.2022,V. Jahresüberschuß/Jahresfehlbetrag,9000,Haben,33783.57
