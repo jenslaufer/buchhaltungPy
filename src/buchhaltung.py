@@ -528,3 +528,229 @@ def get_konten(
 ) -> pl.DataFrame:
     start_d, ende_d = _parse_date(start), _parse_date(ende)
     return _get_konten(journal_file, konten_file, start_d, ende_d, True).drop("detail")
+
+
+# ---------------------------------------------------------------------------
+# Jahresabschluss (year-end closing)
+# ---------------------------------------------------------------------------
+
+def _add_jahresendbuchung(
+    datum: str, konto: str, saldo: float, saldo_typ: str,
+    bilanzposten: str | None, guv_posten: str | None,
+) -> pl.DataFrame:
+    """Create a closing entry for one account."""
+    # Determine counter-account and description
+    if bilanzposten is None or bilanzposten == "":
+        gegenkonto = "00000"  # GuV account
+        text = guv_posten or ""
+    else:
+        gegenkonto = "9000"  # Settlement account
+        text = bilanzposten or ""
+
+    # Determine Soll/Haben: reverse the balance
+    if saldo_typ == "Soll":
+        sollkonto, habenkonto = konto, gegenkonto
+    else:
+        sollkonto, habenkonto = gegenkonto, konto
+
+    return _make_buchungssatz(datum, "JEB", text, sollkonto, habenkonto, saldo)
+
+
+def jahresabschluss(
+    journal_file: str, konten_file: str, start: str, hebesatz: int,
+) -> None:
+    """Perform year-end closing: calculate taxes, create closing entries, update journal."""
+    start_d = _parse_date(start)
+    year = start_d.year
+    ende_d = date(year, 12, 31)
+    datum_str = ende_d.strftime("%d.%m.%Y")
+
+    journal = _read_journal(journal_file)
+
+    # Idempotent: skip if already closed
+    if journal.filter(pl.col("Belegnummer").str.contains("JEB")).height > 0:
+        return
+
+    import shutil
+    backup_file = journal_file.replace(".csv", "_backup.csv")
+    shutil.copy(journal_file, backup_file)
+
+    # Get all accounts including tax bookings
+    konten = _get_konten_mit_steuer(journal_file, konten_file, start_d, ende_d, hebesatz)
+
+    # Create closing entries for each non-zero account
+    closing_entries = []
+    for row in konten.filter(pl.col("Saldo").round(2) != 0).iter_rows(named=True):
+        entry = _add_jahresendbuchung(
+            datum_str, row["Konto"], row["Saldo"], row["Saldo Typ"],
+            row["Bilanzposten"], row["GuV Posten"],
+        )
+        closing_entries.append(entry)
+
+    if not closing_entries:
+        return
+
+    schlussbuchungen = pl.concat(closing_entries)
+
+    # Transfer GuV account (00000) net balance to settlement account (9000)
+    guv_rows = schlussbuchungen.filter(pl.col("Konto") == "00000")
+    if guv_rows.height > 0:
+        guv_signed = guv_rows.with_columns(
+            pl.when(pl.col("Typ") == "Soll")
+            .then(-pl.col("Betrag"))
+            .otherwise(pl.col("Betrag"))
+            .alias("Signed")
+        )["Signed"].sum()
+        guv_saldo = abs(guv_signed)
+        if round(guv_saldo, 2) > 0:
+            if guv_signed < 0:
+                # Net debit on 00000 → credit 00000, debit 9000
+                transfer = _make_buchungssatz(datum_str, "JEB", "GuV Abschluss", "00000", "9000", guv_saldo)
+            else:
+                # Net credit on 00000 → debit 00000, credit 9000
+                transfer = _make_buchungssatz(datum_str, "JEB", "GuV Abschluss", "9000", "00000", guv_saldo)
+            schlussbuchungen = pl.concat([schlussbuchungen, transfer])
+
+    # Assign sequential Buchungssatznummer (continuing from journal)
+    max_bsn = int(journal["Buchungssatznummer"].max()) if journal.height > 0 else 0
+    # Group pairs by their position (every 2 rows = 1 Buchungssatz)
+    n_rows = schlussbuchungen.height
+    bsn_list = []
+    for i in range(n_rows):
+        bsn_list.append(max_bsn + 1 + i // 2)
+    schlussbuchungen = schlussbuchungen.with_columns(
+        pl.Series("Buchungssatznummer", bsn_list)
+    )
+
+    # Assign Belegnummer = JEB{Buchungssatznummer - max_bsn}
+    schlussbuchungen = schlussbuchungen.with_columns(
+        (pl.lit("JEB") + (pl.col("Buchungssatznummer") - max_bsn).cast(pl.Utf8)).alias("Belegnummer")
+    )
+
+    # Assign sequential Journalnummer (continuing from journal)
+    max_jn = int(journal["Journalnummer"].max()) if journal.height > 0 else 0
+    schlussbuchungen = schlussbuchungen.with_columns(
+        pl.Series("Journalnummer", list(range(max_jn + 1, max_jn + 1 + n_rows)))
+    )
+
+    # Append to journal and write
+    combined = pl.concat([journal, schlussbuchungen], how="diagonal_relaxed")
+    combined = combined.select(journal.columns)
+    combined = combined.with_columns(
+        pl.col("Betrag").round(2)
+    )
+    combined.write_csv(journal_file)
+
+
+# ---------------------------------------------------------------------------
+# Jahreseröffnung (year opening)
+# ---------------------------------------------------------------------------
+
+def _add_jahreseroeffnungsbuchung(
+    datum: str, konto: str, saldo: float, saldo_typ: str,
+) -> pl.DataFrame:
+    """Create an opening entry for one balance sheet account."""
+    if saldo_typ == "Soll":
+        # Credit balance → re-establish by: debit 9000, credit Konto
+        sollkonto, habenkonto = "9000", konto
+    else:
+        # Debit balance → re-establish by: debit Konto, credit 9000
+        sollkonto, habenkonto = konto, "9000"
+    return _make_buchungssatz(datum, "JAB", "Übertrag aus Vorjahr", sollkonto, habenkonto, saldo)
+
+
+def jahreseroeffnung(
+    journal_file: str, konten_file: str, ende: str, hebesatz: int,
+) -> str:
+    """Create opening entries for next fiscal year. Returns path to new journal."""
+    ende_d = _parse_date(ende)
+    current_year = ende_d.year
+    new_year = current_year + 1
+    start_d = date(current_year, 1, 1)
+    datum_str = f"01.01.{new_year}"
+
+    # Get all accounts with taxes from current year
+    konten = _get_konten_mit_steuer(journal_file, konten_file, start_d, ende_d, hebesatz)
+    konten = konten.filter(pl.col("Saldo").round(2) > 0)
+
+    # Get Jahresüberschuss from GuV
+    guv_df = guv(journal_file, konten_file, str(start_d), str(ende_d), hebesatz)
+    ju_row = guv_df.filter(pl.col("GuV Posten") == "17. Jahresüberschuss/Jahresfehlbetrag")
+    jahresueberschuss = float(ju_row["Betrag"][0]) if not ju_row.is_empty() else 0.0
+
+    # Get existing Gewinnvortrag
+    gv_rows = konten.filter(pl.col("Bilanzposten").str.contains("Gewinnvortrag/Verlustvortrag"))
+    gewinnvortrag = float(gv_rows["Saldo"].sum()) if gv_rows.height > 0 else 0.0
+
+    # Opening entries for all balance sheet accounts except Gewinnvortrag
+    opening_entries = []
+    bilanz_konten = konten.filter(
+        pl.col("Bilanzposten").is_not_null()
+        & ~pl.col("Bilanzposten").str.contains("Gewinnvortrag/Verlustvortrag")
+    )
+    for row in bilanz_konten.iter_rows(named=True):
+        entry = _add_jahreseroeffnungsbuchung(
+            datum_str, row["Konto"], row["Saldo"], row["Saldo Typ"],
+        )
+        opening_entries.append(entry)
+
+    if opening_entries:
+        buchungen = pl.concat(opening_entries)
+    else:
+        buchungen = pl.DataFrame(schema={
+            "Journalnummer": pl.Int64, "Buchungssatznummer": pl.Int64,
+            "Belegnummer": pl.Utf8, "Belegdatum": pl.Utf8,
+            "Buchungsdatum": pl.Utf8, "Buchungstext": pl.Utf8,
+            "Konto": pl.Utf8, "Typ": pl.Utf8, "Betrag": pl.Float64,
+        })
+
+    # Assign sequential numbering
+    n_rows = buchungen.height
+    bsn_list = []
+    for i in range(n_rows):
+        bsn_list.append(1 + i // 2)
+
+    if n_rows > 0:
+        buchungen = buchungen.with_columns([
+            pl.Series("Journalnummer", list(range(1, n_rows + 1))),
+            pl.Series("Buchungssatznummer", bsn_list),
+        ])
+        buchungen = buchungen.with_columns(
+            (pl.lit("JAB") + pl.col("Buchungssatznummer").cast(pl.Utf8)).alias("Belegnummer")
+        )
+
+    # Add Gewinnvortrag entry (Jahresüberschuss + existing Gewinnvortrag → 2970)
+    gv_total = jahresueberschuss + gewinnvortrag
+    if abs(round(gv_total, 2)) > 0:
+        next_bsn = (n_rows // 2 + 1) if n_rows > 0 else 1
+        next_jn = n_rows + 1
+
+        if gv_total > 0:
+            # Profit: debit 9000, credit 2970
+            gv_entry = _make_buchungssatz(datum_str, "JAB", "Übertrag aus Vorjahr", "9000", "2970", abs(gv_total))
+        else:
+            # Loss: debit 2970, credit 9000
+            gv_entry = _make_buchungssatz(datum_str, "JAB", "Übertrag aus Vorjahr", "2970", "9000", abs(gv_total))
+
+        gv_entry = gv_entry.with_columns([
+            pl.Series("Journalnummer", [next_jn, next_jn + 1]),
+            pl.Series("Buchungssatznummer", [next_bsn, next_bsn]),
+            pl.lit(f"JAB{next_bsn}").alias("Belegnummer"),
+        ])
+        buchungen = pl.concat([buchungen, gv_entry], how="diagonal_relaxed")
+
+    # Write new journal file
+    import shutil
+    base = Path(journal_file)
+    new_file = str(base.parent / f"{base.stem}_{new_year}.csv")
+    if Path(new_file).exists():
+        shutil.copy(new_file, new_file.replace(".csv", "_backup.csv"))
+
+    buchungen = buchungen.with_columns(pl.col("Betrag").round(2))
+    buchungen = buchungen.select([
+        "Journalnummer", "Buchungssatznummer", "Belegnummer",
+        "Belegdatum", "Buchungsdatum", "Buchungstext",
+        "Konto", "Typ", "Betrag",
+    ])
+    buchungen.write_csv(new_file)
+    return new_file
