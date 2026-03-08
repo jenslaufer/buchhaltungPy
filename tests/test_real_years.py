@@ -217,10 +217,10 @@ def test_real_eroeffnungsbilanz_balanced(api, year, start, ende, hebesatz):
 # --- Schlussbilanz year N == Eröffnungsbilanz year N+1 ---
 
 YEAR_TRANSITIONS = [
-    ("2022", "2023", 395),
-    ("2023", "2024", 395),
-    ("2024", "2025", 395),
-    ("2025", "2026", 395),
+    ("2022", "2023", 305),
+    ("2023", "2024", 325),
+    ("2024", "2025", 325),
+    ("2025", "2026", 325),
 ]
 
 
