@@ -12,7 +12,8 @@ hebesatz_for_year() {
     case $1 in
         2022) echo 305 ;;
         2023|2024|2025) echo 325 ;;
-        *) echo 395 ;;
+        2026) echo 395 ;;
+        *) echo "ERROR: Unknown Hebesatz for year $1" >&2; return 1 ;;
     esac
 }
 

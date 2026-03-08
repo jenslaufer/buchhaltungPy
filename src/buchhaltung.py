@@ -1,10 +1,25 @@
 """Double-entry bookkeeping engine — Python/polars reimplementation."""
 
 import math
+import shutil
 from datetime import date
 from pathlib import Path
 
 import polars as pl
+
+# ---------------------------------------------------------------------------
+# Account number constants
+# ---------------------------------------------------------------------------
+
+KONTO_GUV = "00000"           # GuV settlement account
+KONTO_SBK = "9000"            # Schlussbilanzkonto / Eröffnungsbilanzkonto
+KONTO_GEWINNVORTRAG = "2970"  # Gewinnvortrag / Verlustvortrag
+KONTO_GEWERBESTEUER_AUFWAND = "7610"
+KONTO_GEWERBESTEUER_RUECKSTELLUNG = "3035"
+KONTO_KOERPERSCHAFTSTEUER_AUFWAND = "7600"
+KONTO_KOERPERSCHAFTSTEUER_RUECKSTELLUNG = "3040"
+KONTO_SOLI_AUFWAND = "7608"
+KONTO_SOLI_RUECKSTELLUNG = "3020"
 
 DATA_DIR = Path(__file__).parent.parent / "data"
 
@@ -154,11 +169,11 @@ def _get_steuerbuchungen(
     datum = ende.strftime("%d.%m.%Y")
     bookings = []
     if gwst > 0:
-        bookings.append(_make_buchungssatz(datum, "JEB", "Gewerbesteuer", "7610", "3035", gwst))
+        bookings.append(_make_buchungssatz(datum, "JEB", "Gewerbesteuer", KONTO_GEWERBESTEUER_AUFWAND, KONTO_GEWERBESTEUER_RUECKSTELLUNG, gwst))
     if kst > 0:
-        bookings.append(_make_buchungssatz(datum, "JEB", "Körperschaftsteuer", "7600", "3040", kst))
+        bookings.append(_make_buchungssatz(datum, "JEB", "Körperschaftsteuer", KONTO_KOERPERSCHAFTSTEUER_AUFWAND, KONTO_KOERPERSCHAFTSTEUER_RUECKSTELLUNG, kst))
     if soli > 0:
-        bookings.append(_make_buchungssatz(datum, "JEB", "Solidaritätszuschlag", "7608", "3020", soli))
+        bookings.append(_make_buchungssatz(datum, "JEB", "Solidaritätszuschlag", KONTO_SOLI_AUFWAND, KONTO_SOLI_RUECKSTELLUNG, soli))
 
     if not bookings:
         return pl.DataFrame(schema={
@@ -384,11 +399,16 @@ def _build_bilanzposten_lookup() -> pl.DataFrame:
 def _bilanz_signed_betrag(bilanz_konten: pl.DataFrame) -> pl.DataFrame:
     """Apply bilanz sign convention to account saldos.
 
-    _summarise stores abs(sum) as Saldo with a Saldo Typ indicator.
-    Saldo Typ "Haben" → more Soll/debit bookings → debit balance.
-    Saldo Typ "Soll" → more Haben/credit bookings → credit balance.
-    Aktiva: debit balance = +Saldo, credit balance = -Saldo.
-    Passiva: credit balance = +Saldo, debit balance = -Saldo.
+    _summarise computes sum(Haben) - sum(Soll). A negative sum means more
+    Soll/debit activity, stored as abs() with Saldo Typ = "Haben" (meaning
+    "needs a Haben entry to close" = debit-heavy = normal for Aktiva).
+    Conversely, Saldo Typ = "Soll" means credit-heavy = normal for Passiva.
+
+    Therefore:
+    Aktiva + "Haben" (debit-heavy, normal) → +Saldo
+    Aktiva + "Soll" (credit-heavy, unusual) → -Saldo
+    Passiva + "Soll" (credit-heavy, normal) → +Saldo
+    Passiva + "Haben" (debit-heavy, unusual) → -Saldo
     """
     return bilanz_konten.with_columns(
         pl.when(
@@ -648,10 +668,10 @@ def _add_jahresendbuchung(
     """Create a closing entry for one account."""
     # Determine counter-account and description
     if bilanzposten is None or bilanzposten == "":
-        gegenkonto = "00000"  # GuV account
+        gegenkonto = KONTO_GUV
         text = guv_posten or ""
     else:
-        gegenkonto = "9000"  # Settlement account
+        gegenkonto = KONTO_SBK
         text = bilanzposten or ""
 
     # Determine Soll/Haben: reverse the balance
@@ -678,7 +698,6 @@ def jahresabschluss(
     if journal.filter(pl.col("Belegnummer").str.contains("JEB")).height > 0:
         return
 
-    import shutil
     backup_file = journal_file.replace(".csv", "_backup.csv")
     shutil.copy(journal_file, backup_file)
 
@@ -699,8 +718,8 @@ def jahresabschluss(
 
     schlussbuchungen = pl.concat(closing_entries)
 
-    # Transfer GuV account (00000) net balance to settlement account (9000)
-    guv_rows = schlussbuchungen.filter(pl.col("Konto") == "00000")
+    # Transfer GuV account net balance to settlement account
+    guv_rows = schlussbuchungen.filter(pl.col("Konto") == KONTO_GUV)
     if guv_rows.height > 0:
         guv_signed = guv_rows.with_columns(
             pl.when(pl.col("Typ") == "Soll")
@@ -711,11 +730,9 @@ def jahresabschluss(
         guv_saldo = abs(guv_signed)
         if round(guv_saldo, 2) > 0:
             if guv_signed < 0:
-                # Net debit on 00000 → credit 00000, debit 9000
-                transfer = _make_buchungssatz(datum_str, "JEB", "GuV Abschluss", "00000", "9000", guv_saldo)
+                transfer = _make_buchungssatz(datum_str, "JEB", "GuV Abschluss", KONTO_GUV, KONTO_SBK, guv_saldo)
             else:
-                # Net credit on 00000 → debit 00000, credit 9000
-                transfer = _make_buchungssatz(datum_str, "JEB", "GuV Abschluss", "9000", "00000", guv_saldo)
+                transfer = _make_buchungssatz(datum_str, "JEB", "GuV Abschluss", KONTO_SBK, KONTO_GUV, guv_saldo)
             schlussbuchungen = pl.concat([schlussbuchungen, transfer])
 
     # Assign sequential Buchungssatznummer (continuing from journal)
@@ -758,11 +775,11 @@ def _add_jahreseroeffnungsbuchung(
 ) -> pl.DataFrame:
     """Create an opening entry for one balance sheet account."""
     if saldo_typ == "Soll":
-        # Credit balance → re-establish by: debit 9000, credit Konto
-        sollkonto, habenkonto = "9000", konto
+        # "Soll" = credit-heavy → re-establish credit balance: debit SBK, credit Konto
+        sollkonto, habenkonto = KONTO_SBK, konto
     else:
-        # Debit balance → re-establish by: debit Konto, credit 9000
-        sollkonto, habenkonto = konto, "9000"
+        # "Haben" = debit-heavy → re-establish debit balance: debit Konto, credit SBK
+        sollkonto, habenkonto = konto, KONTO_SBK
     return _make_buchungssatz(datum, "JAB", "Übertrag aus Vorjahr", sollkonto, habenkonto, saldo)
 
 
@@ -778,7 +795,7 @@ def jahreseroeffnung(
 
     # Get all accounts with taxes from current year
     konten = _get_konten_mit_steuer(journal_file, konten_file, start_d, ende_d, hebesatz)
-    konten = konten.filter(pl.col("Saldo").round(2) > 0)
+    konten = konten.filter(pl.col("Saldo").round(2) != 0)
 
     # Get Jahresüberschuss from GuV
     guv_df = guv(journal_file, konten_file, str(start_d), str(ende_d), hebesatz)
@@ -833,11 +850,9 @@ def jahreseroeffnung(
         next_jn = n_rows + 1
 
         if gv_total > 0:
-            # Profit: debit 9000, credit 2970
-            gv_entry = _make_buchungssatz(datum_str, "JAB", "Übertrag aus Vorjahr", "9000", "2970", abs(gv_total))
+            gv_entry = _make_buchungssatz(datum_str, "JAB", "Übertrag aus Vorjahr", KONTO_SBK, KONTO_GEWINNVORTRAG, abs(gv_total))
         else:
-            # Loss: debit 2970, credit 9000
-            gv_entry = _make_buchungssatz(datum_str, "JAB", "Übertrag aus Vorjahr", "2970", "9000", abs(gv_total))
+            gv_entry = _make_buchungssatz(datum_str, "JAB", "Übertrag aus Vorjahr", KONTO_GEWINNVORTRAG, KONTO_SBK, abs(gv_total))
 
         gv_entry = gv_entry.with_columns([
             pl.Series("Journalnummer", [next_jn, next_jn + 1]),
@@ -847,7 +862,6 @@ def jahreseroeffnung(
         buchungen = pl.concat([buchungen, gv_entry], how="diagonal_relaxed")
 
     # Write new journal file
-    import shutil
     base = Path(journal_file)
     new_file = str(base.parent / f"{base.stem}_{new_year}.csv")
     if Path(new_file).exists():

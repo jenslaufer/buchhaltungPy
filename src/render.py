@@ -1,6 +1,7 @@
 """Render Bilanz, GuV, and T-Konten as standalone HTML files."""
 
 import argparse
+from html import escape
 from pathlib import Path
 
 from buchhaltung import (
@@ -50,15 +51,15 @@ def _render_guv_body(journal_file, konten_file, start, ende, hebesatz, firma):
 
     bold_rows = {"Betriebsergebnis", "15. Ergebnis nach Steuern", "17. Jahresüberschuss/Jahresfehlbetrag"}
 
-    html = f'<h2 class="text-xl font-bold mb-6">{firma} &mdash; GuV {start_str} &ndash; {ende_str}</h2>\n'
+    html = f'<h2 class="text-xl font-bold mb-6">{escape(firma)} &mdash; GuV {start_str} &ndash; {ende_str}</h2>\n'
     html += '<table class="w-full">'
 
     for row in g.iter_rows(named=True):
-        posten = row["GuV Posten"]
+        posten = escape(row["GuV Posten"])
         betrag = row["Betrag"]
-        vorzeichen = row["Vorzeichen"]
+        vorzeichen = escape(row["Vorzeichen"])
         betrag_str = _format_german_number(betrag) if betrag != 0 else ""
-        bold = posten in bold_rows
+        bold = row["GuV Posten"] in bold_rows
         fw = " font-bold" if bold else ""
 
         html += f"""<tr>
@@ -74,12 +75,12 @@ def _render_guv_body(journal_file, konten_file, start, ende, hebesatz, firma):
 def _render_bilanz_body(firma, titel, bilanz_df, journal_valid="", bilanz_valid=""):
     b = bilanz_df
 
-    html = f'<h2 class="text-xl font-bold mb-6">{firma} &mdash; {titel}</h2>\n'
+    html = f'<h2 class="text-xl font-bold mb-6">{escape(firma)} &mdash; {escape(titel)}</h2>\n'
 
     if journal_valid:
-        html += f'<p class="mb-2"><b>Journal-Validierung:</b> {journal_valid}</p>\n'
+        html += f'<p class="mb-2"><b>Journal-Validierung:</b> {escape(journal_valid)}</p>\n'
     if bilanz_valid:
-        html += f'<p class="mb-2"><b>Bilanz-Validierung:</b> {bilanz_valid}</p>\n'
+        html += f'<p class="mb-2"><b>Bilanz-Validierung:</b> {escape(bilanz_valid)}</p>\n'
 
     def get_betrag(seite, ebene1="NA", ebene2="NA"):
         row = b.filter(
@@ -158,11 +159,11 @@ def _render_t_konten_body(journal_file, konten_file, start, ende, hebesatz, firm
             return ""
         return _format_german_number(val)
 
-    html = f'<h2 class="text-xl font-bold mb-6">{firma} &mdash; T-Konten zum {ende_str}</h2>\n'
+    html = f'<h2 class="text-xl font-bold mb-6">{escape(firma)} &mdash; T-Konten zum {ende_str}</h2>\n'
 
     for entry in accounts:
-        konto = entry["konto"]
-        bezeichnung = entry["bezeichnung"]
+        konto = escape(entry["konto"])
+        bezeichnung = escape(entry["bezeichnung"])
         detail = entry["detail"]
 
         html += '<table class="w-full mb-10 table-fixed">'
@@ -178,11 +179,13 @@ def _render_t_konten_body(journal_file, konten_file, start, ende, hebesatz, firm
         haben_total = 0.0
 
         for row in detail.iter_rows(named=True):
-            s_datum = row.get("Soll_Belegdatum") or ""
-            s_text = row.get("Soll_Buchungstext") or ""
+            raw_s_text = row.get("Soll_Buchungstext") or ""
+            raw_h_text = row.get("Haben_Buchungstext") or ""
+            s_datum = escape(row.get("Soll_Belegdatum") or "")
+            s_text = escape(raw_s_text)
             s_betrag = row.get("Soll_Betrag")
-            h_datum = row.get("Haben_Belegdatum") or ""
-            h_text = row.get("Haben_Buchungstext") or ""
+            h_datum = escape(row.get("Haben_Belegdatum") or "")
+            h_text = escape(raw_h_text)
             h_betrag = row.get("Haben_Betrag")
 
             if s_betrag is not None:
@@ -190,7 +193,7 @@ def _render_t_konten_body(journal_file, konten_file, start, ende, hebesatz, firm
             if h_betrag is not None:
                 haben_total += h_betrag
 
-            is_saldo = s_text == "Saldo" or h_text == "Saldo"
+            is_saldo = raw_s_text == "Saldo" or raw_h_text == "Saldo"
             fw = " font-bold" if is_saldo else ""
 
             html += f"""<tr>
@@ -202,7 +205,7 @@ def _render_t_konten_body(journal_file, konten_file, start, ende, hebesatz, firm
           <td class="p-2.5 text-right w-[100px]{fw}">{fmt(h_betrag)}</td>
         </tr>"""
 
-        summe = _format_german_number(max(soll_total, haben_total))
+        summe = _format_german_number(round(max(soll_total, haben_total), 2))
         html += f"""<tr>
       <td colspan="2" class="border-t-[3px] border-black"></td>
       <td class="p-2.5 border-t-[3px] border-r-2 border-black text-right font-bold">{summe}</td>
@@ -215,11 +218,14 @@ def _render_t_konten_body(journal_file, konten_file, start, ende, hebesatz, firm
 
 
 def _wrap_html(title, body):
-    return HTML_TEMPLATE.format(title=title, body=body)
+    return HTML_TEMPLATE.format(title=escape(title), body=body)
 
 
 def _signature(ort, ende_str, name, position):
-    return SIGNATURE_TEMPLATE.format(ort=ort, ende_str=ende_str, name=name, position=position)
+    return SIGNATURE_TEMPLATE.format(
+        ort=escape(ort), ende_str=escape(ende_str),
+        name=escape(name), position=escape(position),
+    )
 
 
 def render_guv(journal_file, konten_file, start, ende, hebesatz, firma, ort, name, position):
