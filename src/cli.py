@@ -138,6 +138,16 @@ def cmd_jahreseroeffnung(args):
     print(f"Opening entries written: {new_file}")
 
 
+def cmd_ebilanz(args):
+    ini_path = bh.ebilanz_export(
+        args.journal, args.konten, args.start, args.ende,
+        args.hebesatz,
+        template_ini=args.template,
+        output_dir=args.output_dir,
+    )
+    print(f"E-Bilanz export: {ini_path}")
+
+
 # ---------------------------------------------------------------------------
 # Payroll commands
 # ---------------------------------------------------------------------------
@@ -320,6 +330,13 @@ def main(argv=None):
     p = sub.add_parser("jahreseroeffnung", help="Create opening entries for next year")
     _add_common(p, start=False, hebesatz=True)
     p.set_defaults(func=cmd_jahreseroeffnung)
+
+    # ebilanz
+    p = sub.add_parser("ebilanz", help="Export E-Bilanz for myEBilanz")
+    _add_common(p, hebesatz=True)
+    p.add_argument("--template", default="", help="Path to myEBilanz template INI")
+    p.add_argument("--output-dir", default="", help="Output directory for CSV and INI")
+    p.set_defaults(func=cmd_ebilanz)
 
     # lohn-berechnen
     p = sub.add_parser("lohn-berechnen", help="Compute payroll for an employee (CSV)")

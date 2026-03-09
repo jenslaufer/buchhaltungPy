@@ -911,3 +911,130 @@ def korrigiere_nummern(journal_file: str) -> None:
     journal = journal.with_columns(pl.col("Betrag").round(2))
 
     journal.write_csv(journal_file)
+
+
+# ---------------------------------------------------------------------------
+# E-Bilanz export (myEBilanz format)
+# ---------------------------------------------------------------------------
+
+def ebilanz_export(
+    journal_file: str, konten_file: str, start: str, ende: str,
+    hebesatz: int = 380,
+    template_ini: str = "",
+    output_dir: str = "",
+) -> str:
+    """Generate E-Bilanz CSV and INI for myEBilanz.
+
+    Args:
+        journal_file: Path to journal CSV
+        konten_file: Path to konten.csv
+        start: Fiscal year start (YYYY-MM-DD)
+        ende: Fiscal year end (YYYY-MM-DD)
+        hebesatz: Trade tax Hebesatz
+        template_ini: Path to myEBilanz template INI (with [xbrl] mappings)
+        output_dir: Output directory for CSV and INI
+
+    Returns:
+        Path to generated INI file.
+    """
+    import configparser
+    import uuid
+
+    start_d, ende_d = _parse_date(start), _parse_date(ende)
+
+    # Get account balances including tax bookings
+    konten_df = _get_konten_mit_steuer(
+        journal_file, konten_file, start_d, ende_d, hebesatz
+    )
+
+    # Build CSV: Konto;Saldo;Bezeichnung
+    rows = []
+    for row in konten_df.iter_rows(named=True):
+        saldo = row["Saldo"]
+        if row["Saldo Typ"] == "Haben":
+            # "Haben" = debit-heavy (normal for Aktiva) → positive
+            saldo = abs(saldo)
+        else:
+            # "Soll" = credit-heavy (normal for Passiva/revenue) → negative
+            saldo = -abs(saldo)
+        if abs(saldo) >= 0.005:
+            rows.append({
+                "Konto": row["Konto"],
+                "Saldo": round(saldo, 2),
+                "Bezeichnung": row["Bezeichnung"],
+            })
+
+    saldo_df = pl.DataFrame(rows)
+
+    # Determine output paths
+    out_dir = Path(output_dir) if output_dir else Path(".")
+    ende_str = ende_d.isoformat()
+    csv_name = f"bilanz_{ende_str}.csv"
+    ini_name = f"bilanz_{ende_str}.ini"
+    csv_path = out_dir / csv_name
+    ini_path = out_dir / ini_name
+
+    # Write CSV with semicolon delimiter
+    saldo_df.write_csv(csv_path, separator=";", quote_style="always")
+
+    # Build INI from template or scratch
+    if template_ini and Path(template_ini).exists():
+        # Read raw to preserve encoding quirks
+        ini_content = Path(template_ini).read_text(encoding="latin-1")
+        config = configparser.ConfigParser(interpolation=None, delimiters=("=",))
+        config.optionxform = str  # preserve case
+        config.read_string(ini_content)
+    else:
+        config = configparser.ConfigParser(interpolation=None, delimiters=("=",))
+        config.optionxform = str
+
+    # Update dynamic fields
+    if not config.has_section("magic"):
+        config.add_section("magic")
+    config.set("magic", "myebilanz", "true")
+    config.set("magic", "guid", str(uuid.uuid4()).upper())
+
+    if not config.has_section("csv"):
+        config.add_section("csv")
+    config.set("csv", "filename", csv_name)
+    config.set("csv", "delimiter", ";")
+    config.set("csv", "fieldKto", "1")
+    config.set("csv", "fieldValue", "2")
+    config.set("csv", "fieldName", "3")
+    config.set("csv", "fieldValueDebit", "0")
+    config.set("csv", "fieldValueCredit", "0")
+    config.set("csv", "fieldXBRL", "0")
+
+    if not config.has_section("period"):
+        config.add_section("period")
+    jahr = start_d.year
+    config.set("period", "fiscalYearBegin", start_d.isoformat())
+    config.set("period", "fiscalYearEnd", ende_d.isoformat())
+    prev_start = date(jahr - 1, 1, 1).isoformat()
+    prev_end = date(jahr - 1, 12, 31).isoformat()
+    config.set("period", "fiscalPreviousYearBegin", prev_start)
+    config.set("period", "fiscalPreviousYearEnd", prev_end)
+    config.set("period", "balSheetClosingDatePreviousYear", prev_end)
+    config.set("period", "balSheetClosingDate", ende_d.isoformat())
+
+    # Update XBRL mappings from konten.csv taxonomie column
+    konten_raw = pl.read_csv(konten_file, schema_overrides={"Konto": pl.Utf8})
+    if "XBRL Taxonomie" in konten_raw.columns:
+        tax_map = (
+            konten_raw
+            .filter(pl.col("XBRL Taxonomie").is_not_null() & (pl.col("XBRL Taxonomie") != ""))
+            .group_by("XBRL Taxonomie")
+            .agg(pl.col("Konto").sort_by("Konto"))
+        )
+        if not config.has_section("xbrl"):
+            config.add_section("xbrl")
+        for row in tax_map.iter_rows(named=True):
+            key = f"de-gaap-ci:{row['XBRL Taxonomie']}"
+            val = ",".join(row["Konto"])
+            config.set("xbrl", key, val)
+
+    # Write INI
+    with open(ini_path, "w", encoding="latin-1") as f:
+        config.write(f)
+
+    return str(ini_path)
