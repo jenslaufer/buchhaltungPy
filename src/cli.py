@@ -19,9 +19,10 @@ Commands:
   t-konten             Show T-account detail for all accounts
   jahresabschluss      Perform year-end closing (modifies journal in-place)
   jahreseroeffnung     Create opening entries for next fiscal year
+  ebilanz              Export E-Bilanz CSV + INI for myEBilanz
   lohn-berechnen       Compute payroll for an employee
   lohn-buchungen       Generate journal entries for a payroll
-  lohn-zettel          Generate payslip as Quarto markdown
+  lohn-zettel          Generate payslip as HTML
 """
 
 import argparse
