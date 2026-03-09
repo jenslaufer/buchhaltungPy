@@ -7,8 +7,8 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 6,3,SV001,31.01.2024,31.01.2024,Sozialversicherung,1810,Haben,1500
 7,4,BK001,31.01.2024,31.01.2024,Bankgebuehren,6855,Soll,29.90
 8,4,BK001,31.01.2024,31.01.2024,Bankgebuehren,1810,Haben,29.90
-9,5,WB001,15.02.2024,15.02.2024,Lieferant A Ads,6600,Soll,2000
-10,5,WB001,15.02.2024,15.02.2024,Lieferant A Ads,1810,Haben,2000
+9,5,WB001,15.02.2024,15.02.2024,Online-Werbung,6600,Soll,2000
+10,5,WB001,15.02.2024,15.02.2024,Online-Werbung,1810,Haben,2000
 11,6,IT001,15.02.2024,15.02.2024,Software Lizenzen,6837,Soll,500
 12,6,IT001,15.02.2024,15.02.2024,Software Lizenzen,1810,Haben,500
 13,7,RK001,20.03.2024,20.03.2024,Reise Uebernachtung,6660,Soll,350

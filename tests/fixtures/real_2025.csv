@@ -31,11 +31,11 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 30,15,JAB15,01.01.2025,01.01.2025,Übertrag aus Vorjahr,3806,Haben,9.48
 31,16,JAB16,01.01.2025,01.01.2025,Übertrag aus Vorjahr,9000,Soll,124112.51
 32,16,JAB16,01.01.2025,01.01.2025,Übertrag aus Vorjahr,2970,Haben,124112.51
-33,17,E1,01.01.2025,01.01.2025,Hosting Digital Ocean,6810,Soll,17.55
-34,17,E1,01.01.2025,01.01.2025,Hosting Digital Ocean,1406,Soll,3.33
-35,17,E1,01.01.2025,01.01.2025,Hosting Digital Ocean,99999,Haben,20.88
-36,18,KO1,01.01.2025,01.01.2025,Hosting Digital Ocean,99999,Soll,20.88
-37,18,KO1,01.01.2025,01.01.2025,Hosting Digital Ocean,1820,Haben,20.88
+33,17,E1,01.01.2025,01.01.2025,Hosting Cloud,6810,Soll,17.55
+34,17,E1,01.01.2025,01.01.2025,Hosting Cloud,1406,Soll,3.33
+35,17,E1,01.01.2025,01.01.2025,Hosting Cloud,99999,Haben,20.88
+36,18,KO1,01.01.2025,01.01.2025,Hosting Cloud,99999,Soll,20.88
+37,18,KO1,01.01.2025,01.01.2025,Hosting Cloud,1820,Haben,20.88
 38,19,S01,08.01.2025,08.01.2025,Umsatzsteuervoranmeldung,3820,Soll,18.44
 39,19,S01,08.01.2025,08.01.2025,Umsatzsteuervoranmeldung,1401,Haben,18.44
 40,20,S01,08.01.2025,08.01.2025,Umsatzsteuervoranmeldung,3820,Soll,3.28
@@ -46,10 +46,10 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 45,22,A1,06.01.2025,06.01.2025,Anlagezins,7100,Haben,22.50
 46,23,E2,06.01.2025,06.01.2025,Ausländische Quellensteuer,7639,Soll,4.50
 47,23,E2,06.01.2025,06.01.2025,Ausländische Quellensteuer,1830,Haben,4.50
-48,24,E3,07.01.2025,07.01.2025,Chat GPT Abo,6837,Soll,19.43
-49,24,E3,07.01.2025,07.01.2025,Chat GPT Abo,99999,Haben,19.43
-50,25,KO01,09.01.2025,09.01.2025,Chat GPT Abo,99999,Soll,19.43
-51,25,KO01,09.01.2025,09.01.2025,Chat GPT Abo,1820,Haben,19.43
+48,24,E3,07.01.2025,07.01.2025,KI-Dienst Abo,6837,Soll,19.43
+49,24,E3,07.01.2025,07.01.2025,KI-Dienst Abo,99999,Haben,19.43
+50,25,KO01,09.01.2025,09.01.2025,KI-Dienst Abo,99999,Soll,19.43
+51,25,KO01,09.01.2025,09.01.2025,KI-Dienst Abo,1820,Haben,19.43
 52,26,S02,09.01.2025,09.01.2025,Rückerstattung aus Umsatzsteuervoranmeldung,1820,Soll,21.72
 53,26,S02,09.01.2025,09.01.2025,Rückerstattung aus Umsatzsteuervoranmeldung,3820,Haben,21.72
 54,27,L01,28.01.2025,28.01.2025,Lohn Geschäftsführer,6024,Soll,3500.00
@@ -60,11 +60,11 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 59,29,L01,28.01.2025,28.01.2025,Lohnsteuer Geschäftsführer,3730,Haben,590.58
 60,30,KO01,28.01.2025,28.01.2025,Lohn Geschäftsführer,3720,Soll,2909.42
 61,30,KO01,28.01.2025,28.01.2025,Lohn Geschäftsführer,1820,Haben,2909.42
-62,31,E4,01.02.2025,01.02.2025,Hosting Digital Ocean,6810,Soll,17.52
-63,31,E4,01.02.2025,01.02.2025,Hosting Digital Ocean,1406,Soll,3.33
-64,31,E4,01.02.2025,01.02.2025,Hosting Digital Ocean,99999,Haben,20.85
-65,32,KO1,01.02.2025,01.02.2025,Hosting Digital Ocean,99999,Soll,20.85
-66,32,KO1,01.02.2025,01.02.2025,Hosting Digital Ocean,1820,Haben,20.85
+62,31,E4,01.02.2025,01.02.2025,Hosting Cloud,6810,Soll,17.52
+63,31,E4,01.02.2025,01.02.2025,Hosting Cloud,1406,Soll,3.33
+64,31,E4,01.02.2025,01.02.2025,Hosting Cloud,99999,Haben,20.85
+65,32,KO1,01.02.2025,01.02.2025,Hosting Cloud,99999,Soll,20.85
+66,32,KO1,01.02.2025,01.02.2025,Hosting Cloud,1820,Haben,20.85
 67,33,S04,03.02.2025,03.02.2025,Umsatzsteuervoranmeldung,3820,Soll,3.33
 68,33,S04,03.02.2025,03.02.2025,Umsatzsteuervoranmeldung,1406,Haben,3.33
 69,34,KO05,04.02.2025,04.02.2025,Lohnsteuer Geschäftsführer,3730,Soll,590.58
@@ -73,10 +73,10 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 72,35,A2,05.02.2025,05.02.2025,Anlagezins,7100,Haben,19.72
 73,36,E5,05.02.2025,05.02.2025,Ausländische Quellensteuer,7639,Soll,3.94
 74,36,E5,05.02.2025,05.02.2025,Ausländische Quellensteuer,1830,Haben,3.94
-75,37,E6,07.02.2025,07.02.2025,Chat GPT Abo,6837,Soll,19.32
-76,37,E6,07.02.2025,07.02.2025,Chat GPT Abo,99999,Haben,19.32
-77,38,KO01,09.02.2025,07.02.2025,Chat GPT Abo,99999,Soll,19.32
-78,38,KO01,09.02.2025,07.02.2025,Chat GPT Abo,1820,Haben,19.32
+75,37,E6,07.02.2025,07.02.2025,KI-Dienst Abo,6837,Soll,19.32
+76,37,E6,07.02.2025,07.02.2025,KI-Dienst Abo,99999,Haben,19.32
+77,38,KO01,09.02.2025,07.02.2025,KI-Dienst Abo,99999,Soll,19.32
+78,38,KO01,09.02.2025,07.02.2025,KI-Dienst Abo,1820,Haben,19.32
 79,39,E07,14.02.2025,14.02.2025,Hotelübernachtung VS,6660,Soll,151.03
 80,39,E07,14.02.2025,14.02.2025,Hotelübernachtung VS,1401,Soll,10.57
 81,39,E07,14.02.2025,14.02.2025,Hotelübernachtung VS,99999,Haben,161.60
@@ -95,10 +95,10 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 94,45,KO04,25.02.2025,25.02.2025,Übertrag auf neues Hauptkonto,1820,Haben,15226.80
 95,46,KO06,25.02.2025,25.02.2025,Umschichtung auf neues Rücktstellungskonto,1841,Soll,9812.74
 96,46,K05,25.02.2025,25.02.2025,Umschichtung auf Rücktstellungskonto,1840,Haben,9812.74
-97,47,E9,26.02.2025,26.02.2025,Claude Abo,6837,Soll,195.00
-98,47,E9,26.02.2025,26.02.2025,Claude Abo,99999,Haben,195.00
-99,48,KO01,26.02.2025,26.02.2025,Claude Abo,99999,Soll,195.00
-100,48,KO01,26.02.2025,26.02.2025,Claude Abo,1840,Haben,195.00
+97,47,E9,26.02.2025,26.02.2025,KI-Dienst B Abo,6837,Soll,195.00
+98,47,E9,26.02.2025,26.02.2025,KI-Dienst B Abo,99999,Haben,195.00
+99,48,KO01,26.02.2025,26.02.2025,KI-Dienst B Abo,99999,Soll,195.00
+100,48,KO01,26.02.2025,26.02.2025,KI-Dienst B Abo,1840,Haben,195.00
 101,49,L01,28.02.2025,28.02.2025,Lohn Geschäftsführer,6024,Soll,3500.00
 102,49,L01,28.02.2025,28.02.2025,Lohn Geschäftsführer,3790,Haben,3500.00
 103,50,L01,28.02.2025,28.02.2025,Lohn Geschäftsführer,3790,Soll,2909.42
@@ -107,19 +107,19 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 106,51,L01,28.02.2025,28.02.2025,Lohnsteuer Geschäftsführer,3730,Haben,590.58
 107,52,KO01,28.02.2025,28.02.2025,Lohn Geschäftsführer,3720,Soll,2909.42
 108,52,KO01,28.02.2025,28.02.2025,Lohn Geschäftsführer,1840,Haben,2909.42
-109,53,E10,01.03.2025,01.03.2025,Hosting Digital Ocean,6810,Soll,17.56
-110,53,E10,01.03.2025,01.03.2025,Hosting Digital Ocean,1406,Soll,3.34
-111,53,E10,01.03.2025,01.03.2025,Hosting Digital Ocean,99999,Haben,20.90
-112,54,KO1,01.03.2025,01.03.2025,Hosting Digital Ocean,99999,Soll,20.90
-113,54,KO1,01.03.2025,01.03.2025,Hosting Digital Ocean,1840,Haben,20.90
+109,53,E10,01.03.2025,01.03.2025,Hosting Cloud,6810,Soll,17.56
+110,53,E10,01.03.2025,01.03.2025,Hosting Cloud,1406,Soll,3.34
+111,53,E10,01.03.2025,01.03.2025,Hosting Cloud,99999,Haben,20.90
+112,54,KO1,01.03.2025,01.03.2025,Hosting Cloud,99999,Soll,20.90
+113,54,KO1,01.03.2025,01.03.2025,Hosting Cloud,1840,Haben,20.90
 114,55,A3,05.03.2025,05.03.2025,Anlagezins,1830,Soll,15.19
 115,55,A3,05.03.2025,05.03.2025,Anlagezins,7100,Haben,15.19
 116,56,E11,05.03.2025,05.03.2025,Ausländische Quellensteuer,7639,Soll,3.04
 117,56,E11,05.03.2025,05.03.2025,Ausländische Quellensteuer,1830,Haben,3.04
-118,57,E12,07.03.2025,07.03.2025,Chat GPT Abo,6837,Soll,18.58
-119,57,E12,07.03.2025,07.03.2025,Chat GPT Abo,99999,Haben,18.58
-120,58,KO04,09.03.2025,09.03.2025,Chat GPT Abo,99999,Soll,18.58
-121,58,KO04,09.03.2025,09.03.2025,Chat GPT Abo,1840,Haben,18.58
+118,57,E12,07.03.2025,07.03.2025,KI-Dienst Abo,6837,Soll,18.58
+119,57,E12,07.03.2025,07.03.2025,KI-Dienst Abo,99999,Haben,18.58
+120,58,KO04,09.03.2025,09.03.2025,KI-Dienst Abo,99999,Soll,18.58
+121,58,KO04,09.03.2025,09.03.2025,KI-Dienst Abo,1840,Haben,18.58
 122,59,S9,10.03.2025,10.03.2025,Umsatzsteuervoranmeldung,3820,Soll,10.57
 123,59,S9,10.03.2025,10.03.2025,Umsatzsteuervoranmeldung,1401,Haben,10.57
 124,60,S9,10.03.2025,10.03.2025,Umsatzsteuervoranmeldung,3820,Soll,6.20
@@ -153,13 +153,13 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 152,73,L01,28.03.2025,28.03.2025,Lohnsteuer Geschäftsführer,3730,Haben,590.58
 153,74,KO01,28.03.2025,28.03.2025,Lohn Geschäftsführer,3720,Soll,2909.42
 154,74,KO01,28.03.2025,28.03.2025,Lohn Geschäftsführer,1840,Haben,2909.42
-155,75,E13,01.04.2025,01.04.2025,Hosting Digital Ocean,6810,Soll,16.87
-156,75,E13,01.04.2025,01.04.2025,Hosting Digital Ocean,1406,Soll,3.21
-157,75,KO12,01.04.2025,01.04.2025,Hosting Digital Ocean,1840,Haben,20.08
-158,76,A4,01.04.2025,01.04.2025,Bank A Konto Cashback,10000,Soll,10.69
-159,76,A4,01.04.2025,01.04.2025,Bank A Konto Cashback,4560,Haben,10.69
-160,77,KO1,01.04.2025,01.04.2025,Bank A Konto Cashback,1840,Soll,10.69
-161,77,KO1,01.04.2025,01.04.2025,Bank A Konto Cashback,10000,Haben,10.69
+155,75,E13,01.04.2025,01.04.2025,Hosting Cloud,6810,Soll,16.87
+156,75,E13,01.04.2025,01.04.2025,Hosting Cloud,1406,Soll,3.21
+157,75,KO12,01.04.2025,01.04.2025,Hosting Cloud,1840,Haben,20.08
+158,76,A4,01.04.2025,01.04.2025,Bank Cashback,10000,Soll,10.69
+159,76,A4,01.04.2025,01.04.2025,Bank Cashback,4560,Haben,10.69
+160,77,KO1,01.04.2025,01.04.2025,Bank Cashback,1840,Soll,10.69
+161,77,KO1,01.04.2025,01.04.2025,Bank Cashback,10000,Haben,10.69
 162,78,S11,03.04.2025,03.04.2025,Umsatzsteuervoranmeldung,3820,Soll,3.34
 163,78,S11,03.04.2025,03.04.2025,Umsatzsteuervoranmeldung,1406,Haben,3.34
 164,79,A5,03.04.2025,03.04.2025,Anlagezins,1830,Soll,4.93
@@ -168,10 +168,10 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 167,80,E15,03.04.2025,03.04.2025,Ausländische Quellensteuer,1830,Haben,0.99
 168,81,S10,07.04.2025,07.04.2025,Lohnsteuer Geschäftsführer,3730,Soll,590.58
 169,81,S10,07.04.2025,07.04.2025,Lohnsteuer Geschäftsführer,1841,Haben,590.58
-170,82,E13,07.04.2025,07.04.2025,Chat GPT Abo,6837,Soll,18.31
-171,82,E13,07.04.2025,07.04.2025,Chat GPT Abo,99999,Haben,18.31
-172,83,KO12,07.04.2025,07.04.2025,Chat GPT Abo,99999,Soll,18.31
-173,83,KO12,07.04.2025,07.04.2025,Chat GPT Abo,1840,Haben,18.31
+170,82,E13,07.04.2025,07.04.2025,KI-Dienst Abo,6837,Soll,18.31
+171,82,E13,07.04.2025,07.04.2025,KI-Dienst Abo,99999,Haben,18.31
+172,83,KO12,07.04.2025,07.04.2025,KI-Dienst Abo,99999,Soll,18.31
+173,83,KO12,07.04.2025,07.04.2025,KI-Dienst Abo,1840,Haben,18.31
 174,84,S11,08.04.2025,08.04.2025,Rückerstattung aus Umsatzsteuervoranmeldung,1840,Soll,3.34
 175,84,S11,08.04.2025,08.04.2025,Rückerstattung aus Umsatzsteuervoranmeldung,3820,Haben,3.34
 176,85,KO12,09.04.2025,09.04.2025,Hotel VS,99999,Soll,156.60
@@ -214,13 +214,13 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 213,101,A6,10.04.2025,10.04.2025,Kauf ETF,1830,Haben,23572.00
 214,102,A6,10.04.2025,10.04.2025,Provision Aktienhandel,6855,Soll,33.00
 215,102,A6,10.04.2025,10.04.2025,Provision Aktienhandel,1830,Haben,33.00
-216,103,E19,10.04.2025,10.04.2025,LEIReg - Verlängerung,6825,Soll,70.00
-217,103,E19,10.04.2025,10.04.2025,LEIReg - Verlängerung,1406,Soll,13.30
-218,103,E19,10.04.2025,10.04.2025,LEIReg - Verlängerung,99999,Haben,83.30
+216,103,E19,10.04.2025,10.04.2025,LEI Verlängerung,6825,Soll,70.00
+217,103,E19,10.04.2025,10.04.2025,LEI Verlängerung,1406,Soll,13.30
+218,103,E19,10.04.2025,10.04.2025,LEI Verlängerung,99999,Haben,83.30
 219,104,KO12,11.04.2025,11.04.2025,Hotel VS,99999,Soll,270.92
 220,104,KO12,11.04.2025,11.04.2025,Hotel VS,1840,Haben,270.92
-221,105,KO12,21.04.2025,21.04.2025,LEIReg - Verlängerung,99999,Soll,83.30
-222,105,KO12,21.04.2025,21.04.2025,LEIReg - Verlängerung,1840,Haben,83.30
+221,105,KO12,21.04.2025,21.04.2025,LEI Verlängerung,99999,Soll,83.30
+222,105,KO12,21.04.2025,21.04.2025,LEI Verlängerung,1840,Haben,83.30
 223,106,E20,23.04.2025,23.04.2025,Kontoführungsgebühren,6855,Soll,84.00
 224,106,E20,23.04.2025,23.04.2025,Kontoführungsgebühren,99999,Haben,84.00
 225,107,KO12,24.04.2025,24.04.2025,Kontoführungsgebühren,99999,Soll,84.00
@@ -236,13 +236,13 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 235,111,L01,28.04.2025,28.04.2025,Lohnsteuer Geschäftsführer,3730,Haben,590.58
 236,112,KO12,28.04.2025,28.04.2025,Lohn Geschäftsführer,3720,Soll,2909.42
 237,112,KO12,28.04.2025,28.04.2025,Lohn Geschäftsführer,1840,Haben,2909.42
-238,113,KO12,30.04.2025,30.04.2025,Lieferant A Gutschrift Konto,1840,Soll,0.37
-239,113,A7,30.04.2025,30.04.2025,Lieferant A Gutschrift Konto,4560,Haben,0.37
-240,114,E21,01.05.2025,01.05.2025,Hosting Digital Ocean,6810,Soll,16.08
-241,114,E21,01.05.2025,01.05.2025,Hosting Digital Ocean,1406,Soll,3.05
-242,114,E21,01.05.2025,01.05.2025,Hosting Digital Ocean,99999,Haben,19.13
-243,115,KO15,01.05.2025,01.05.2025,Hosting Digital Ocean,99999,Soll,19.13
-244,115,KO15,01.05.2025,01.05.2025,Hosting Digital Ocean,1840,Haben,19.13
+238,113,KO12,30.04.2025,30.04.2025,Plattform-Gutschrift Konto,1840,Soll,0.37
+239,113,A7,30.04.2025,30.04.2025,Plattform-Gutschrift Konto,4560,Haben,0.37
+240,114,E21,01.05.2025,01.05.2025,Hosting Cloud,6810,Soll,16.08
+241,114,E21,01.05.2025,01.05.2025,Hosting Cloud,1406,Soll,3.05
+242,114,E21,01.05.2025,01.05.2025,Hosting Cloud,99999,Haben,19.13
+243,115,KO15,01.05.2025,01.05.2025,Hosting Cloud,99999,Soll,19.13
+244,115,KO15,01.05.2025,01.05.2025,Hosting Cloud,1840,Haben,19.13
 245,116,S12,03.05.2025,03.05.2025,Umsatzsteuervoranmeldung,3820,Soll,17.72
 246,116,S12,03.05.2025,03.05.2025,Umsatzsteuervoranmeldung,1401,Haben,17.72
 247,117,S12,03.05.2025,03.05.2025,Umsatzsteuervoranmeldung,3820,Soll,16.51
@@ -257,16 +257,16 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 256,121,E23,07.05.2025,07.05.2025,Übernachtung Fewo VS,1840,Haben,297.60
 257,122,KO15,07.05.2025,07.05.2025,Rückerstattung aus Umsatzsteuervoranmeldung,1840,Soll,34.23
 258,122,KO15,07.05.2025,07.05.2025,Rückerstattung aus Umsatzsteuervoranmeldung,3820,Haben,34.23
-259,123,E24,07.05.2025,07.05.2025,Chat GPT Abo,6837,Soll,17.73
-260,123,E24,07.05.2025,07.05.2025,Chat GPT Abo,99999,Haben,17.73
-261,124,E24,07.05.2025,07.05.2025,Chat GPT Abo,1407,Soll,3.37
-262,124,E24,07.05.2025,07.05.2025,Chat GPT Abo,3837,Haben,3.37
-263,125,KO15,07.05.2025,07.05.2025,Chat GPT Abo,99999,Soll,17.73
-264,125,KO15,07.05.2025,07.05.2025,Chat GPT Abo,1840,Haben,17.73
-265,126,E24,18.05.2025,18.05.2025,Buch 'Ergodicity Economics',6820,Soll,107.64
-266,126,E24,18.05.2025,18.05.2025,Buch 'Ergodicity Economics',99999,Haben,107.64
-267,127,KO18,18.05.2025,18.05.2025,Buch 'Ergodicity Economics',99999,Soll,107.64
-268,127,KO18,18.05.2025,18.05.2025,Buch 'Ergodicity Economics',1840,Haben,107.64
+259,123,E24,07.05.2025,07.05.2025,KI-Dienst Abo,6837,Soll,17.73
+260,123,E24,07.05.2025,07.05.2025,KI-Dienst Abo,99999,Haben,17.73
+261,124,E24,07.05.2025,07.05.2025,KI-Dienst Abo,1407,Soll,3.37
+262,124,E24,07.05.2025,07.05.2025,KI-Dienst Abo,3837,Haben,3.37
+263,125,KO15,07.05.2025,07.05.2025,KI-Dienst Abo,99999,Soll,17.73
+264,125,KO15,07.05.2025,07.05.2025,KI-Dienst Abo,1840,Haben,17.73
+265,126,E24,18.05.2025,18.05.2025,Fachbuch,6820,Soll,107.64
+266,126,E24,18.05.2025,18.05.2025,Fachbuch,99999,Haben,107.64
+267,127,KO18,18.05.2025,18.05.2025,Fachbuch,99999,Soll,107.64
+268,127,KO18,18.05.2025,18.05.2025,Fachbuch,1840,Haben,107.64
 269,128,L01,28.05.2025,28.05.2025,Lohn Geschäftsführer,6024,Soll,3500.00
 270,128,L01,28.05.2025,28.05.2025,Lohn Geschäftsführer,3790,Haben,3500.00
 271,129,L01,28.05.2025,28.05.2025,Lohn Geschäftsführer,3790,Soll,2909.42
@@ -275,11 +275,11 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 274,130,L01,28.05.2025,28.05.2025,Lohnsteuer Geschäftsführer,3730,Haben,590.58
 275,131,KO15,28.05.2025,28.05.2025,Lohn Geschäftsführer,3720,Soll,2909.42
 276,131,KO15,28.05.2025,28.05.2025,Lohn Geschäftsführer,1840,Haben,2909.42
-277,132,E25,01.06.2025,01.06.2025,Hosting Digital Ocean,6810,Soll,16.08
-278,132,E25,01.06.2025,01.06.2025,Hosting Digital Ocean,1406,Soll,3.06
-279,132,E25,01.06.2025,01.06.2025,Hosting Digital Ocean,99999,Haben,19.14
-280,133,KO18,01.06.2025,01.06.2025,Hosting Digital Ocean,99999,Soll,19.14
-281,133,KO18,01.06.2025,01.06.2025,Hosting Digital Ocean,1840,Haben,19.14
+277,132,E25,01.06.2025,01.06.2025,Hosting Cloud,6810,Soll,16.08
+278,132,E25,01.06.2025,01.06.2025,Hosting Cloud,1406,Soll,3.06
+279,132,E25,01.06.2025,01.06.2025,Hosting Cloud,99999,Haben,19.14
+280,133,KO18,01.06.2025,01.06.2025,Hosting Cloud,99999,Soll,19.14
+281,133,KO18,01.06.2025,01.06.2025,Hosting Cloud,1840,Haben,19.14
 282,134,E26,02.06.2025,02.06.2025,Säumniszuschlag für Hinterlegung Jahresbilanz,6436,Soll,103.50
 283,134,E26,02.06.2025,02.06.2025,Säumniszuschlag für Hinterlegung Jahresbilanz,99999,Haben,103.50
 284,135,S14,04.06.2025,04.06.2025,Lohnsteuer Geschäftsführer,3730,Soll,590.58
@@ -290,24 +290,24 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 289,137,A9,05.06.2025,05.06.2025,Anlagezins,7100,Haben,16.48
 290,138,E27,05.06.2025,05.06.2025,Ausländische Quellensteuer,7639,Soll,3.30
 291,138,E27,05.06.2025,05.06.2025,Ausländische Quellensteuer,1830,Haben,3.30
-292,139,E28,07.06.2025,07.06.2025,Chat GPT Abo,6837,Soll,17.59
-293,139,E28,07.06.2025,07.06.2025,Chat GPT Abo,99999,Haben,17.59
-294,140,E28,07.06.2025,07.06.2025,Chat GPT Abo,1407,Soll,3.34
-295,140,E28,07.06.2025,07.06.2025,Chat GPT Abo,3837,Haben,3.34
-296,141,KO18,08.06.2025,08.06.2025,Chat GPT Abo,99999,Soll,17.59
-297,141,KO18,08.06.2025,08.06.2025,Chat GPT Abo,1840,Haben,17.59
+292,139,E28,07.06.2025,07.06.2025,KI-Dienst Abo,6837,Soll,17.59
+293,139,E28,07.06.2025,07.06.2025,KI-Dienst Abo,99999,Haben,17.59
+294,140,E28,07.06.2025,07.06.2025,KI-Dienst Abo,1407,Soll,3.34
+295,140,E28,07.06.2025,07.06.2025,KI-Dienst Abo,3837,Haben,3.34
+296,141,KO18,08.06.2025,08.06.2025,KI-Dienst Abo,99999,Soll,17.59
+297,141,KO18,08.06.2025,08.06.2025,KI-Dienst Abo,1840,Haben,17.59
 298,142,S15,10.06.2025,10.06.2025,Umsatzsteuervoranmeldung,3820,Soll,3.05
 299,142,S15,10.06.2025,10.06.2025,Umsatzsteuervoranmeldung,1406,Haben,3.05
 300,143,S15,10.06.2025,10.06.2025,Umsatzsteuervoranmeldung,3820,Soll,3.37
 301,143,S15,10.06.2025,10.06.2025,Umsatzsteuervoranmeldung,1407,Haben,3.37
 302,144,S15,10.06.2025,10.06.2025,Umsatzsteuervoranmeldung,3837,Soll,3.37
 303,144,S15,10.06.2025,10.06.2025,Umsatzsteuervoranmeldung,3820,Haben,3.37
-304,145,KO18,12.06.2025,12.06.2025,Hotelbuchung London Anzahlung,6660,Soll,78.45
-305,145,KO18,12.06.2025,12.06.2025,Hotelbuchung London Anzahlung,1840,Haben,78.45
-306,146,KO18,12.06.2025,12.06.2025,Hotelbuchung London Anzahlung (Storno),1840,Soll,77.57
-307,146,KO18,12.06.2025,12.06.2025,Hotelbuchung London Anzahlung (Storno),6660,Haben,77.57
-308,147,KO18,12.06.2025,12.06.2025,Hotelbuchung London Anzahlung (Währungsumrechnungsverlust),6880,Soll,0.88
-309,147,KO18,12.06.2025,12.06.2025,Hotelbuchung London Anzahlung (Währungsumrechnungsverlust),6660,Haben,0.88
+304,145,KO18,12.06.2025,12.06.2025,Hotelbuchung Ausland Anzahlung,6660,Soll,78.45
+305,145,KO18,12.06.2025,12.06.2025,Hotelbuchung Ausland Anzahlung,1840,Haben,78.45
+306,146,KO18,12.06.2025,12.06.2025,Hotelbuchung Ausland Anzahlung (Storno),1840,Soll,77.57
+307,146,KO18,12.06.2025,12.06.2025,Hotelbuchung Ausland Anzahlung (Storno),6660,Haben,77.57
+308,147,KO18,12.06.2025,12.06.2025,Hotelbuchung Ausland Anzahlung (Währungsumrechnungsverlust),6880,Soll,0.88
+309,147,KO18,12.06.2025,12.06.2025,Hotelbuchung Ausland Anzahlung (Währungsumrechnungsverlust),6660,Haben,0.88
 310,148,KO18,13.06.2025,13.06.2025,Rückerstattung aus Umsatzsteuervoranmeldung,1840,Soll,6.42
 311,148,KO18,13.06.2025,13.06.2025,Rückerstattung aus Umsatzsteuervoranmeldung,3820,Haben,6.42
 312,149,E29,17.06.2025,17.06.2025,Unternehmensregister Hinterlegung Jahresbilanz,6300,Soll,61.10
@@ -317,8 +317,8 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 316,150,KO18,24.06.2025,24.06.2025,Säumniszuschlag für Hinterlegung Jahresbilanz,1840,Haben,103.50
 317,151,KO18,24.06.2025,24.06.2025,Unternehmensregister Hinterlegung Jahresbilanz,99999,Soll,72.71
 318,151,KO18,24.06.2025,24.06.2025,Unternehmensregister Hinterlegung Jahresbilanz,1840,Haben,72.71
-319,152,KO18,23.06.2025,23.06.2025,Vorauszahlung Lieferant A Ads,99997,Soll,10.00
-320,152,KO18,23.06.2025,23.06.2025,Vorauszahlung Lieferant A Ads,1840,Haben,10.00
+319,152,KO18,23.06.2025,23.06.2025,Vorauszahlung Online-Werbung,99997,Soll,10.00
+320,152,KO18,23.06.2025,23.06.2025,Vorauszahlung Online-Werbung,1840,Haben,10.00
 321,153,L01,28.06.2025,28.06.2025,Lohn Geschäftsführer,6024,Soll,3500.00
 322,153,L01,28.06.2025,28.06.2025,Lohn Geschäftsführer,3790,Haben,3500.00
 323,154,L01,28.06.2025,28.06.2025,Lohn Geschäftsführer,3790,Soll,2909.42
@@ -327,53 +327,53 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 326,155,L01,28.06.2025,28.06.2025,Lohnsteuer Geschäftsführer,3730,Haben,590.58
 327,156,KO18,30.06.2025,30.06.2025,Lohn Geschäftsführer,3720,Soll,2909.42
 328,156,KO18,30.06.2025,30.06.2025,Lohn Geschäftsführer,1840,Haben,2909.42
-329,157,E30,30.06.2025,30.06.2025,Lieferant A Werbekampagne,6600,Soll,59.92
-330,157,E30,30.06.2025,30.06.2025,Lieferant A Werbekampagne,99997,Haben,59.92
-331,158,E30,07.06.2025,07.06.2025,Lieferant A Werbekampagne,1407,Soll,11.38
-332,158,E30,07.06.2025,07.06.2025,Lieferant A Werbekampagne,3837,Haben,11.38
-333,159,E31,01.07.2025,01.07.2025,Hosting Digital Ocean,6810,Soll,15.55
-334,159,E31,01.07.2025,01.07.2025,Hosting Digital Ocean,1406,Soll,2.95
-335,159,E31,01.07.2025,01.07.2025,Hosting Digital Ocean,99999,Haben,18.50
-336,160,KO21,01.07.2025,01.07.2025,Hosting Digital Ocean,99999,Soll,18.50
-337,160,KO21,01.07.2025,01.07.2025,Hosting Digital Ocean,1840,Haben,18.50
-338,161,E30,02.07.2025,02.07.2025,Lieferant A Werbekampagne,99997,Soll,49.92
-339,161,E30,02.07.2025,02.07.2025,Lieferant A Werbekampagne,1840,Haben,49.92
+329,157,E30,30.06.2025,30.06.2025,Online-Werbekampagne,6600,Soll,59.92
+330,157,E30,30.06.2025,30.06.2025,Online-Werbekampagne,99997,Haben,59.92
+331,158,E30,07.06.2025,07.06.2025,Online-Werbekampagne,1407,Soll,11.38
+332,158,E30,07.06.2025,07.06.2025,Online-Werbekampagne,3837,Haben,11.38
+333,159,E31,01.07.2025,01.07.2025,Hosting Cloud,6810,Soll,15.55
+334,159,E31,01.07.2025,01.07.2025,Hosting Cloud,1406,Soll,2.95
+335,159,E31,01.07.2025,01.07.2025,Hosting Cloud,99999,Haben,18.50
+336,160,KO21,01.07.2025,01.07.2025,Hosting Cloud,99999,Soll,18.50
+337,160,KO21,01.07.2025,01.07.2025,Hosting Cloud,1840,Haben,18.50
+338,161,E30,02.07.2025,02.07.2025,Online-Werbekampagne,99997,Soll,49.92
+339,161,E30,02.07.2025,02.07.2025,Online-Werbekampagne,1840,Haben,49.92
 340,162,S16,04.07.2025,04.07.2025,Lohnsteuer Geschäftsführer,3730,Soll,590.58
 341,162,S16,04.07.2025,04.07.2025,Lohnsteuer Geschäftsführer,1841,Haben,590.58
-342,163,A10,04.07.2025,04.07.2025,Bank A Konto Cashback,1840,Soll,22.02
-343,163,A10,04.07.2025,04.07.2025,Bank A Konto Cashback,4560,Haben,22.02
-344,164,E32,07.07.2025,07.07.2025,Chat GPT Abo,6837,Soll,17.02
-345,164,E32,07.07.2025,07.07.2025,Chat GPT Abo,99999,Haben,17.02
-346,165,E32,07.07.2025,07.07.2025,Chat GPT Abo,1407,Soll,3.23
-347,165,E32,07.07.2025,07.07.2025,Chat GPT Abo,3837,Haben,3.23
-348,166,KO21,07.07.2025,07.07.2025,Chat GPT Abo,99999,Soll,17.02
-349,166,KO21,07.07.2025,07.07.2025,Chat GPT Abo,1840,Haben,17.02
+342,163,A10,04.07.2025,04.07.2025,Bank Cashback,1840,Soll,22.02
+343,163,A10,04.07.2025,04.07.2025,Bank Cashback,4560,Haben,22.02
+344,164,E32,07.07.2025,07.07.2025,KI-Dienst Abo,6837,Soll,17.02
+345,164,E32,07.07.2025,07.07.2025,KI-Dienst Abo,99999,Haben,17.02
+346,165,E32,07.07.2025,07.07.2025,KI-Dienst Abo,1407,Soll,3.23
+347,165,E32,07.07.2025,07.07.2025,KI-Dienst Abo,3837,Haben,3.23
+348,166,KO21,07.07.2025,07.07.2025,KI-Dienst Abo,99999,Soll,17.02
+349,166,KO21,07.07.2025,07.07.2025,KI-Dienst Abo,1840,Haben,17.02
 350,167,S17,08.07.2025,08.07.2025,Umsatzsteuervoranmeldung,3820,Soll,14.67
 351,167,S17,08.07.2025,08.07.2025,Umsatzsteuervoranmeldung,1406,Haben,14.67
 352,168,S17,08.07.2025,08.07.2025,Umsatzsteuervoranmeldung,3820,Soll,14.72
 353,168,S17,08.07.2025,08.07.2025,Umsatzsteuervoranmeldung,1407,Haben,14.72
 354,169,S17,08.07.2025,08.07.2025,Umsatzsteuervoranmeldung,3837,Soll,14.72
 355,169,S17,08.07.2025,08.07.2025,Umsatzsteuervoranmeldung,3820,Haben,14.72
-356,170,E3,11.07.2025,11.07.2025,ChatGPT Vorsteuer (Reverse Charge),1407,Soll,3.69
-357,170,E3,11.07.2025,11.07.2025,ChatGPT Vorsteuer (Reverse Charge),3837,Haben,3.69
+356,170,E3,11.07.2025,11.07.2025,KI-Dienst Vorsteuer (Reverse Charge),1407,Soll,3.69
+357,170,E3,11.07.2025,11.07.2025,KI-Dienst Vorsteuer (Reverse Charge),3837,Haben,3.69
 358,171,S18,11.07.2025,11.07.2025,Umsatzsteuervoranmeldung,3820,Soll,3.69
 359,171,S18,11.07.2025,11.07.2025,Umsatzsteuervoranmeldung,1407,Haben,3.69
 360,172,S18,11.07.2025,11.07.2025,Umsatzsteuervoranmeldung,3837,Soll,3.69
 361,172,S18,11.07.2025,11.07.2025,Umsatzsteuervoranmeldung,3820,Haben,3.69
-362,173,E6,11.07.2025,11.07.2025,ChatGPT Vorsteuer (Reverse Charge),1407,Soll,3.67
-363,173,E6,11.07.2025,11.07.2025,ChatGPT Vorsteuer (Reverse Charge),3837,Haben,3.67
+362,173,E6,11.07.2025,11.07.2025,KI-Dienst Vorsteuer (Reverse Charge),1407,Soll,3.67
+363,173,E6,11.07.2025,11.07.2025,KI-Dienst Vorsteuer (Reverse Charge),3837,Haben,3.67
 364,174,S19,11.07.2025,11.07.2025,Umsatzsteuervoranmeldung,3820,Soll,3.67
 365,174,S19,11.07.2025,11.07.2025,Umsatzsteuervoranmeldung,1407,Haben,3.67
 366,175,S19,11.07.2025,11.07.2025,Umsatzsteuervoranmeldung,3837,Soll,3.67
 367,175,S19,11.07.2025,11.07.2025,Umsatzsteuervoranmeldung,3820,Haben,3.67
-368,176,E12,11.07.2025,11.07.2025,ChatGPT Vorsteuer (Reverse Charge),1407,Soll,3.53
-369,176,E12,11.07.2025,11.07.2025,ChatGPT Vorsteuer (Reverse Charge),3837,Haben,3.53
+368,176,E12,11.07.2025,11.07.2025,KI-Dienst Vorsteuer (Reverse Charge),1407,Soll,3.53
+369,176,E12,11.07.2025,11.07.2025,KI-Dienst Vorsteuer (Reverse Charge),3837,Haben,3.53
 370,177,S20,11.07.2025,11.07.2025,Umsatzsteuervoranmeldung,3820,Soll,3.53
 371,177,S20,11.07.2025,11.07.2025,Umsatzsteuervoranmeldung,1407,Haben,3.53
 372,178,S20,11.07.2025,11.07.2025,Umsatzsteuervoranmeldung,3837,Soll,3.53
 373,178,S20,11.07.2025,11.07.2025,Umsatzsteuervoranmeldung,3820,Haben,3.53
-374,179,E13,11.07.2025,11.07.2025,ChatGPT Vorsteuer (Reverse Charge),1407,Soll,3.48
-375,179,E13,11.07.2025,11.07.2025,ChatGPT Vorsteuer (Reverse Charge),3837,Haben,3.48
+374,179,E13,11.07.2025,11.07.2025,KI-Dienst Vorsteuer (Reverse Charge),1407,Soll,3.48
+375,179,E13,11.07.2025,11.07.2025,KI-Dienst Vorsteuer (Reverse Charge),3837,Haben,3.48
 376,180,S21,11.07.2025,11.07.2025,Umsatzsteuervoranmeldung,3820,Soll,3.48
 377,180,S21,11.07.2025,11.07.2025,Umsatzsteuervoranmeldung,1407,Haben,3.48
 378,181,S21,11.07.2025,11.07.2025,Umsatzsteuervoranmeldung,3837,Soll,3.48
@@ -390,17 +390,17 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 389,186,L01,28.07.2025,28.07.2025,Lohnsteuer Geschäftsführer,3730,Haben,590.58
 390,187,KO21,28.07.2025,28.07.2025,Lohn Geschäftsführer,3720,Soll,2909.42
 391,187,KO21,28.07.2025,28.07.2025,Lohn Geschäftsführer,1840,Haben,2909.42
-392,188,E33,01.08.2025,01.08.2025,Hosting Digital Ocean,6810,Soll,15.96
-393,188,E33,01.08.2025,01.08.2025,Hosting Digital Ocean,1406,Soll,3.03
-394,188,E33,01.08.2025,01.08.2025,Hosting Digital Ocean,99999,Haben,18.99
-395,189,KO24,01.08.2025,01.08.2025,Hosting Digital Ocean,99999,Soll,18.99
-396,189,KO24,01.08.2025,01.08.2025,Hosting Digital Ocean,1840,Haben,18.99
-397,190,E34,07.08.2025,07.08.2025,Chat GPT Abo,6837,Soll,17.30
-398,190,E34,07.08.2025,07.08.2025,Chat GPT Abo,99999,Haben,17.30
-399,191,E34,07.08.2025,07.08.2025,Chat GPT Abo,1407,Soll,3.29
-400,191,E34,07.08.2025,07.08.2025,Chat GPT Abo,3837,Haben,3.29
-401,192,KO24,08.08.2025,08.08.2025,Chat GPT Abo,99999,Soll,17.30
-402,192,KO24,08.08.2025,08.08.2025,Chat GPT Abo,1840,Haben,17.30
+392,188,E33,01.08.2025,01.08.2025,Hosting Cloud,6810,Soll,15.96
+393,188,E33,01.08.2025,01.08.2025,Hosting Cloud,1406,Soll,3.03
+394,188,E33,01.08.2025,01.08.2025,Hosting Cloud,99999,Haben,18.99
+395,189,KO24,01.08.2025,01.08.2025,Hosting Cloud,99999,Soll,18.99
+396,189,KO24,01.08.2025,01.08.2025,Hosting Cloud,1840,Haben,18.99
+397,190,E34,07.08.2025,07.08.2025,KI-Dienst Abo,6837,Soll,17.30
+398,190,E34,07.08.2025,07.08.2025,KI-Dienst Abo,99999,Haben,17.30
+399,191,E34,07.08.2025,07.08.2025,KI-Dienst Abo,1407,Soll,3.29
+400,191,E34,07.08.2025,07.08.2025,KI-Dienst Abo,3837,Haben,3.29
+401,192,KO24,08.08.2025,08.08.2025,KI-Dienst Abo,99999,Soll,17.30
+402,192,KO24,08.08.2025,08.08.2025,KI-Dienst Abo,1840,Haben,17.30
 403,193,S23,10.08.2025,10.08.2025,Lohnsteuer Geschäftsführer,3730,Soll,590.58
 404,193,S23,10.08.2025,10.08.2025,Lohnsteuer Geschäftsführer,1841,Haben,590.58
 405,194,S24,10.08.2025,10.08.2025,Umsatzsteuervoranmeldung,3820,Soll,2.95
@@ -419,11 +419,11 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 418,200,L01,28.08.2025,28.08.2025,Lohnsteuer Geschäftsführer,3730,Haben,590.58
 419,201,KO27,28.08.2025,28.08.2025,Lohn Geschäftsführer,3720,Soll,2909.42
 420,201,KO27,28.08.2025,28.08.2025,Lohn Geschäftsführer,1840,Haben,2909.42
-421,202,E35,01.09.2025,01.09.2025,Hosting Digital Ocean,6810,Soll,15.62
-422,202,E35,01.09.2025,01.09.2025,Hosting Digital Ocean,1406,Soll,2.97
-423,202,E35,01.09.2025,01.09.2025,Hosting Digital Ocean,99999,Haben,18.59
-424,203,KO27,01.09.2025,01.09.2025,Hosting Digital Ocean,99999,Soll,18.59
-425,203,KO27,01.09.2025,01.09.2025,Hosting Digital Ocean,1840,Haben,18.59
+421,202,E35,01.09.2025,01.09.2025,Hosting Cloud,6810,Soll,15.62
+422,202,E35,01.09.2025,01.09.2025,Hosting Cloud,1406,Soll,2.97
+423,202,E35,01.09.2025,01.09.2025,Hosting Cloud,99999,Haben,18.59
+424,203,KO27,01.09.2025,01.09.2025,Hosting Cloud,99999,Soll,18.59
+425,203,KO27,01.09.2025,01.09.2025,Hosting Cloud,1840,Haben,18.59
 426,204,S26,02.09.2025,02.09.2025,Umsatzsteuervoranmeldung,3820,Soll,3.03
 427,204,S26,02.09.2025,02.09.2025,Umsatzsteuervoranmeldung,1406,Haben,3.03
 428,205,S26,02.09.2025,02.09.2025,Umsatzsteuervoranmeldung,3820,Soll,3.29
@@ -432,12 +432,12 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 431,206,S26,02.09.2025,02.09.2025,Umsatzsteuervoranmeldung,3820,Haben,3.29
 432,207,KO27,06.09.2025,06.09.2025,Rückerstattung aus Umsatzsteuervoranmeldung,1840,Soll,3.03
 433,207,KO27,06.09.2025,06.09.2025,Rückerstattung aus Umsatzsteuervoranmeldung,3820,Haben,3.03
-434,208,E36,07.09.2025,07.09.2025,Chat GPT Abo,6837,Soll,17.20
-435,208,E36,07.09.2025,07.09.2025,Chat GPT Abo,99999,Haben,17.20
-436,209,E36,07.09.2025,07.09.2025,Chat GPT Abo,1407,Soll,3.27
-437,209,E36,07.09.2025,07.09.2025,Chat GPT Abo,3837,Haben,3.27
-438,210,KO27,07.09.2025,07.09.2025,Chat GPT Abo,99999,Soll,17.20
-439,210,KO27,07.09.2025,07.09.2025,Chat GPT Abo,1840,Haben,17.20
+434,208,E36,07.09.2025,07.09.2025,KI-Dienst Abo,6837,Soll,17.20
+435,208,E36,07.09.2025,07.09.2025,KI-Dienst Abo,99999,Haben,17.20
+436,209,E36,07.09.2025,07.09.2025,KI-Dienst Abo,1407,Soll,3.27
+437,209,E36,07.09.2025,07.09.2025,KI-Dienst Abo,3837,Haben,3.27
+438,210,KO27,07.09.2025,07.09.2025,KI-Dienst Abo,99999,Soll,17.20
+439,210,KO27,07.09.2025,07.09.2025,KI-Dienst Abo,1840,Haben,17.20
 440,211,E37,12.09.2025,12.09.2025,IHK Beitrag,6420,Soll,188.36
 441,211,E37,12.09.2025,12.09.2025,IHK Beitrag,99999,Haben,188.36
 442,212,KO27,18.09.2025,18.09.2025,Bezahlung E8,99999,Soll,188.36
@@ -454,11 +454,11 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 453,217,L01,29.09.2025,29.09.2025,Lohnsteuer Geschäftsführer,3730,Haben,590.58
 454,218,KO27,29.09.2025,29.09.2025,Lohn Geschäftsführer,3720,Soll,2909.42
 455,218,KO27,29.09.2025,29.09.2025,Lohn Geschäftsführer,1840,Haben,2909.42
-456,219,E38,01.10.2025,01.10.2025,Hosting Digital Ocean,6810,Soll,15.54
-457,219,E38,01.10.2025,01.10.2025,Hosting Digital Ocean,1406,Soll,2.95
-458,219,E38,01.10.2025,01.10.2025,Hosting Digital Ocean,99999,Haben,18.49
-459,220,KO30,01.10.2025,01.10.2025,Hosting Digital Ocean,99999,Soll,18.49
-460,220,KO30,01.10.2025,01.10.2025,Hosting Digital Ocean,1840,Haben,18.49
+456,219,E38,01.10.2025,01.10.2025,Hosting Cloud,6810,Soll,15.54
+457,219,E38,01.10.2025,01.10.2025,Hosting Cloud,1406,Soll,2.95
+458,219,E38,01.10.2025,01.10.2025,Hosting Cloud,99999,Haben,18.49
+459,220,KO30,01.10.2025,01.10.2025,Hosting Cloud,99999,Soll,18.49
+460,220,KO30,01.10.2025,01.10.2025,Hosting Cloud,1840,Haben,18.49
 461,221,S27,02.10.2025,02.10.2025,Lohnsteuer Geschäftsführer,3730,Soll,590.58
 462,221,S27,02.10.2025,02.10.2025,Lohnsteuer Geschäftsführer,1841,Haben,590.58
 463,222,E39,02.10.2025,02.10.2025,Säumniszuschlag Lohnsteueranmeldung,6436,Soll,5.50
@@ -473,12 +473,12 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 472,226,S29,03.10.2025,03.10.2025,Umsatzsteuervoranmeldung,3820,Haben,3.27
 473,227,S28,06.10.2025,06.10.2025,Säumniszuschlag Lohnsteueranmeldung + Umsatzsteuer,1840,Soll,247.16
 474,227,S28,06.10.2025,06.10.2025,Säumniszuschlag Lohnsteueranmeldung + Umsatzsteuer,10004,Haben,247.16
-475,228,E40,07.10.2025,07.10.2025,Chat GPT Abo,6837,Soll,17.17
-476,228,E40,07.10.2025,07.10.2025,Chat GPT Abo,99999,Haben,17.17
-477,229,E40,07.10.2025,07.10.2025,Chat GPT Abo,1407,Soll,3.26
-478,229,E40,07.10.2025,07.10.2025,Chat GPT Abo,3837,Haben,3.26
-479,230,KO30,07.10.2025,07.10.2025,Chat GPT Abo,99999,Soll,17.17
-480,230,KO30,07.10.2025,07.10.2025,Chat GPT Abo,1840,Haben,17.17
+475,228,E40,07.10.2025,07.10.2025,KI-Dienst Abo,6837,Soll,17.17
+476,228,E40,07.10.2025,07.10.2025,KI-Dienst Abo,99999,Haben,17.17
+477,229,E40,07.10.2025,07.10.2025,KI-Dienst Abo,1407,Soll,3.26
+478,229,E40,07.10.2025,07.10.2025,KI-Dienst Abo,3837,Haben,3.26
+479,230,KO30,07.10.2025,07.10.2025,KI-Dienst Abo,99999,Soll,17.17
+480,230,KO30,07.10.2025,07.10.2025,KI-Dienst Abo,1840,Haben,17.17
 481,231,KO27,08.10.2025,08.10.2025,Rückerstattung aus Umsatzsteuervoranmeldung,1840,Soll,2.97
 482,231,KO27,08.10.2025,08.10.2025,Rückerstattung aus Umsatzsteuervoranmeldung,3820,Haben,2.97
 483,232,KO30,26.10.2025,26.10.2025,Umschichtung,1840,Soll,2084.73
@@ -493,9 +493,9 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 492,236,L01,28.10.2025,28.10.2025,Lohnsteuer Geschäftsführer,3730,Haben,590.58
 493,237,KO30,28.10.2025,28.10.2025,Lohn Geschäftsführer,3720,Soll,2909.42
 494,237,KO30,28.10.2025,28.10.2025,Lohn Geschäftsführer,1840,Haben,2909.42
-495,238,E41,01.11.2025,01.11.2025,Hosting Digital Ocean,6810,Soll,15.79
-496,238,E41,01.11.2025,01.11.2025,Hosting Digital Ocean,1406,Soll,3.00
-497,238,KO33,01.11.2025,01.11.2025,Hosting Digital Ocean,1840,Haben,18.79
+495,238,E41,01.11.2025,01.11.2025,Hosting Cloud,6810,Soll,15.79
+496,238,E41,01.11.2025,01.11.2025,Hosting Cloud,1406,Soll,3.00
+497,238,KO33,01.11.2025,01.11.2025,Hosting Cloud,1840,Haben,18.79
 498,239,S30,02.11.2025,02.11.2025,Umsatzsteuervoranmeldung,3820,Soll,2.95
 499,239,S30,02.11.2025,02.11.2025,Umsatzsteuervoranmeldung,1406,Haben,2.95
 500,240,S30,02.11.2025,02.11.2025,Umsatzsteuervoranmeldung,3820,Soll,3.26
@@ -506,12 +506,12 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 505,242,S31,03.11.2025,03.11.2025,Lohnsteuer Geschäftsführer,1840,Haben,590.58
 506,243,KO33,06.11.2025,06.11.2025,Rückerstattung aus Umsatzsteuervoranmeldung,1840,Soll,2.95
 507,243,KO33,06.11.2025,06.11.2025,Rückerstattung aus Umsatzsteuervoranmeldung,3820,Haben,2.95
-508,244,E42,07.11.2025,07.11.2025,Chat GPT Abo,6837,Soll,17.41
-509,244,E42,07.11.2025,07.11.2025,Chat GPT Abo,99999,Haben,17.41
-510,244,E42,07.11.2025,07.11.2025,Chat GPT Abo,1407,Soll,3.31
-511,244,E42,07.11.2025,07.11.2025,Chat GPT Abo,3837,Haben,3.31
-512,245,KO33,07.11.2025,07.11.2025,Chat GPT Abo,99999,Soll,17.41
-513,245,KO33,07.11.2025,07.11.2025,Chat GPT Abo,1840,Haben,17.41
+508,244,E42,07.11.2025,07.11.2025,KI-Dienst Abo,6837,Soll,17.41
+509,244,E42,07.11.2025,07.11.2025,KI-Dienst Abo,99999,Haben,17.41
+510,244,E42,07.11.2025,07.11.2025,KI-Dienst Abo,1407,Soll,3.31
+511,244,E42,07.11.2025,07.11.2025,KI-Dienst Abo,3837,Haben,3.31
+512,245,KO33,07.11.2025,07.11.2025,KI-Dienst Abo,99999,Soll,17.41
+513,245,KO33,07.11.2025,07.11.2025,KI-Dienst Abo,1840,Haben,17.41
 514,246,L01,28.11.2025,28.11.2025,Lohn Geschäftsführer,6024,Soll,3500.00
 515,246,L01,28.11.2025,28.11.2025,Lohn Geschäftsführer,3790,Haben,3500.00
 516,247,L01,28.11.2025,28.11.2025,Lohn Geschäftsführer,3790,Soll,2909.42
@@ -520,11 +520,11 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 519,248,L01,28.11.2025,28.11.2025,Lohnsteuer Geschäftsführer,3730,Haben,590.58
 520,249,KO33,28.11.2025,28.11.2025,Lohn Geschäftsführer,3720,Soll,2909.42
 521,249,KO33,28.11.2025,28.11.2025,Lohn Geschäftsführer,1840,Haben,2909.42
-522,250,E43,01.12.2025,01.12.2025,Hosting Digital Ocean,6810,Soll,15.75
-523,250,E43,01.12.2025,01.12.2025,Hosting Digital Ocean,1406,Soll,2.99
-524,250,E43,01.12.2025,01.12.2025,Hosting Digital Ocean,99999,Haben,18.74
-525,251,KO36,01.12.2025,01.12.2025,Hosting Digital Ocean,99999,Soll,18.74
-526,251,KO36,01.12.2025,01.12.2025,Hosting Digital Ocean,1840,Haben,18.74
+522,250,E43,01.12.2025,01.12.2025,Hosting Cloud,6810,Soll,15.75
+523,250,E43,01.12.2025,01.12.2025,Hosting Cloud,1406,Soll,2.99
+524,250,E43,01.12.2025,01.12.2025,Hosting Cloud,99999,Haben,18.74
+525,251,KO36,01.12.2025,01.12.2025,Hosting Cloud,99999,Soll,18.74
+526,251,KO36,01.12.2025,01.12.2025,Hosting Cloud,1840,Haben,18.74
 527,252,S32,01.12.2025,01.12.2025,Umsatzsteuervoranmeldung,3820,Soll,3.00
 528,252,S32,01.12.2025,01.12.2025,Umsatzsteuervoranmeldung,1406,Haben,3.00
 529,253,S32,01.12.2025,01.12.2025,Umsatzsteuervoranmeldung,3820,Soll,3.31
@@ -533,16 +533,16 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 532,254,S32,01.12.2025,01.12.2025,Umsatzsteuervoranmeldung,3820,Haben,3.31
 533,255,S33,01.12.2025,01.12.2025,Lohnsteuer Geschäftsführer,3730,Soll,590.58
 534,255,S33,01.12.2025,01.12.2025,Lohnsteuer Geschäftsführer,1840,Haben,590.58
-535,256,KO36,02.12.2025,02.12.2025,Bank A Konto Cashback,1840,Soll,3.59
-536,256,A11,02.12.2025,02.12.2025,Bank A Konto Cashback,4560,Haben,3.59
+535,256,KO36,02.12.2025,02.12.2025,Bank Cashback,1840,Soll,3.59
+536,256,A11,02.12.2025,02.12.2025,Bank Cashback,4560,Haben,3.59
 537,257,KO36,04.12.2025,04.12.2025,Rückerstattung aus Umsatzsteuervoranmeldung,1840,Soll,3.00
 538,257,KO36,04.12.2025,04.12.2025,Rückerstattung aus Umsatzsteuervoranmeldung,3820,Haben,3.00
-539,258,E44,07.12.2025,07.12.2025,Chat GPT Abo,6837,Soll,17.20
-540,258,E44,07.12.2025,07.12.2025,Chat GPT Abo,99999,Haben,17.20
-541,259,E44,07.12.2025,07.12.2025,Chat GPT Abo,1407,Soll,3.27
-542,259,E44,07.12.2025,07.12.2025,Chat GPT Abo,3837,Haben,3.27
-543,260,KO36,07.12.2025,07.12.2025,Chat GPT Abo,99999,Soll,17.20
-544,260,KO36,07.12.2025,07.12.2025,Chat GPT Abo,1840,Haben,17.20
+539,258,E44,07.12.2025,07.12.2025,KI-Dienst Abo,6837,Soll,17.20
+540,258,E44,07.12.2025,07.12.2025,KI-Dienst Abo,99999,Haben,17.20
+541,259,E44,07.12.2025,07.12.2025,KI-Dienst Abo,1407,Soll,3.27
+542,259,E44,07.12.2025,07.12.2025,KI-Dienst Abo,3837,Haben,3.27
+543,260,KO36,07.12.2025,07.12.2025,KI-Dienst Abo,99999,Soll,17.20
+544,260,KO36,07.12.2025,07.12.2025,KI-Dienst Abo,1840,Haben,17.20
 545,261,KO36,15.12.2025,15.12.2025,FeWo VS,99999,Soll,131.80
 546,261,KO36,15.12.2025,15.12.2025,FeWo VS,1840,Haben,131.80
 547,262,E45,16.12.2025,16.12.2025,FeWo VS,6660,Soll,123.18
@@ -556,8 +556,8 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 555,265,L01,29.12.2025,29.12.2025,Lohnsteuer Geschäftsführer,3730,Haben,453.62
 556,266,KO36,29.12.2025,29.12.2025,Lohn Geschäftsführer,3720,Soll,3046.38
 557,266,KO36,29.12.2025,29.12.2025,Lohn Geschäftsführer,1840,Haben,3046.38
-558,267,KO36,29.12.2025,29.12.2025,Bank A Konto Cashback,1840,Soll,2.98
-559,267,A12,29.12.2025,29.12.2025,Bank A Konto Cashback,4560,Haben,2.98
+558,267,KO36,29.12.2025,29.12.2025,Bank Cashback,1840,Soll,2.98
+559,267,A12,29.12.2025,29.12.2025,Bank Cashback,4560,Haben,2.98
 560,268,X1,31.12.2025,31.12.2025,Auflösung geringfügiger Rückstellung,3020,Soll,0.10
 561,268,X1,31.12.2025,31.12.2025,Auflösung geringfügiger Rückstellung,4930,Haben,0.10
 562,269,X2,31.12.2025,31.12.2025,Auflösung geringfügiger Rückstellung,3035,Soll,8.00

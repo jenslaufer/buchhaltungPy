@@ -1,14 +1,14 @@
 Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungstext,Konto,Typ,Betrag
-1,1,E1,29.09.2022,03.11.2022,Stammkapital Solytics GmbH,1298,Soll,25000.00
-2,1,E1,29.09.2022,03.11.2022,Stammkapital Solytics GmbH,2900,Haben,25000.00
-3,2,E2,29.09.2022,03.11.2022,Notarkosten Beurkundung GmbH,6825,Soll,683.00
-4,2,E2,29.09.2022,03.11.2022,Notarkosten Beurkundung GmbH,1406,Soll,129.77
-5,2,E2,29.09.2022,03.11.2022,Notarkosten Beurkundung GmbH,99999,Haben,812.77
+1,1,E1,29.09.2022,03.11.2022,Stammkapital Muster GmbH,1298,Soll,25000.00
+2,1,E1,29.09.2022,03.11.2022,Stammkapital Muster GmbH,2900,Haben,25000.00
+3,2,E2,29.09.2022,03.11.2022,Notarkosten Beurkundung,6825,Soll,683.00
+4,2,E2,29.09.2022,03.11.2022,Notarkosten Beurkundung,1406,Soll,129.77
+5,2,E2,29.09.2022,03.11.2022,Notarkosten Beurkundung,99999,Haben,812.77
 6,3,E3,21.10.2022,03.11.2022,Gewerbeanmeldung,6430,Soll,25.00
 7,3,E3,21.10.2022,03.11.2022,Gewerbeanmeldung,99999,Haben,25.00
-8,4,E4,22.10.2022,03.11.2022,Hotelkosten VS,6660,Soll,336.45
-9,4,E4,22.10.2022,03.11.2022,Hotelkosten VS,1401,Soll,23.55
-10,4,E4,22.10.2022,03.11.2022,Hotelkosten VS,99999,Haben,360.00
+8,4,E4,22.10.2022,03.11.2022,Hotelkosten,6660,Soll,336.45
+9,4,E4,22.10.2022,03.11.2022,Hotelkosten,1401,Soll,23.55
+10,4,E4,22.10.2022,03.11.2022,Hotelkosten,99999,Haben,360.00
 11,5,KO1,05.10.2022,03.11.2022,Einzahlung Stammkapital Gesellschafter,1810,Soll,25000.00
 12,5,KO1,05.10.2022,03.11.2022,Einzahlung Stammkapital Gesellschafter,1298,Haben,25000.00
 13,6,KO1,13.10.2022,03.11.2022,Bezahlung E2,99999,Soll,812.77
@@ -17,26 +17,26 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 16,7,KO1,24.10.2022,03.11.2022,Bezahlung E4,1810,Haben,360.00
 17,8,KO1,30.10.2022,03.11.2022,Bezahlung E3,99999,Soll,25.00
 18,8,KO1,30.10.2022,03.11.2022,Bezahlung E3,1810,Haben,25.00
-19,9,E5,17.11.2022,10.12.2022,Bronze Logo Design Paket,6600,Soll,269.00
-20,9,E5,17.11.2022,10.12.2022,Bronze Logo Design Paket,99999,Haben,269.00
+19,9,E5,17.11.2022,10.12.2022,Logo Design Paket,6600,Soll,269.00
+20,9,E5,17.11.2022,10.12.2022,Logo Design Paket,99999,Haben,269.00
 21,10,E6,25.11.2022,10.12.2022,Eintrag Handelsregister,6430,Soll,200.00
 22,10,E6,25.11.2022,10.12.2022,Eintrag Handelsregister,99999,Haben,200.00
-23,11,E7,26.11.2022,10.12.2022,Sony Headset,0670,Soll,276.47
-24,11,E7,26.11.2022,10.12.2022,Sony Headset,1406,Soll,52.53
-25,11,E7,26.11.2022,10.12.2022,Sony Headset,99999,Haben,329.00
+23,11,E7,26.11.2022,10.12.2022,Headset,0670,Soll,276.47
+24,11,E7,26.11.2022,10.12.2022,Headset,1406,Soll,52.53
+25,11,E7,26.11.2022,10.12.2022,Headset,99999,Haben,329.00
 26,12,E8,28.11.2022,10.12.2022,Styleguide,6600,Soll,69.00
 27,12,E8,28.11.2022,10.12.2022,Styleguide,99999,Haben,69.00
 28,13,E9,02.12.2022,10.12.2022,Kontoführungsgebühren,6855,Soll,15.83
 29,13,E9,02.12.2022,10.12.2022,Kontoführungsgebühren,1406,Soll,3.01
 30,13,E9,02.12.2022,10.12.2022,Kontoführungsgebühren,99999,Haben,18.84
-31,14,A1,31.10.2022,10.12.2022,Softwareberatung Brunata,10001,Soll,12096.35
-32,14,A1,31.10.2022,10.12.2022,Softwareberatung Brunata,3806,Haben,1931.35
-33,14,A1,31.10.2022,10.12.2022,Softwareberatung Brunata,4400,Haben,10165.00
-34,15,A2,31.10.2022,10.12.2022,Softwareberatung Brunata,10001,Soll,14696.50
-35,15,A2,31.10.2022,10.12.2022,Softwareberatung Brunata,3806,Haben,2346.50
-36,15,A2,31.10.2022,10.12.2022,Softwareberatung Brunata,4400,Haben,12350.00
-37,16,A3,16.11.2022,10.12.2022,Gutschrift Kontoprüfung Kunde B,10002,Soll,0.01
-38,16,A3,16.11.2022,10.12.2022,Gutschrift Kontoprüfung Kunde B,4400,Haben,0.01
+31,14,A1,31.10.2022,10.12.2022,Softwareberatung,10001,Soll,12096.35
+32,14,A1,31.10.2022,10.12.2022,Softwareberatung,3806,Haben,1931.35
+33,14,A1,31.10.2022,10.12.2022,Softwareberatung,4400,Haben,10165.00
+34,15,A2,31.10.2022,10.12.2022,Softwareberatung,10001,Soll,14696.50
+35,15,A2,31.10.2022,10.12.2022,Softwareberatung,3806,Haben,2346.50
+36,15,A2,31.10.2022,10.12.2022,Softwareberatung,4400,Haben,12350.00
+37,16,A3,16.11.2022,10.12.2022,Gutschrift Kontoprüfung,10002,Soll,0.01
+38,16,A3,16.11.2022,10.12.2022,Gutschrift Kontoprüfung,4400,Haben,0.01
 39,17,KO3,04.11.2022,10.12.2022,Auszahlung A1,1810,Soll,12096.35
 40,17,KO3,04.11.2022,10.12.2022,Auszahlung A1,10001,Haben,12096.35
 41,18,KO2,04.11.2022,10.12.2022,Steuerrückstellung,1811,Soll,1931.35
@@ -64,17 +64,17 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 63,29,E10,02.12.2022,01.01.2023,Telefonische Beratung Steuerberater,6825,Soll,200.00
 64,29,E10,02.12.2022,01.01.2023,Telefonische Beratung Steuerberater,1406,Soll,38.00
 65,29,E10,02.12.2022,01.01.2023,Telefonische Beratung Steuerberater,99999,Haben,238.00
-66,30,E11,14.12.2022,01.01.2023,Twitter Werbekampagne,6600,Soll,7.74
-67,30,E11,14.12.2022,01.01.2023,Twitter Werbekampagne,1406,Soll,1.47
-68,30,E11,14.12.2022,01.01.2023,Twitter Werbekampagne,99999,Haben,9.21
-69,31,E12,21.12.2022,01.01.2023,Twitter Werbekampagne,6600,Soll,2.72
-70,31,E12,21.12.2022,01.01.2023,Twitter Werbekampagne,1406,Soll,0.52
-71,31,E12,21.12.2022,01.01.2023,Twitter Werbekampagne,99999,Haben,3.24
+66,30,E11,14.12.2022,01.01.2023,Online-Werbekampagne,6600,Soll,7.74
+67,30,E11,14.12.2022,01.01.2023,Online-Werbekampagne,1406,Soll,1.47
+68,30,E11,14.12.2022,01.01.2023,Online-Werbekampagne,99999,Haben,9.21
+69,31,E12,21.12.2022,01.01.2023,Online-Werbekampagne,6600,Soll,2.72
+70,31,E12,21.12.2022,01.01.2023,Online-Werbekampagne,1406,Soll,0.52
+71,31,E12,21.12.2022,01.01.2023,Online-Werbekampagne,99999,Haben,3.24
 72,32,E13,27.12.2022,01.01.2023,Domainregistrierung,6600,Soll,6.06
 73,32,E13,27.12.2022,01.01.2023,Domainregistrierung,99999,Haben,6.06
-74,33,A4,30.11.2022,01.01.2023,Softwareberatung Brunata,10001,Soll,20066.38
-75,33,A4,30.11.2022,01.01.2023,Softwareberatung Brunata,3806,Haben,3203.88
-76,33,A4,30.11.2022,01.01.2023,Softwareberatung Brunata,4400,Haben,16862.50
+74,33,A4,30.11.2022,01.01.2023,Softwareberatung,10001,Soll,20066.38
+75,33,A4,30.11.2022,01.01.2023,Softwareberatung,3806,Haben,3203.88
+76,33,A4,30.11.2022,01.01.2023,Softwareberatung,4400,Haben,16862.50
 77,34,KO5,04.12.2022,01.01.2023,Bezahlung E6,99999,Soll,200.00
 78,34,KO5,04.12.2022,01.01.2023,Bezahlung E6,1810,Haben,200.00
 79,35,KO5,07.12.2022,01.01.2023,Bezahlung E9,99999,Soll,18.84
@@ -91,11 +91,11 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 90,40,KO5,22.12.2022,01.01.2023,Bezahlung E12,1810,Haben,3.24
 91,41,KO5,29.12.2022,01.01.2023,Bezahlung E13,99999,Soll,6.06
 92,41,KO5,29.12.2022,01.01.2023,Bezahlung E13,1810,Haben,6.06
-93,42,E7,31.12.2022,01.01.2023,Sofortabschreibung Sony Headset,6262,Soll,276.47
-94,42,E7,31.12.2022,01.01.2023,Sofortabschreibung Sony Headset,0670,Haben,276.47
-95,43,A5,31.12.2022,01.01.2023,Softwareberatung Brunata,10001,Soll,10457.13
-96,43,A5,31.12.2022,01.01.2023,Softwareberatung Brunata,3806,Haben,1669.63
-97,43,A5,31.12.2022,01.01.2023,Softwareberatung Brunata,4400,Haben,8787.50
+93,42,E7,31.12.2022,01.01.2023,Sofortabschreibung Headset,6262,Soll,276.47
+94,42,E7,31.12.2022,01.01.2023,Sofortabschreibung Headset,0670,Haben,276.47
+95,43,A5,31.12.2022,01.01.2023,Softwareberatung,10001,Soll,10457.13
+96,43,A5,31.12.2022,01.01.2023,Softwareberatung,3806,Haben,1669.63
+97,43,A5,31.12.2022,01.01.2023,Softwareberatung,4400,Haben,8787.50
 98,44,JEB1,31.12.2022,31.12.2022,Gewerbesteuer,7610,Soll,4999.00
 99,44,JEB1,31.12.2022,31.12.2022,Gewerbesteuer,3035,Haben,4999.00
 100,45,JEB2,31.12.2022,31.12.2022,Körperschaftsteuer,7600,Soll,6911.06

@@ -27,9 +27,9 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 26,13,JAB13,01.01.2024,01.01.2024,Übertrag aus Vorjahr,9000,Haben,2180.00
 27,14,JAB14,01.01.2024,01.01.2024,Übertrag aus Vorjahr,9000,Soll,114477.16
 28,14,JAB14,01.01.2024,01.01.2024,Übertrag aus Vorjahr,2970,Haben,114477.16
-29,15,E1,01.01.2024,01.01.2024,Hosting Digital Ocean,6810,Soll,11.75
-30,15,E1,01.01.2024,01.01.2024,Hosting Digital Ocean,1406,Soll,2.23
-31,15,E1,01.01.2024,01.01.2024,Hosting Digital Ocean,99999,Haben,13.98
+29,15,E1,01.01.2024,01.01.2024,Hosting Cloud,6810,Soll,11.75
+30,15,E1,01.01.2024,01.01.2024,Hosting Cloud,1406,Soll,2.23
+31,15,E1,01.01.2024,01.01.2024,Hosting Cloud,99999,Haben,13.98
 32,16,KO1,01.01.2024,01.01.2024,Bezahlung E1,99999,Soll,13.98
 33,16,KO1,01.01.2024,01.01.2024,Bezahlung E1,1820,Haben,13.98
 34,17,KO2,03.01.2024,03.01.2024,Umsatzsteuervoranmeldung,3820,Soll,2235.96
@@ -42,9 +42,9 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 41,20,A1,04.01.2024,04.01.2024,Anlagezins,7100,Haben,35.72
 42,21,E2,04.01.2024,04.01.2024,Ausländische Quellensteuer,7639,Soll,7.14
 43,21,E2,04.01.2024,04.01.2024,Ausländische Quellensteuer,1830,Haben,7.14
-44,22,A2,12.01.2024,12.01.2024,Softwareberatung Brunata,10001,Soll,14696.50
-45,22,A2,12.01.2024,12.01.2024,Softwareberatung Brunata,3806,Haben,2346.50
-46,22,A2,12.01.2024,12.01.2024,Softwareberatung Brunata,4400,Haben,12350.00
+44,22,A2,12.01.2024,12.01.2024,Softwareberatung,10001,Soll,14696.50
+45,22,A2,12.01.2024,12.01.2024,Softwareberatung,3806,Haben,2346.50
+46,22,A2,12.01.2024,12.01.2024,Softwareberatung,4400,Haben,12350.00
 47,23,KO2,15.01.2024,15.01.2024,Verrechnung Gewerbesteuervorauszahlung,1821,Soll,2180.00
 48,23,KO2,15.01.2024,15.01.2024,Verrechnung Gewerbesteuervorauszahlung,10003,Haben,2180.00
 49,24,KO1,17.01.2024,17.01.2024,Auszahlung A2,1820,Soll,14696.50
@@ -67,13 +67,13 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 66,32,Lxx,27.01.2024,27.01.2024,Lohnsteuer Geschäftsführer,3730,Haben,620.33
 67,33,KO1,27.01.2024,27.01.2024,Lohn Geschäftsführer,3720,Soll,2879.67
 68,33,KO1,27.01.2024,27.01.2024,Lohn Geschäftsführer,1820,Haben,2879.67
-69,34,A3,30.01.2024,30.01.2024,Bank A Konto Cashback,10000,Soll,1.85
-70,34,A3,30.01.2024,30.01.2024,Bank A Konto Cashback,4560,Haben,1.85
+69,34,A3,30.01.2024,30.01.2024,Bank Cashback,10000,Soll,1.85
+70,34,A3,30.01.2024,30.01.2024,Bank Cashback,4560,Haben,1.85
 71,35,KO1,30.01.2024,30.01.2024,Auszahlung A3,1820,Soll,1.85
 72,35,KO1,30.01.2024,30.01.2024,Auszahlung A3,10000,Haben,1.85
-73,36,E4,01.02.2024,01.02.2024,Hosting Digital Ocean,6810,Soll,11.98
-74,36,E4,01.02.2024,01.02.2024,Hosting Digital Ocean,1406,Soll,2.28
-75,36,E4,01.02.2024,01.02.2024,Hosting Digital Ocean,99999,Haben,14.26
+73,36,E4,01.02.2024,01.02.2024,Hosting Cloud,6810,Soll,11.98
+74,36,E4,01.02.2024,01.02.2024,Hosting Cloud,1406,Soll,2.28
+75,36,E4,01.02.2024,01.02.2024,Hosting Cloud,99999,Haben,14.26
 76,37,KO4,01.02.2024,01.02.2024,Bezahlung E2,99999,Soll,14.26
 77,37,KO4,01.02.2024,01.02.2024,Bezahlung E2,1820,Haben,14.26
 78,38,KO6,04.02.2024,04.02.2024,Transfer zu Geldanlagekonto,1830,Soll,5000.00
@@ -98,9 +98,9 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 97,47,KO4,05.02.2024,05.02.2024,Transfer zu Geldanlagekonto,1820,Haben,1664.91
 98,48,KO6,10.02.2024,10.02.2024,Transfer zu Geldanlagekonto,1830,Soll,5000.00
 99,48,KO4,10.02.2024,10.02.2024,Transfer zu Geldanlagekonto,1820,Haben,5000.00
-100,49,A4,13.02.2024,13.02.2024,Softwareberatung Brunata,10001,Soll,15993.60
-101,49,A4,13.02.2024,13.02.2024,Softwareberatung Brunata,3806,Haben,2553.60
-102,49,A4,13.02.2024,13.02.2024,Softwareberatung Brunata,4400,Haben,13440.00
+100,49,A4,13.02.2024,13.02.2024,Softwareberatung,10001,Soll,15993.60
+101,49,A4,13.02.2024,13.02.2024,Softwareberatung,3806,Haben,2553.60
+102,49,A4,13.02.2024,13.02.2024,Softwareberatung,4400,Haben,13440.00
 103,50,E7,13.02.2024,13.02.2024,Anlage in ETF,0900,Soll,2500.00
 104,50,E7,13.02.2024,13.02.2024,Anlage in ETF,1830,Haben,2500.00
 105,51,E7,13.02.2024,13.02.2024,Provision Aktienhandel,6855,Soll,3.90
@@ -139,18 +139,18 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 138,67,E11,27.02.2024,27.02.2024,Storno Beleg,4400,Soll,13440.00
 139,67,E11,27.02.2024,27.02.2024,Storno Beleg,3806,Soll,2553.60
 140,67,E11,27.02.2024,27.02.2024,Storno Beleg,10001,Haben,15993.60
-141,68,A5,27.02.2024,27.02.2024,Softwareberatung Brunata,10001,Soll,14470.40
-142,68,A5,27.02.2024,27.02.2024,Softwareberatung Brunata,3806,Haben,2310.40
-143,68,A5,27.02.2024,27.02.2024,Softwareberatung Brunata,4400,Haben,12160.00
+141,68,A5,27.02.2024,27.02.2024,Softwareberatung,10001,Soll,14470.40
+142,68,A5,27.02.2024,27.02.2024,Softwareberatung,3806,Haben,2310.40
+143,68,A5,27.02.2024,27.02.2024,Softwareberatung,4400,Haben,12160.00
 144,69,S4,27.02.2024,27.02.2024,Gewerbesteuervorauszahlung,3035,Soll,63.00
 145,69,S4,27.02.2024,27.02.2024,Gewerbesteuervorauszahlung,1821,Haben,63.00
 146,70,E10,27.02.2024,27.02.2024,Anlage in ETF,0900,Soll,2499.99
 147,70,E10,27.02.2024,27.02.2024,Anlage in ETF,1830,Haben,2499.99
 148,71,E10,27.02.2024,27.02.2024,Provision Aktienhandel,6855,Soll,3.90
 149,71,E10,27.02.2024,27.02.2024,Provision Aktienhandel,1830,Haben,3.90
-150,72,E12,01.03.2024,01.03.2024,Hosting Digital Ocean,6810,Soll,12.00
-151,72,E12,01.03.2024,01.03.2024,Hosting Digital Ocean,1406,Soll,2.28
-152,72,E12,01.03.2024,01.03.2024,Hosting Digital Ocean,99999,Haben,14.28
+150,72,E12,01.03.2024,01.03.2024,Hosting Cloud,6810,Soll,12.00
+151,72,E12,01.03.2024,01.03.2024,Hosting Cloud,1406,Soll,2.28
+152,72,E12,01.03.2024,01.03.2024,Hosting Cloud,99999,Haben,14.28
 153,73,KO7,01.03.2024,01.03.2024,Bezahlung E11,99999,Soll,14.28
 154,73,KO7,01.03.2024,01.03.2024,Bezahlung E11,1820,Haben,14.28
 155,74,A6,05.03.2024,05.03.2024,Anlagezins,1830,Soll,0.20
@@ -169,9 +169,9 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 168,80,E14,12.03.2024,12.03.2024,Anlage in ETF,1830,Haben,2500.00
 169,81,E14,12.03.2024,12.03.2024,Provision Aktienhandel,6855,Soll,3.90
 170,81,E14,12.03.2024,12.03.2024,Provision Aktienhandel,1830,Haben,3.90
-171,82,A7,15.03.2024,15.03.2024,Softwareberatung Brunata,10001,Soll,8365.70
-172,82,A7,15.03.2024,15.03.2024,Softwareberatung Brunata,3806,Haben,1335.70
-173,82,A7,15.03.2024,15.03.2024,Softwareberatung Brunata,4400,Haben,7030.00
+171,82,A7,15.03.2024,15.03.2024,Softwareberatung,10001,Soll,8365.70
+172,82,A7,15.03.2024,15.03.2024,Softwareberatung,3806,Haben,1335.70
+173,82,A7,15.03.2024,15.03.2024,Softwareberatung,4400,Haben,7030.00
 174,83,KO7,20.03.2024,20.03.2024,"Auszahlung A7, Verrechnung E11",1820,Soll,6842.50
 175,83,KO7,20.03.2024,20.03.2024,"Auszahlung A7, Verrechnung E11",10001,Haben,6842.50
 176,84,E15,23.03.2024,23.03.2024,Auslandsbezahlung Kreditkarte,6855,Soll,0.29
@@ -190,9 +190,9 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 189,90,Lxx,27.03.2024,27.03.2024,Lohnsteuer Geschäftsführer,3730,Haben,620.33
 190,91,KO7,27.03.2024,27.03.2024,Lohn Geschäftsführer,3720,Soll,2879.67
 191,91,KO7,27.03.2024,27.03.2024,Lohn Geschäftsführer,1820,Haben,2879.67
-192,92,E17,01.04.2024,01.04.2024,Hosting Digital Ocean,6810,Soll,12.03
-193,92,E17,01.04.2024,01.04.2024,Hosting Digital Ocean,1406,Soll,2.29
-194,92,E17,01.04.2024,01.04.2024,Hosting Digital Ocean,99999,Haben,14.32
+192,92,E17,01.04.2024,01.04.2024,Hosting Cloud,6810,Soll,12.03
+193,92,E17,01.04.2024,01.04.2024,Hosting Cloud,1406,Soll,2.29
+194,92,E17,01.04.2024,01.04.2024,Hosting Cloud,99999,Haben,14.32
 195,93,KO10,01.04.2024,01.04.2024,Bezahlung E17,99999,Soll,14.32
 196,93,KO10,01.04.2024,01.04.2024,Bezahlung E17,1820,Haben,14.32
 197,94,KO11,03.04.2024,03.04.2024,Umsatzsteuervoranmeldung,3820,Soll,1333.42
@@ -203,9 +203,9 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 202,96,S8,03.04.2024,03.04.2024,Umsatzsteuervoranmeldung,1406,Haben,2.28
 203,97,KO12,10.04.2024,10.04.2024,Transfer zu Geldanlagekonto,1830,Soll,5008.00
 204,97,KO10,10.04.2024,10.04.2024,Transfer zu Geldanlagekonto,1820,Haben,5008.00
-205,98,A8,10.04.2024,10.04.2024,Softwareberatung Brunata,10001,Soll,17070.55
-206,98,A8,10.04.2024,10.04.2024,Softwareberatung Brunata,3806,Haben,2725.55
-207,98,A8,10.04.2024,10.04.2024,Softwareberatung Brunata,4400,Haben,14345.00
+205,98,A8,10.04.2024,10.04.2024,Softwareberatung,10001,Soll,17070.55
+206,98,A8,10.04.2024,10.04.2024,Softwareberatung,3806,Haben,2725.55
+207,98,A8,10.04.2024,10.04.2024,Softwareberatung,4400,Haben,14345.00
 208,99,KO11,11.04.2024,11.04.2024,Transfer auf Rückstellungskonto,1821,Soll,11114.80
 209,99,KO10,11.04.2024,11.04.2024,Transfer auf Rückstellungskonto,1820,Haben,11114.80
 210,100,KO10,12.04.2024,12.04.2024,Auszahlung A8,1820,Soll,17070.55
@@ -243,9 +243,9 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 242,114,Lxx,27.04.2024,27.04.2024,Lohnsteuer Geschäftsführer,3730,Haben,620.33
 243,115,KO10,27.04.2024,27.04.2024,Lohn Geschäftsführer,3720,Soll,2879.67
 244,115,KO10,27.04.2024,27.04.2024,Lohn Geschäftsführer,1820,Haben,2879.67
-245,116,E21,01.05.2024,01.05.2024,Hosting Digital Ocean,6810,Soll,12.13
-246,116,E21,01.05.2024,01.05.2024,Hosting Digital Ocean,1406,Soll,2.30
-247,116,E21,01.05.2024,01.05.2024,Hosting Digital Ocean,99999,Haben,14.43
+245,116,E21,01.05.2024,01.05.2024,Hosting Cloud,6810,Soll,12.13
+246,116,E21,01.05.2024,01.05.2024,Hosting Cloud,1406,Soll,2.30
+247,116,E21,01.05.2024,01.05.2024,Hosting Cloud,99999,Haben,14.43
 248,117,KO13,02.05.2024,02.05.2024,Bezahlung E21,99999,Soll,14.43
 249,117,KO13,02.05.2024,02.05.2024,Bezahlung E21,1820,Haben,14.43
 250,118,KO14,03.05.2024,03.05.2024,Umsatzsteuervoranmeldung,3820,Soll,2723.26
@@ -260,9 +260,9 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 259,122,E22,07.05.2024,07.05.2024,Provision Aktienhandel,1830,Haben,3.90
 260,123,S7,10.05.2024,10.05.2024,Gewerbesteuervorauszahlung,3035,Soll,1419.00
 261,123,S7,10.05.2024,10.05.2024,Gewerbesteuervorauszahlung,1821,Haben,1419.00
-262,124,A9,14.05.2024,14.05.2024,Softwareberatung Brunata,10001,Soll,13566.00
-263,124,A9,14.05.2024,14.05.2024,Softwareberatung Brunata,3806,Haben,2166.00
-264,124,A9,14.05.2024,14.05.2024,Softwareberatung Brunata,4400,Haben,11400.00
+262,124,A9,14.05.2024,14.05.2024,Softwareberatung,10001,Soll,13566.00
+263,124,A9,14.05.2024,14.05.2024,Softwareberatung,3806,Haben,2166.00
+264,124,A9,14.05.2024,14.05.2024,Softwareberatung,4400,Haben,11400.00
 265,125,KO13,17.05.2024,17.05.2024,Auszahlung A9,1820,Soll,13566.00
 266,125,KO13,17.05.2024,17.05.2024,Auszahlung A9,10001,Haben,13566.00
 267,126,KO14,17.05.2024,17.05.2024,Transfer auf Rückstellungskonto,1821,Soll,2351.42
@@ -286,9 +286,9 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 285,134,Lxx,27.05.2024,27.05.2024,Lohnsteuer Geschäftsführer,3730,Haben,620.33
 286,135,KO13,27.05.2024,27.05.2024,Lohn Geschäftsführer,3720,Soll,2879.67
 287,135,KO13,27.05.2024,27.05.2024,Lohn Geschäftsführer,1820,Haben,2879.67
-288,136,E24,01.06.2024,01.06.2024,Hosting Digital Ocean,6810,Soll,12.02
-289,136,E24,01.06.2024,01.06.2024,Hosting Digital Ocean,1406,Soll,2.28
-290,136,E24,01.06.2024,01.06.2024,Hosting Digital Ocean,99999,Haben,14.30
+288,136,E24,01.06.2024,01.06.2024,Hosting Cloud,6810,Soll,12.02
+289,136,E24,01.06.2024,01.06.2024,Hosting Cloud,1406,Soll,2.28
+290,136,E24,01.06.2024,01.06.2024,Hosting Cloud,99999,Haben,14.30
 291,137,KO16,01.06.2024,01.06.2024,Bezahlung E24,99999,Soll,14.30
 292,137,KO16,01.06.2024,01.06.2024,Bezahlung E24,1820,Haben,14.30
 293,138,KO17,03.06.2024,03.06.2024,Umsatzsteuervoranmeldung,3820,Soll,2163.70
@@ -315,9 +315,9 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 314,148,Lxx,27.06.2024,27.06.2024,Lohnsteuer Geschäftsführer,3730,Haben,620.33
 315,149,KO16,27.06.2024,27.06.2024,Lohn Geschäftsführer,3720,Soll,2879.67
 316,149,KO16,27.06.2024,27.06.2024,Lohn Geschäftsführer,1820,Haben,2879.67
-317,150,E27,01.07.2024,01.07.2024,Hosting Digital Ocean,6810,Soll,12.13
-318,150,E27,01.07.2024,01.07.2024,Hosting Digital Ocean,1406,Soll,2.30
-319,150,E27,01.07.2024,01.07.2024,Hosting Digital Ocean,99999,Haben,14.43
+317,150,E27,01.07.2024,01.07.2024,Hosting Cloud,6810,Soll,12.13
+318,150,E27,01.07.2024,01.07.2024,Hosting Cloud,1406,Soll,2.30
+319,150,E27,01.07.2024,01.07.2024,Hosting Cloud,99999,Haben,14.43
 320,151,KO19,01.07.2024,01.07.2024,Bezahlung E27,99999,Soll,14.43
 321,151,KO19,01.07.2024,01.07.2024,Bezahlung E27,1820,Haben,14.43
 322,152,S12,01.07.2024,01.07.2024,Umsatzsteuervoranmeldung,3820,Soll,2.30
@@ -338,13 +338,13 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 337,157,E30,12.07.2024,12.07.2024,Hotel Frühstück VS,99999,Haben,12.90
 338,158,KO19,12.07.2024,12.07.2024,Bezahlung E30,99999,Soll,12.90
 339,158,KO19,12.07.2024,12.07.2024,Bezahlung E30,1820,Haben,12.90
-340,159,A12,15.07.2024,15.07.2024,Bank A Konto Cashback,10000,Soll,2.25
-341,159,A12,15.07.2024,15.07.2024,Bank A Konto Cashback,4560,Haben,2.25
+340,159,A12,15.07.2024,15.07.2024,Bank Cashback,10000,Soll,2.25
+341,159,A12,15.07.2024,15.07.2024,Bank Cashback,4560,Haben,2.25
 342,160,KO1,15.07.2024,15.07.2024,Auszahlung A12,1820,Soll,2.25
 343,160,KO1,14.07.2024,15.07.2024,Auszahlung A12,10000,Haben,2.25
-344,161,E31,19.07.2024,19.07.2024,LEIReg - Verlängerung,6825,Soll,70.00
-345,161,E31,19.07.2024,19.07.2024,LEIReg - Verlängerung,1406,Soll,13.30
-346,161,E31,19.07.2024,19.07.2024,LEIReg - Verlängerung,99999,Haben,83.30
+344,161,E31,19.07.2024,19.07.2024,LEI Verlängerung,6825,Soll,70.00
+345,161,E31,19.07.2024,19.07.2024,LEI Verlängerung,1406,Soll,13.30
+346,161,E31,19.07.2024,19.07.2024,LEI Verlängerung,99999,Haben,83.30
 347,162,KO19,17.07.2024,17.07.2024,Bezahlung E31,99999,Soll,83.30
 348,162,KO19,17.07.2024,17.07.2024,Bezahlung E31,1820,Haben,83.30
 349,163,E32,23.07.2024,23.07.2024,Auslandsbezahlung Kreditkarte,6855,Soll,0.29
@@ -355,11 +355,11 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 354,165,KO19,24.07.2024,24.07.2024,Bezahlung E33,1820,Haben,609.00
 355,166,KO19,24.07.2024,24.07.2024,Bezahlung E34/E35,99999,Soll,23.98
 356,166,KO19,24.07.2024,24.07.2024,Bezahlung E34/E35,1820,Haben,23.98
-357,167,E33,25.07.2024,25.07.2024,Smartphone Lieferant A Pixel 8a,0690,Soll,511.76
-358,167,E33,25.07.2024,25.07.2024,Smartphone Lieferant A Pixel 8a,1406,Soll,97.24
-359,167,E33,25.07.2024,25.07.2024,Smartphone Lieferant A Pixel 8a,99999,Haben,609.00
-360,168,E33,25.07.2024,25.07.2024,Sofortabschreibung Smartphone Lieferant A Pixel 8a,6262,Soll,511.76
-361,168,E33,25.07.2024,25.07.2024,Sofortabschreibung Smartphone Lieferant A Pixel 8a,0690,Haben,511.76
+357,167,E33,25.07.2024,25.07.2024,Smartphone,0690,Soll,511.76
+358,167,E33,25.07.2024,25.07.2024,Smartphone,1406,Soll,97.24
+359,167,E33,25.07.2024,25.07.2024,Smartphone,99999,Haben,609.00
+360,168,E33,25.07.2024,25.07.2024,Sofortabschreibung Smartphone,6262,Soll,511.76
+361,168,E33,25.07.2024,25.07.2024,Sofortabschreibung Smartphone,0690,Haben,511.76
 362,169,E34,25.07.2024,25.07.2024,Smartphone Schutzfolie,0690,Soll,6.71
 363,169,E34,25.07.2024,25.07.2024,Smartphone Schutzfolie,1406,Soll,1.28
 364,169,E34,25.07.2024,25.07.2024,Smartphone Schutzfolie,99999,Haben,7.99
@@ -378,18 +378,18 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 377,175,Lxx,27.07.2024,27.07.2024,Lohnsteuer Geschäftsführer,3730,Haben,593.41
 378,176,KO19,27.07.2024,27.07.2024,Lohn Geschäftsführer,3720,Soll,2906.59
 379,176,KO19,27.07.2024,27.07.2024,Lohn Geschäftsführer,1820,Haben,2906.59
-380,177,E36,25.07.2024,25.07.2024,Geschäftsreise Hamburg,6663,Soll,45.78
-381,177,E36,25.07.2024,25.07.2024,Geschäftsreise Hamburg,1401,Soll,3.21
-382,177,E36,25.07.2024,25.07.2024,Geschäftsreise Hamburg,99999,Haben,48.99
+380,177,E36,25.07.2024,25.07.2024,Geschäftsreise,6663,Soll,45.78
+381,177,E36,25.07.2024,25.07.2024,Geschäftsreise,1401,Soll,3.21
+382,177,E36,25.07.2024,25.07.2024,Geschäftsreise,99999,Haben,48.99
 383,178,KO19,27.07.2024,27.07.2024,Bezahlung E36,99999,Soll,48.99
 384,178,KO19,27.07.2024,27.07.2024,Bezahlung E36,1820,Haben,48.99
 385,179,KO19,29.07.2024,29.07.2024,Versehentliche Bezahlung Firmenkreditkarte,1820,Soll,46.00
 386,179,KO19,29.07.2024,29.07.2024,Versehentliche Bezahlung Firmenkreditkarte,99999,Haben,46.00
 387,180,KO19,31.07.2024,31.07.2024,Ausgleich Versehentliche Bezahlung Firmenkreditkarte,99999,Soll,46.00
 388,180,KO19,31.07.2024,31.07.2024,Ausgleich Versehentliche Bezahlung Firmenkreditkarte,1820,Haben,46.00
-389,181,E37,01.08.2024,01.08.2024,Hosting Digital Ocean,6810,Soll,12.00
-390,181,E37,01.08.2024,01.08.2024,Hosting Digital Ocean,1406,Soll,2.28
-391,181,E37,01.08.2024,01.08.2024,Hosting Digital Ocean,99999,Haben,14.28
+389,181,E37,01.08.2024,01.08.2024,Hosting Cloud,6810,Soll,12.00
+390,181,E37,01.08.2024,01.08.2024,Hosting Cloud,1406,Soll,2.28
+391,181,E37,01.08.2024,01.08.2024,Hosting Cloud,99999,Haben,14.28
 392,182,K22,02.08.2024,02.08.2024,Bezahlung E37,99999,Soll,14.28
 393,182,K22,02.08.2024,02.08.2024,Bezahlung E37,1820,Haben,14.28
 394,183,S13,04.08.2024,04.08.2024,Umsatzsteuervoranmeldung,3820,Soll,7.82
@@ -414,8 +414,8 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 413,191,S14,22.08.2024,22.08.2024,Vorauszahlung Körperschaftssteuer und Soli,99999,Haben,1770.29
 414,192,E40,23.08.2024,23.08.2024,Auslandsbezahlung Kreditkarte,6855,Soll,0.29
 415,192,E40,23.08.2024,23.08.2024,Auslandsbezahlung Kreditkarte,99999,Haben,0.29
-416,193,E41,25.08.2024,25.08.2024,Amazon Prime,99999,Soll,89.90
-417,193,E41,25.08.2024,25.08.2024,Amazon Prime,1820,Haben,89.90
+416,193,E41,25.08.2024,25.08.2024,Abo-Dienst,99999,Soll,89.90
+417,193,E41,25.08.2024,25.08.2024,Abo-Dienst,1820,Haben,89.90
 418,194,KO22,26.08.2024,26.08.2024,Bezahlung E40,99999,Soll,0.29
 419,194,KO22,26.08.2024,26.08.2024,Bezahlung E40,1820,Haben,0.29
 420,195,Lxx,27.08.2024,27.08.2024,Lohn Geschäftsführer,6024,Soll,3500.00
@@ -426,17 +426,17 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 425,197,Lxx,27.08.2024,27.08.2024,Lohnsteuer Geschäftsführer,3730,Haben,593.41
 426,198,KO22,27.08.2024,27.08.2024,Lohn Geschäftsführer,3720,Soll,2906.59
 427,198,KO22,27.08.2024,27.08.2024,Lohn Geschäftsführer,1820,Haben,2906.59
-428,199,E42,01.09.2024,01.09.2024,Hosting Digital Ocean,6810,Soll,15.76
-429,199,E42,01.09.2024,01.09.2024,Hosting Digital Ocean,1406,Soll,2.99
-430,199,E42,01.09.2024,01.09.2024,Hosting Digital Ocean,99999,Haben,18.75
+428,199,E42,01.09.2024,01.09.2024,Hosting Cloud,6810,Soll,15.76
+429,199,E42,01.09.2024,01.09.2024,Hosting Cloud,1406,Soll,2.99
+430,199,E42,01.09.2024,01.09.2024,Hosting Cloud,99999,Haben,18.75
 431,200,K25,02.09.2024,02.09.2024,Bezahlung E42,99999,Soll,18.75
 432,200,K25,02.09.2024,02.09.2024,Bezahlung E42,1820,Haben,18.75
 433,201,A15,05.09.2024,05.09.2024,Anlagezins,1830,Soll,33.49
 434,201,A15,05.09.2024,05.09.2024,Anlagezins,7100,Haben,33.49
 435,202,E43,05.09.2024,05.09.2024,Ausländische Quellensteuer,7639,Soll,6.70
 436,202,E43,05.09.2024,05.09.2024,Ausländische Quellensteuer,1830,Haben,6.70
-437,203,K25,06.09.2024,06.09.2024,Rückerstattung Amazon Prime,1820,Soll,89.90
-438,203,K25,06.09.2024,06.09.2024,Rückerstattung Amazon Prime,99999,Haben,89.90
+437,203,K25,06.09.2024,06.09.2024,Rückerstattung Abo-Dienst,1820,Soll,89.90
+438,203,K25,06.09.2024,06.09.2024,Rückerstattung Abo-Dienst,99999,Haben,89.90
 439,204,E44,06.09.2024,06.09.2024,IHK Beitrag,6420,Soll,92.00
 440,204,E44,06.09.2024,06.09.2024,IHK Beitrag,99999,Haben,92.00
 441,205,S16,06.09.2024,06.09.2024,Umsatzsteuervoranmeldung,3820,Soll,2.28
@@ -459,9 +459,9 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 458,213,Lxx,27.09.2024,27.09.2024,Lohnsteuer Geschäftsführer,3730,Haben,593.41
 459,214,KO25,27.09.2024,27.09.2024,Lohn Geschäftsführer,3720,Soll,2906.59
 460,214,KO25,27.09.2024,27.09.2024,Lohn Geschäftsführer,1820,Haben,2906.59
-461,215,E46,01.10.2024,01.10.2024,Hosting Digital Ocean,6810,Soll,16.35
-462,215,E46,01.10.2024,01.10.2024,Hosting Digital Ocean,1406,Soll,3.11
-463,215,E46,01.10.2024,01.10.2024,Hosting Digital Ocean,99999,Haben,19.46
+461,215,E46,01.10.2024,01.10.2024,Hosting Cloud,6810,Soll,16.35
+462,215,E46,01.10.2024,01.10.2024,Hosting Cloud,1406,Soll,3.11
+463,215,E46,01.10.2024,01.10.2024,Hosting Cloud,99999,Haben,19.46
 464,216,KO28,01.10.2024,01.10.2024,Bezahlung E46,99999,Soll,19.46
 465,216,KO28,01.10.2024,01.10.2024,Bezahlung E46,1820,Haben,19.46
 466,217,KO28,03.10.2024,03.10.2024,Bezahlung E44,99999,Soll,92.00
@@ -478,8 +478,8 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 477,222,KO28,18.10.2024,18.10.2024,Hotelbuchung,1820,Haben,341.78
 478,223,KO28,18.10.2024,18.10.2024,Storno Hotelbuchung,1820,Soll,341.78
 479,223,KO28,18.10.2024,18.10.2024,Storno Hotelbuchung,99999,Haben,341.78
-480,224,A17,18.10.2024,18.10.2024,Bank A Konto Cashback,10000,Soll,21.08
-481,224,A17,18.10.2024,18.10.2024,Bank A Konto Cashback,4560,Haben,21.08
+480,224,A17,18.10.2024,18.10.2024,Bank Cashback,10000,Soll,21.08
+481,224,A17,18.10.2024,18.10.2024,Bank Cashback,4560,Haben,21.08
 482,225,KO28,18.10.2024,18.10.2024,Auszahlung A17,1820,Soll,21.08
 483,225,KO28,18.10.2024,18.10.2024,Auszahlung A17,10000,Haben,21.08
 484,226,E48,19.10.2024,19.10.2024,Hotelübernachtung VS,6660,Soll,269.44
@@ -494,8 +494,8 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 493,229,E49,23.10.2024,23.10.2024,Auslandsbezahlung Kreditkarte,99999,Haben,0.39
 494,230,KO1,24.10.2024,24.10.2024,Bezahlung E49,99999,Soll,0.39
 495,230,KO1,24.10.2024,24.10.2024,Bezahlung E49,1820,Haben,0.39
-496,231,KO28,21.10.2024,21.10.2024,Lieferant A Dev Account (versehentliche Abbuchung),99999,Soll,4.63
-497,231,KO28,21.10.2024,21.10.2024,Lieferant A Dev Account (versehentliche Abbuchung),1820,Haben,4.63
+496,231,KO28,21.10.2024,21.10.2024,Plattform-Konto (versehentliche Abbuchung),99999,Soll,4.63
+497,231,KO28,21.10.2024,21.10.2024,Plattform-Konto (versehentliche Abbuchung),1820,Haben,4.63
 498,232,E50,23.10.2024,23.10.2024,Hotelübernachtung VS,6660,Soll,147.66
 499,232,E50,23.10.2024,23.10.2024,Hotelübernachtung VS,1401,Soll,10.34
 500,232,E50,23.10.2024,23.10.2024,Hotelübernachtung VS,99999,Haben,158.00
@@ -514,17 +514,17 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 513,238,KO28,27.10.2024,27.10.2024,Lohn Geschäftsführer,1820,Haben,2906.59
 514,239,S17,31.10.2024,31.10.2024,Rückerstattung falsch verrechnete Lohnsteuer aus Dezember 2023 an Finanzamt,3730,Soll,2461.32
 515,239,S17,31.10.2024,31.10.2024,Rückerstattung falsch verrechnete Lohnsteuer aus Dezember 2023 an Finanzamt,1821,Haben,2461.32
-516,240,E51,01.11.2024,01.11.2024,Hosting Digital Ocean,6810,Soll,16.78
-517,240,E51,01.11.2024,01.11.2024,Hosting Digital Ocean,1406,Soll,3.19
-518,240,E51,01.11.2024,01.11.2024,Hosting Digital Ocean,99999,Haben,19.97
+516,240,E51,01.11.2024,01.11.2024,Hosting Cloud,6810,Soll,16.78
+517,240,E51,01.11.2024,01.11.2024,Hosting Cloud,1406,Soll,3.19
+518,240,E51,01.11.2024,01.11.2024,Hosting Cloud,99999,Haben,19.97
 519,241,KO31,03.11.2024,03.11.2024,Bezahlung E51,99999,Soll,19.97
 520,241,KO31,03.11.2024,03.11.2024,Bezahlung E51,1820,Haben,19.97
 521,242,S18,04.11.2024,04.11.2024,Umsatzsteuervoranmeldung,3820,Soll,10.29
 522,242,S18,04.11.2024,04.11.2024,Umsatzsteuervoranmeldung,1406,Haben,10.29
 523,243,S18,04.11.2024,04.11.2024,Umsatzsteuervoranmeldung,3820,Soll,29.20
 524,243,S18,04.11.2024,04.11.2024,Umsatzsteuervoranmeldung,1401,Haben,29.20
-525,244,KO31,04.11.2024,04.11.2024,Lieferant A Dev Account (versehentliche Abbuchung) Rückerstattung,1820,Soll,4.63
-526,244,KO31,04.11.2024,04.11.2024,Lieferant A Dev Account (versehentliche Abbuchung) Rückerstattung,99999,Haben,4.63
+525,244,KO31,04.11.2024,04.11.2024,Plattform-Konto (versehentliche Abbuchung) Rückerstattung,1820,Soll,4.63
+526,244,KO31,04.11.2024,04.11.2024,Plattform-Konto (versehentliche Abbuchung) Rückerstattung,99999,Haben,4.63
 527,245,A16,05.11.2024,05.11.2024,Anlagezins,1830,Soll,27.85
 528,245,A16,05.11.2024,05.11.2024,Anlagezins,7100,Haben,27.85
 529,246,E46,05.11.2024,05.11.2024,Ausländische Quellensteuer,7639,Soll,5.57
@@ -546,8 +546,8 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 545,253,Lxx,27.11.2024,27.11.2024,Lohnsteuer Geschäftsführer,3730,Haben,593.41
 546,254,KO31,27.11.2024,27.11.2024,Lohn Geschäftsführer,3720,Soll,2906.59
 547,254,KO31,27.11.2024,27.11.2024,Lohn Geschäftsführer,1820,Haben,2906.59
-548,255,A19,27.11.2024,27.11.2024,Bank A Konto Cashback,10000,Soll,6.78
-549,255,A19,27.11.2024,27.11.2024,Bank A Konto Cashback,4560,Haben,6.78
+548,255,A19,27.11.2024,27.11.2024,Bank Cashback,10000,Soll,6.78
+549,255,A19,27.11.2024,27.11.2024,Bank Cashback,4560,Haben,6.78
 550,256,KO1,27.11.2024,27.11.2024,Auszahlung A19,1820,Soll,6.78
 551,256,KO1,27.11.2024,27.11.2024,Auszahlung A19,10000,Haben,6.78
 552,257,E53,30.11.2024,30.11.2024,Hotelübernachtung VS,6660,Soll,129.76
@@ -555,9 +555,9 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 554,257,E53,30.11.2024,30.11.2024,Hotelübernachtung VS,99999,Haben,138.84
 555,258,KO31,30.11.2024,30.11.2024,Bezahlung E53,99999,Soll,138.84
 556,258,KO31,30.11.2024,30.11.2024,Bezahlung E53,1820,Haben,138.84
-557,259,E54,01.12.2024,01.12.2024,Hosting Digital Ocean,6810,Soll,17.27
-558,259,E54,01.12.2024,01.12.2024,Hosting Digital Ocean,1406,Soll,3.28
-559,259,E54,01.12.2024,01.12.2024,Hosting Digital Ocean,99999,Haben,20.55
+557,259,E54,01.12.2024,01.12.2024,Hosting Cloud,6810,Soll,17.27
+558,259,E54,01.12.2024,01.12.2024,Hosting Cloud,1406,Soll,3.28
+559,259,E54,01.12.2024,01.12.2024,Hosting Cloud,99999,Haben,20.55
 560,260,S20,01.02.2024,01.02.2024,Umsatzsteuervoranmeldung,3820,Soll,3.19
 561,260,S20,01.02.2024,01.02.2024,Umsatzsteuervoranmeldung,1406,Haben,3.19
 562,261,KO34,02.12.2024,02.12.2024,Bezahlung E54,99999,Soll,20.55
@@ -568,8 +568,8 @@ Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungste
 567,263,A19,04.12.2024,04.12.2024,Anlagezins,7100,Haben,24.47
 568,264,E55,04.12.2024,04.12.2024,Ausländische Quellensteuer,7639,Soll,4.89
 569,264,E55,04.12.2024,04.12.2024,Ausländische Quellensteuer,1830,Haben,4.89
-570,265,E56,07.12.2024,07.12.2024,Chat GPT Abo,6837,Soll,18.97
-571,265,E56,07.12.2024,07.12.2024,Chat GPT Abo,99999,Haben,18.97
+570,265,E56,07.12.2024,07.12.2024,KI-Dienst Abo,6837,Soll,18.97
+571,265,E56,07.12.2024,07.12.2024,KI-Dienst Abo,99999,Haben,18.97
 572,266,KO34,07.12.2024,07.12.2024,Bezahlung E56,99999,Soll,18.97
 573,266,KO34,07.12.2024,07.12.2024,Bezahlung E56,1820,Haben,18.97
 574,267,KO35,08.12.2024,08.12.2024,Vorauszahlung Körperschaftssteuer und Soli,99999,Soll,1770.29

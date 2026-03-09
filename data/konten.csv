@@ -42,7 +42,7 @@ Konto,Bezeichnung,Bilanzposten,GuV Posten,XBRL Taxonomie
 4400,Erlöse 19 % USt,,1. Umsatzerlöse,is.netIncome.regular.operatingTC.grossTradingProfit.totalOutput.netSales.grossSales.generalRateVAT
 4560,Provisionsumsätze,,4. Sonstige betriebliche Erträge,is.netIncome.regular.operatingTC.grossTradingProfit.totalOutput.netSales.grossSales.unknownVAT
 4930,Erträge aus der Auflösung von Rückstellungen,,4. Sonstige betriebliche Erträge,is.netIncome.regular.operatingTC.otherOpRevenue.releaseProv
-4932,"Erträge aus der Herabsetzung von Verbindlichkeiten",,4. Sonstige betriebliche Erträge,is.netIncome.regular.operatingTC.otherOpRevenue.releasLiab
+4932,Erträge aus der Herabsetzung von Verbindlichkeiten,,4. Sonstige betriebliche Erträge,is.netIncome.regular.operatingTC.otherOpRevenue.releasLiab
 6024,Geschäftsführergehälter der GmbH-Gesellschafter,,6. Personalaufwand,is.netIncome.regular.operatingTC.staff.salaries.managerPartner
 6035,Löhne für Minijobs,,6. Personalaufwand,is.netIncome.regular.operatingTC.staff.salaries.minijobs
 6036,Pauschale Steuer für Minijobber,,6. Personalaufwand,is.netIncome.regular.operatingTC.staff.salaries.minijobs
@@ -50,7 +50,7 @@ Konto,Bezeichnung,Bilanzposten,GuV Posten,XBRL Taxonomie
 6110,Gesetzliche soziale Aufwendungen,,6. Personalaufwand,is.netIncome.regular.operatingTC.staff.social.socExp.misc
 6130,"Freiwillige soziale Aufwendungen, lohnsteuerfrei",,6. Personalaufwand,is.netIncome.regular.operatingTC.staff.social.socExp.misc
 6262,"Abschreibungen auf aktivierte, geringwertige Wirtschaftsgüter",,7. Abschreibungen,is.netIncome.regular.operatingTC.deprAmort.fixAss.tan.other
-6300,"Sonstige betriebliche Aufwendungen",,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.miscellaneous
+6300,Sonstige betriebliche Aufwendungen,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.miscellaneous
 6420,Beiträge,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.miscellaneous
 6430,Sonstige Abgaben,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.miscellaneous
 6436,Steuerlich abzugsfähige Verspätungszuschläge und Zwangsgelder,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.miscellaneous
@@ -66,7 +66,7 @@ Konto,Bezeichnung,Bilanzposten,GuV Posten,XBRL Taxonomie
 6855,Nebenkosten des Geldverkehrs,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.otherOrdinary
 6880,Aufwendungen aus der Währungsumrechnung,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.currLoss
 6930,Forderungsverluste (übliche Höhe),,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.regAllowance
-7100,Sonstige Zinsen und ähnliche Erträge,,"4. Sonstige betriebliche Erträge",is.netIncome.regular.fin.netInterest.income.deposits
+7100,Sonstige Zinsen und ähnliche Erträge,,4. Sonstige betriebliche Erträge,is.netIncome.regular.fin.netInterest.income.deposits
 7600,Körperschaftsteuer,,14. Steuern vom Einkommen und vom Ertrag,is.netIncome.tax.kst
 7603,Körperschaftsteuer für Vorjahre,,14. Steuern vom Einkommen und vom Ertrag,is.netIncome.tax.kst
 7604,Körperschaftsteuererstattungen für Vorjahre,,14. Steuern vom Einkommen und vom Ertrag,is.netIncome.tax.kst
