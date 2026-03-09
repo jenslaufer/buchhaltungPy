@@ -485,6 +485,125 @@ def _letzter_tag(monat: date) -> date:
 
 
 # ---------------------------------------------------------------------------
+# Extract payroll from journal
+# ---------------------------------------------------------------------------
+
+def lohnabrechnungen_aus_journal(
+    journal_path: str,
+    konto_gehalt: str = KONTO_GF_GEHALT,
+    konto_lst: str = KONTO_VERB_LOHN_STEUER,
+    name: str = "",
+) -> list[Lohnabrechnung]:
+    """Extract monthly payroll data from actual journal bookings.
+
+    Reads the journal CSV and reconstructs Lohnabrechnung per month from:
+    - Brutto: sum of konto_gehalt Soll entries
+    - LSt: sum of konto_lst Haben entries (from Lohnsteuer bookings)
+
+    Returns list of Lohnabrechnung sorted by month.
+    """
+    df = pl.read_csv(journal_path, schema_overrides={"Konto": pl.Utf8})
+
+    # Parse dates (DD.MM.YYYY)
+    df = df.with_columns(
+        pl.col("Belegdatum").str.slice(3, 2).cast(pl.Int32).alias("_monat"),
+        pl.col("Belegdatum").str.slice(6, 4).cast(pl.Int32).alias("_jahr"),
+    )
+
+    # Only payroll bookings: Belegnummer starting with "L" or "GH"
+    lohn_df = df.filter(pl.col("Belegnummer").str.contains("^(L|GH)"))
+
+    # Brutto per month: konto_gehalt Soll
+    brutto_df = (
+        lohn_df.filter((pl.col("Konto") == konto_gehalt) & (pl.col("Typ") == "Soll"))
+        .group_by("_jahr", "_monat")
+        .agg(pl.col("Betrag").sum().alias("brutto"))
+    )
+
+    # LSt per month: konto_lst Haben minus Soll (Soll = corrections/refunds)
+    lst_haben = (
+        lohn_df.filter((pl.col("Konto") == konto_lst) & (pl.col("Typ") == "Haben"))
+        .group_by("_jahr", "_monat")
+        .agg(pl.col("Betrag").sum().alias("lst_haben"))
+    )
+    lst_soll = (
+        lohn_df.filter((pl.col("Konto") == konto_lst) & (pl.col("Typ") == "Soll"))
+        .group_by("_jahr", "_monat")
+        .agg(pl.col("Betrag").sum().alias("lst_soll"))
+    )
+    lst_df = (
+        lst_haben.join(lst_soll, on=["_jahr", "_monat"], how="left")
+        .fill_null(0)
+        .with_columns(
+            (pl.col("lst_haben") - pl.col("lst_soll")).alias("lst_total")
+        )
+        .select("_jahr", "_monat", "lst_total")
+    )
+
+    # Join
+    result = brutto_df.join(lst_df, on=["_jahr", "_monat"], how="left").fill_null(0)
+    result = result.sort("_jahr", "_monat")
+
+    abrechnungen = []
+    for row in result.iter_rows(named=True):
+        jahr = row["_jahr"]
+        monat = row["_monat"]
+        brutto = row["brutto"]
+        lst_total = row["lst_total"]
+        netto = round(brutto - lst_total, 2)
+
+        abrechnungen.append(Lohnabrechnung(
+            mitarbeiter=name,
+            monat=f"{monat:02d}.{jahr}",
+            brutto=brutto,
+            lohnsteuer=lst_total,
+            soli=0.0,
+            kirchensteuer=0.0,
+            sv_an=0.0,
+            sv_ag=0.0,
+            netto=netto,
+            ag_kosten=brutto,
+        ))
+
+    return abrechnungen
+
+
+def lohnzettel_aus_journal(
+    journal_path: str,
+    mitarbeiter: Mitarbeiter,
+    firma: Firma | None = None,
+    output_dir: str = "",
+    show_ag_kosten: bool = False,
+) -> list[str]:
+    """Generate payslips from actual journal data.
+
+    Reads the journal, extracts monthly payroll, generates HTML payslips.
+
+    Returns list of output file paths.
+    """
+    abrechnungen = lohnabrechnungen_aus_journal(
+        journal_path,
+        konto_gehalt=mitarbeiter.konto_gehalt,
+        name=mitarbeiter.name,
+    )
+
+    from pathlib import Path
+    out = Path(output_dir) if output_dir else Path(".")
+    out.mkdir(parents=True, exist_ok=True)
+
+    paths = []
+    for abr in abrechnungen:
+        html = lohnzettel(mitarbeiter, abr, firma, show_ag_kosten=show_ag_kosten)
+        parts = abr.monat.split(".")
+        filename = f"lohnzettel_{parts[1]}_{parts[0]}.html"
+        path = out / filename
+        path.write_text(html, encoding="utf-8")
+        paths.append(str(path))
+
+    return paths
+
+
+# ---------------------------------------------------------------------------
 # Lohnzettel (payslip) generation
 # ---------------------------------------------------------------------------
 

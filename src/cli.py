@@ -249,6 +249,25 @@ def cmd_lohn_zettel(args):
         print(content)
 
 
+def cmd_lohn_zettel_journal(args):
+    ma = _build_mitarbeiter(args)
+    firma = lb.Firma(
+        name=args.firma_name,
+        strasse=args.firma_strasse,
+        plz=args.firma_plz,
+        ort=args.firma_ort,
+    )
+    paths = lb.lohnzettel_aus_journal(
+        args.journal,
+        mitarbeiter=ma,
+        firma=firma,
+        output_dir=args.output_dir,
+        show_ag_kosten=args.show_ag_kosten,
+    )
+    for p in paths:
+        print(f"Written: {p}")
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(
         prog="buchhaltung",
@@ -358,6 +377,13 @@ def main(argv=None):
     p = sub.add_parser("lohn-zettel", help="Generate payslip as HTML (print to PDF)")
     _add_lohnzettel_args(p)
     p.set_defaults(func=cmd_lohn_zettel)
+
+    # lohn-zettel-journal
+    p = sub.add_parser("lohn-zettel-journal", help="Generate payslips from journal data")
+    _add_lohnzettel_args(p)
+    _add_journal(p)
+    p.add_argument("--output-dir", default="", help="Output directory for payslip HTML files")
+    p.set_defaults(func=cmd_lohn_zettel_journal)
 
     args = parser.parse_args(argv)
     args.func(args)

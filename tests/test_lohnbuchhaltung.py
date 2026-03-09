@@ -629,3 +629,92 @@ class TestLohnabrechnungDetail:
         from src.lohnbuchhaltung import _beitragsgruppe
         ma = Mitarbeiter(name="M", brutto_monat=520, minijob=True)
         assert _beitragsgruppe(ma) == "6500"
+
+
+class TestLohnabrechnungenAusJournal:
+    """Tests for extracting payroll from journal CSV."""
+
+    @pytest.fixture()
+    def journal_csv(self, tmp_path):
+        """Minimal journal CSV with two months of payroll."""
+        content = (
+            "Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,"
+            "Buchungstext,Konto,Typ,Betrag\n"
+            # January - regular payroll
+            "1,1,L01,28.01.2025,28.01.2025,Lohn GF,6024,Soll,3500.00\n"
+            "2,1,L01,28.01.2025,28.01.2025,Lohn GF,3790,Haben,3500.00\n"
+            "3,2,L01,28.01.2025,28.01.2025,Lohn GF,3790,Soll,2900.00\n"
+            "4,2,L01,28.01.2025,28.01.2025,Lohn GF,3720,Haben,2900.00\n"
+            "5,3,L01,28.01.2025,28.01.2025,LSt GF,3790,Soll,600.00\n"
+            "6,3,L01,28.01.2025,28.01.2025,LSt GF,3730,Haben,600.00\n"
+            # February - regular payroll
+            "7,4,L02,28.02.2025,28.02.2025,Lohn GF,6024,Soll,3500.00\n"
+            "8,4,L02,28.02.2025,28.02.2025,Lohn GF,3790,Haben,3500.00\n"
+            "9,5,L02,28.02.2025,28.02.2025,Lohn GF,3790,Soll,2900.00\n"
+            "10,5,L02,28.02.2025,28.02.2025,Lohn GF,3720,Haben,2900.00\n"
+            "11,6,L02,28.02.2025,28.02.2025,LSt GF,3790,Soll,600.00\n"
+            "12,6,L02,28.02.2025,28.02.2025,LSt GF,3730,Haben,600.00\n"
+            # Non-payroll entry (should be ignored)
+            "13,7,E1,15.01.2025,15.01.2025,Hosting,6810,Soll,50.00\n"
+            "14,7,E1,15.01.2025,15.01.2025,Hosting,99999,Haben,50.00\n"
+        )
+        p = tmp_path / "journal.csv"
+        p.write_text(content)
+        return str(p)
+
+    def test_extracts_two_months(self, journal_csv):
+        from src.lohnbuchhaltung import lohnabrechnungen_aus_journal
+        result = lohnabrechnungen_aus_journal(journal_csv)
+        assert len(result) == 2
+
+    def test_months_sorted(self, journal_csv):
+        from src.lohnbuchhaltung import lohnabrechnungen_aus_journal
+        result = lohnabrechnungen_aus_journal(journal_csv)
+        assert result[0].monat == "01.2025"
+        assert result[1].monat == "02.2025"
+
+    def test_brutto_from_gehalt_konto(self, journal_csv):
+        from src.lohnbuchhaltung import lohnabrechnungen_aus_journal
+        result = lohnabrechnungen_aus_journal(journal_csv)
+        assert result[0].brutto == 3500.0
+
+    def test_lohnsteuer_from_haben(self, journal_csv):
+        from src.lohnbuchhaltung import lohnabrechnungen_aus_journal
+        result = lohnabrechnungen_aus_journal(journal_csv)
+        assert result[0].lohnsteuer == 600.0
+
+    def test_netto_is_brutto_minus_lst(self, journal_csv):
+        from src.lohnbuchhaltung import lohnabrechnungen_aus_journal
+        result = lohnabrechnungen_aus_journal(journal_csv)
+        assert result[0].netto == 2900.0
+
+    def test_ignores_non_payroll_entries(self, journal_csv):
+        from src.lohnbuchhaltung import lohnabrechnungen_aus_journal
+        result = lohnabrechnungen_aus_journal(journal_csv)
+        # Only 2 months, E1 booking not included
+        assert len(result) == 2
+
+    def test_name_passthrough(self, journal_csv):
+        from src.lohnbuchhaltung import lohnabrechnungen_aus_journal
+        result = lohnabrechnungen_aus_journal(journal_csv, name="Test GF")
+        assert result[0].mitarbeiter == "Test GF"
+
+    def test_lst_correction_soll_reduces_lst(self, tmp_path):
+        """LSt Soll on 3730 (refund/correction) reduces net LSt."""
+        from src.lohnbuchhaltung import lohnabrechnungen_aus_journal
+        content = (
+            "Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,"
+            "Buchungstext,Konto,Typ,Betrag\n"
+            "1,1,L01,31.12.2023,31.12.2023,Lohn GF,6024,Soll,3500.00\n"
+            "2,1,L01,31.12.2023,31.12.2023,Lohn GF,3790,Haben,3500.00\n"
+            "3,2,L01,31.12.2023,31.12.2023,LSt GF,3790,Soll,620.00\n"
+            "4,2,L01,31.12.2023,31.12.2023,LSt GF,3730,Haben,620.00\n"
+            "5,3,L01,31.12.2023,31.12.2023,Lohnsteuerausgleich,3730,Soll,2400.00\n"
+            "6,3,L01,31.12.2023,31.12.2023,Lohnsteuerausgleich,3720,Haben,2400.00\n"
+        )
+        p = tmp_path / "journal_corr.csv"
+        p.write_text(content)
+        result = lohnabrechnungen_aus_journal(str(p))
+        assert len(result) == 1
+        assert result[0].lohnsteuer == pytest.approx(-1780.0)
+        assert result[0].netto == pytest.approx(5280.0)
