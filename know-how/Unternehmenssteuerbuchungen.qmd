@@ -1,0 +1,206 @@
+---
+format:
+    html:
+        embed-resources: true
+editor:
+    render-on-save: true
+execute: 
+  echo: false
+  warning: false
+---
+
+# Buchungen Unternehmenssteuern
+
+```{r}
+library(tidyverse)
+library(glue)
+library(kableExtra)
+```
+
+```{r}
+path <- "~/Repos/solytics/{year}/Buchungssaetze/journal.csv"
+```
+
+```{r}
+kontenbuchungen <- function(data, filter = T) {
+    data <- data |>
+        select(Buchungssatznummer, Konto, Typ) |>
+        group_by(Buchungssatznummer) |>
+        mutate(n = n()) |>
+        filter(n < 3) |>
+        pivot_wider(c(-Buchungssatznummer), names_from = Typ, values_from = Konto) |>
+        select(-n) |>
+        unnest() |>
+        filter(Soll %in% (konten |> pull(Konto)) | Haben %in% (konten |> pull(Konto))) |>
+        distinct()
+
+    if (filter) {
+        data <- data |> filter(!(Soll %in% c("9000", "00000")) &
+            !(Haben
+            %in% c("9000", "00000")))
+    }
+    data
+}
+```
+
+## Körperschaftsteuer
+
+### Konten
+
+```{r}
+
+konten <- tribble(
+    ~Konto, ~Beschreibung, ~Bilanzposten, ~`GuV Posten`,
+    3040, "Körperschaftsteuerrückstellung", "B. Rückstellungen", "",
+    1450, "Körperschaftsteuerrückforderung", "II. Forderungen und sonstige Vermögensgegenstände", "",
+    7600, "Körperschaftsteuer", "", "14. Steuern vom Einkommen und vom Ertrag",
+    7603, "Körperschaftsteuer für Vorjahre", "", "14. Steuern vom Einkommen und vom Ertrag",
+    7604, "Körperschaftsteuererstattungen für Vorjahre", "", "14. Steuern vom Einkommen und vom Ertrag",
+)
+
+konten |> kable()
+```
+
+
+```{r}
+year <- "2023"
+path |>
+    glue() |>
+    read_csv() |>
+    kontenbuchungen() |>
+    mutate(Jahr = year) |>
+    kable()
+
+year <- "2024"
+path |>
+    glue() |>
+    read_csv() |>
+    kontenbuchungen() |>
+    mutate(Jahr = year) |>
+    kable()
+
+
+year <- "2025"
+path |>
+    glue() |>
+    read_csv() |>
+    kontenbuchungen() |>
+    mutate(Jahr = year) |>
+    kable()
+```
+
+## Buchungsempfehlungen
+
+- [Körperschaftsteuer](https://sevdesk.de/lexikon/koerperschaftssteuer/)
+
+```{r}
+tribble(
+    ~Beschreibung, ~Soll, ~Haben,
+    "Rückstellung der Körperschaftsteuer", 7600, 3040,
+    "Zahlung der Körperschaftsteuer", 3040, 1800,
+    "Körperschaftsteuer niedriger als geleistete Vorauszahlungen", 1450, 7600,
+    "Körperschaftsteuer höher als geleistete Vorauszahlungen", 7600, 3040,
+) |>
+    kable()
+```
+
+## Solidaritätszuschlag
+
+
+### Konten
+
+```{r}
+
+konten <- tribble(
+    ~Konto, ~Beschreibung, ~Bilanzposten, ~`GuV Posten`,
+    3020, "Steuerrückstellungen", "B. Rückstellungen", "",
+    7607, "Solidaritätszuschlagerstattungen für Vorjahre", "", "14. Steuern vom Einkommen und vom Ertrag",
+    7608, "Solidaritätszuschlag", "", "14. Steuern vom Einkommen und vom Ertrag",
+    7609, "Solidaritätszuschlag für Vorjahre", "", "14. Steuern vom Einkommen und vom Ertrag",
+)
+
+konten |> kable()
+```
+
+
+```{r}
+year <- "2023"
+path |>
+    glue() |>
+    read_csv() |>
+    kontenbuchungen() |>
+    mutate(Jahr = year) |>
+    kable()
+
+year <- "2024"
+path |>
+    glue() |>
+    read_csv() |>
+    kontenbuchungen() |>
+    mutate(Jahr = year) |>
+    kable()
+
+
+year <- "2025"
+path |>
+    glue() |>
+    read_csv() |>
+    kontenbuchungen() |>
+    mutate(Jahr = year) |>
+    kable()
+```
+
+
+
+
+
+## Gewerbesteuer
+
+
+### Konten
+
+```{r}
+
+konten <- tribble(
+    ~Konto, ~Beschreibung, ~Bilanzposten, ~`GuV Posten`,
+    3035, "Gewerbesteuerrückstellung nach § 4 Abs. 5b EStG", "B. Rückstellungen", "",
+    1435, "Forderungen aus Gewerbesteuerüberzahlungen", "II. Forderungen und sonstige Vermögensgegenstände", "",
+    7610, "Gewerbesteuer", "", "14. Steuern vom Einkommen und vom Ertrag",
+    7641, "Gewerbesteuernachzahlungen und Gewerbesteuererstattungen für Vorjahre nach § 4 Abs. 5b EStG", "", "14. Steuern vom Einkommen und vom Ertrag",
+    7643, "Erträge aus der Auflösung von Gewerbesteuerrückstellungen nach § 4 Abs. 5b EStG", "", "14. Steuern vom Einkommen und vom Ertrag",
+)
+
+konten |> kable()
+```
+
+
+```{r}
+year <- "2023"
+path |>
+    glue() |>
+    read_csv() |>
+    kontenbuchungen() |>
+    mutate(Jahr = year) |>
+    kable()
+
+year <- "2024"
+path |>
+    glue() |>
+    read_csv() |>
+    kontenbuchungen() |>
+    mutate(Jahr = year) |>
+    kable()
+
+
+year <- "2025"
+path |>
+    glue() |>
+    read_csv() |>
+    kontenbuchungen() |>
+    mutate(Jahr = year) |>
+    kable()
+```
+
+
+
+

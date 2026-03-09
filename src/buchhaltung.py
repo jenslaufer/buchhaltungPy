@@ -875,3 +875,39 @@ def jahreseroeffnung(
     ])
     buchungen.write_csv(new_file)
     return new_file
+
+
+# ---------------------------------------------------------------------------
+# Journalnummer / Buchungssatznummer correction
+# ---------------------------------------------------------------------------
+
+def korrigiere_nummern(journal_file: str) -> None:
+    """Fix Journalnummer (sequential) and Buchungssatznummer (dense rank) in-place."""
+    journal = pl.read_csv(
+        journal_file,
+        schema_overrides={"Konto": pl.Utf8, "Journalnummer": pl.Int64},
+    )
+
+    # Journalnummer: sequential 1..n
+    journal = journal.with_columns(
+        pl.arange(1, journal.height + 1, eager=True).alias("Journalnummer")
+    )
+
+    # Buchungssatznummer: dense rank preserving original appearance order
+    bsn = journal["Buchungssatznummer"].to_list()
+    seen: dict[int, int] = {}
+    rank = 0
+    new_bsn = []
+    for b in bsn:
+        if b not in seen:
+            rank += 1
+            seen[b] = rank
+        new_bsn.append(seen[b])
+    journal = journal.with_columns(
+        pl.Series("Buchungssatznummer", new_bsn)
+    )
+
+    # Round Betrag to 2 decimal places
+    journal = journal.with_columns(pl.col("Betrag").round(2))
+
+    journal.write_csv(journal_file)

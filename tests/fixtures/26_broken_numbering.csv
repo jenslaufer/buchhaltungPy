@@ -1,0 +1,5 @@
+Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,Buchungstext,Konto,Typ,Betrag
+5,3,RE001,15.01.2024,15.01.2024,Umsatz Jan,1810,Soll,10000
+6,3,RE001,15.01.2024,15.01.2024,Umsatz Jan,4400,Haben,10000
+10,7,RE002,15.03.2024,15.03.2024,Bueromiete,6300,Soll,3000.456
+12,7,RE002,15.03.2024,15.03.2024,Bueromiete,1810,Haben,3000.456
