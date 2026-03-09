@@ -170,3 +170,94 @@ def test_no_command_shows_help():
 def test_missing_required_args():
     with pytest.raises(SystemExit, match="2"):
         main(["validiere-journal", JOURNAL])
+
+
+# -- Payroll commands --
+
+LOHN_ARGS = [
+    "--name", "Max Mustermann",
+    "--brutto", "8000",
+    "--monat", "2024-01-01",
+    "--steuerklasse", "1",
+    "--krankenversicherung", "privat",
+    "--krv", "2",
+]
+
+
+def test_lohn_berechnen(capsys):
+    main(["lohn-berechnen"] + LOHN_ARGS)
+    output = capsys.readouterr().out
+    assert "Mitarbeiter" in output
+    assert "Brutto" in output
+    assert "Netto" in output
+    assert "8000" in output
+
+
+def test_lohn_berechnen_minijob(capsys):
+    main(["lohn-berechnen", "--name", "Mini", "--brutto", "520", "--monat", "2024-01-01", "--minijob"])
+    output = capsys.readouterr().out
+    assert "520" in output
+    assert "Netto" in output
+
+
+def test_lohn_buchungen(capsys):
+    main(["lohn-buchungen"] + LOHN_ARGS)
+    output = capsys.readouterr().out
+    assert "Konto" in output
+    assert "Typ" in output
+    assert "Betrag" in output
+    assert "6024" in output
+
+
+def test_lohn_buchungen_balanced(capsys):
+    main(["lohn-buchungen"] + LOHN_ARGS)
+    output = capsys.readouterr().out
+    import io
+    df = pl.read_csv(io.StringIO(output))
+    soll = df.filter(pl.col("Typ") == "Soll")["Betrag"].sum()
+    haben = df.filter(pl.col("Typ") == "Haben")["Betrag"].sum()
+    assert abs(soll - haben) < 0.01
+
+
+def test_lohn_berechnen_missing_args():
+    with pytest.raises(SystemExit, match="2"):
+        main(["lohn-berechnen", "--name", "Test"])
+
+
+# -- Lohnzettel --
+
+ZETTEL_ARGS = LOHN_ARGS + [
+    "--personal-nr", "1",
+    "--steuer-id", "12 345 678 901",
+    "--firma-name", "Test GmbH",
+    "--firma-strasse", "Teststr. 1",
+    "--firma-plz", "12345",
+    "--firma-ort", "Teststadt",
+]
+
+
+def test_lohn_zettel_stdout(capsys):
+    main(["lohn-zettel"] + ZETTEL_ARGS)
+    output = capsys.readouterr().out
+    assert "<!DOCTYPE html>" in output
+    assert "Lohnabrechnung" in output
+    assert "Max Mustermann" in output
+    assert "Nettolohn" in output
+    assert "Test GmbH" in output
+
+
+def test_lohn_zettel_to_file(capsys, tmp_path):
+    out = tmp_path / "lohnzettel.html"
+    main(["lohn-zettel"] + ZETTEL_ARGS + ["-o", str(out)])
+    assert out.exists()
+    content = out.read_text()
+    assert "<!DOCTYPE html>" in content
+    assert "Max Mustermann" in content
+    assert "<style>" in content
+
+
+def test_lohn_zettel_has_stammdaten(capsys):
+    main(["lohn-zettel"] + ZETTEL_ARGS)
+    output = capsys.readouterr().out
+    assert "12 345 678 901" in output
+    assert "Personal-Nr" in output

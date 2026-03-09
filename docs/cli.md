@@ -139,6 +139,46 @@ python -m src.cli jahreseroeffnung journal.csv --ende 2024-12-31
 
 Note: only needs `--ende`. Start is derived. Returns the path to the new journal file.
 
+### Payroll (Lohnbuchhaltung)
+
+**`lohn-berechnen`** -- Compute payroll for one employee and month. Outputs CSV with Brutto, Lohnsteuer, Soli, Kirchensteuer, SV, Netto, AG-Kosten.
+
+```bash
+python -m src.cli lohn-berechnen \
+  --name "Max Mustermann" --brutto 8000 --monat 2024-01-01 \
+  --steuerklasse 1 --krankenversicherung privat --krv 2
+```
+
+**`lohn-buchungen`** -- Generate journal entries (Buchungssaetze) for a payroll. Outputs CSV with Belegnummer, Belegdatum, Buchungstext, Konto, Typ, Betrag.
+
+```bash
+python -m src.cli lohn-buchungen \
+  --name "Max Mustermann" --brutto 8000 --monat 2024-01-01 \
+  --steuerklasse 1 --krankenversicherung privat --krv 2
+```
+
+Payroll options:
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `--name` | (required) | Employee name |
+| `--brutto` | (required) | Monthly gross salary (EUR) |
+| `--monat` | (required) | Month as `YYYY-MM-DD` (first of month) |
+| `--steuerklasse` | `1` | Tax class (1-6) |
+| `--kinderfreibetraege` | `0` | Child allowances |
+| `--kirchensteuer` | `0.0` | Church tax rate (e.g. `0.09`) |
+| `--krankenversicherung` | `privat` | `gesetzlich` or `privat` |
+| `--krv` | `2` | Pension insurance: 0=West, 1=East, 2=not insured |
+| `--kinderlos` | false | Pflegeversicherung childless surcharge |
+| `--minijob` | false | Minijob mode (520 EUR, flat-rate tax) |
+| `--konto-gehalt` | `6024` | Salary expense account |
+| `--konto-bank` | `1810` | Bank account |
+
+Employee types:
+- **GmbH-GF** (private KV, not in SV): `--krankenversicherung privat --krv 2`
+- **Regular employee** (statutory): `--krankenversicherung gesetzlich --krv 0`
+- **Minijob**: `--minijob --brutto 520`
+
 ## Exit Codes
 
 | Code | Meaning |
@@ -183,4 +223,16 @@ python -m src.cli bilanz data/journal.csv --start 2024-01-01 --ende 2024-12-31 >
 # Year-end closing and opening next year
 python -m src.cli jahresabschluss  data/journal.csv --start 2024-01-01
 python -m src.cli jahreseroeffnung data/journal.csv --ende 2024-12-31
+
+# Payroll: GF with private health insurance
+python -m src.cli lohn-berechnen --name "Max Mustermann" --brutto 8000 \
+  --monat 2024-01-01 --krankenversicherung privat --krv 2
+
+# Payroll: generate journal entries for booking
+python -m src.cli lohn-buchungen --name "Max Mustermann" --brutto 8000 \
+  --monat 2024-01-01 --krankenversicherung privat --krv 2 > gehalt_jan.csv
+
+# Payroll: Minijob
+python -m src.cli lohn-berechnen --name "Mini Jobber" --brutto 520 \
+  --monat 2024-01-01 --minijob
 ```

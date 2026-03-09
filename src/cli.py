@@ -19,13 +19,20 @@ Commands:
   t-konten             Show T-account detail for all accounts
   jahresabschluss      Perform year-end closing (modifies journal in-place)
   jahreseroeffnung     Create opening entries for next fiscal year
+  lohn-berechnen       Compute payroll for an employee
+  lohn-buchungen       Generate journal entries for a payroll
+  lohn-zettel          Generate payslip as Quarto markdown
 """
 
 import argparse
 import sys
+from datetime import date
 from pathlib import Path
 
+import polars as pl
+
 from src import buchhaltung as bh
+from src import lohnbuchhaltung as lb
 
 DEFAULT_KONTEN = str(Path(__file__).parent.parent / "data" / "konten.csv")
 
@@ -131,6 +138,101 @@ def cmd_jahreseroeffnung(args):
     print(f"Opening entries written: {new_file}")
 
 
+# ---------------------------------------------------------------------------
+# Payroll commands
+# ---------------------------------------------------------------------------
+
+def _build_mitarbeiter(args) -> lb.Mitarbeiter:
+    return lb.Mitarbeiter(
+        name=args.name,
+        brutto_monat=args.brutto,
+        steuerklasse=args.steuerklasse,
+        kinderfreibetraege=args.kinderfreibetraege,
+        kirchensteuer_satz=args.kirchensteuer,
+        krankenversicherung=args.krankenversicherung,
+        krv=args.krv,
+        kinderlos=args.kinderlos,
+        minijob=args.minijob,
+        konto_gehalt=args.konto_gehalt,
+        konto_bank=args.konto_bank,
+        personal_nr=getattr(args, "personal_nr", ""),
+        steuer_id=getattr(args, "steuer_id", ""),
+        geburtsdatum=getattr(args, "geburtsdatum", ""),
+        eintritt=getattr(args, "eintritt", ""),
+        strasse=getattr(args, "strasse", ""),
+        plz=getattr(args, "plz", ""),
+        ort=getattr(args, "ort", ""),
+        konfession=getattr(args, "konfession", "-"),
+    )
+
+
+def _add_lohn_args(p):
+    p.add_argument("--name", required=True, help="Employee name")
+    p.add_argument("--brutto", type=float, required=True, help="Monthly gross salary (EUR)")
+    p.add_argument("--monat", required=True, help="Month (YYYY-MM-DD, first of month)")
+    p.add_argument("--steuerklasse", type=int, default=1, help="Tax class 1-6 (default: 1)")
+    p.add_argument("--kinderfreibetraege", type=float, default=0, help="Child allowances (default: 0)")
+    p.add_argument("--kirchensteuer", type=float, default=0.0, help="Church tax rate, e.g. 0.09 (default: 0)")
+    p.add_argument("--krankenversicherung", choices=["gesetzlich", "privat"], default="privat", help="Health insurance type (default: privat)")
+    p.add_argument("--krv", type=int, default=2, help="Pension insurance: 0=West, 1=East, 2=not insured (default: 2)")
+    p.add_argument("--kinderlos", action="store_true", help="Childless surcharge for Pflegeversicherung")
+    p.add_argument("--minijob", action="store_true", help="Minijob (520 EUR basis, flat-rate tax)")
+    p.add_argument("--konto-gehalt", default="6024", help="Salary expense account (default: 6024)")
+    p.add_argument("--konto-bank", default="1810", help="Bank account (default: 1810)")
+
+
+def cmd_lohn_berechnen(args):
+    ma = _build_mitarbeiter(args)
+    monat = date.fromisoformat(args.monat)
+    abr = lb.berechne_lohnabrechnung(ma, monat)
+    df = pl.DataFrame([abr.to_dict()])
+    df.write_csv(sys.stdout)
+
+
+def cmd_lohn_buchungen(args):
+    ma = _build_mitarbeiter(args)
+    monat = date.fromisoformat(args.monat)
+    abr = lb.berechne_lohnabrechnung(ma, monat)
+    df = lb.erzeuge_buchungssaetze(abr, monat, konto_gehalt=args.konto_gehalt, konto_bank=args.konto_bank)
+    df.write_csv(sys.stdout)
+
+
+def _add_lohnzettel_args(p):
+    """Add payslip-specific args on top of standard lohn args."""
+    _add_lohn_args(p)
+    p.add_argument("--personal-nr", default="", help="Personnel number")
+    p.add_argument("--steuer-id", default="", help="Tax ID")
+    p.add_argument("--geburtsdatum", default="", help="Date of birth (DD.MM.YYYY)")
+    p.add_argument("--eintritt", default="", help="Employment start date (DD.MM.YYYY)")
+    p.add_argument("--strasse", default="", help="Employee street address")
+    p.add_argument("--plz", default="", help="Employee postal code")
+    p.add_argument("--ort", default="", help="Employee city")
+    p.add_argument("--konfession", default="-", help="Confession (default: -)")
+    p.add_argument("--firma-name", default="", help="Company name")
+    p.add_argument("--firma-strasse", default="", help="Company street")
+    p.add_argument("--firma-plz", default="", help="Company postal code")
+    p.add_argument("--firma-ort", default="", help="Company city")
+    p.add_argument("-o", "--output", default="", help="Output file path (default: stdout)")
+
+
+def cmd_lohn_zettel(args):
+    ma = _build_mitarbeiter(args)
+    monat = date.fromisoformat(args.monat)
+    abr = lb.berechne_lohnabrechnung(ma, monat)
+    firma = lb.Firma(
+        name=args.firma_name,
+        strasse=args.firma_strasse,
+        plz=args.firma_plz,
+        ort=args.firma_ort,
+    )
+    content = lb.lohnzettel(ma, abr, firma)
+    if args.output:
+        Path(args.output).write_text(content, encoding="utf-8")
+        print(f"Payslip written: {args.output}")
+    else:
+        print(content)
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(
         prog="buchhaltung",
@@ -218,6 +320,21 @@ def main(argv=None):
     p = sub.add_parser("jahreseroeffnung", help="Create opening entries for next year")
     _add_common(p, start=False, hebesatz=True)
     p.set_defaults(func=cmd_jahreseroeffnung)
+
+    # lohn-berechnen
+    p = sub.add_parser("lohn-berechnen", help="Compute payroll for an employee (CSV)")
+    _add_lohn_args(p)
+    p.set_defaults(func=cmd_lohn_berechnen)
+
+    # lohn-buchungen
+    p = sub.add_parser("lohn-buchungen", help="Generate payroll journal entries (CSV)")
+    _add_lohn_args(p)
+    p.set_defaults(func=cmd_lohn_buchungen)
+
+    # lohn-zettel
+    p = sub.add_parser("lohn-zettel", help="Generate payslip as HTML (print to PDF)")
+    _add_lohnzettel_args(p)
+    p.set_defaults(func=cmd_lohn_zettel)
 
     args = parser.parse_args(argv)
     args.func(args)
