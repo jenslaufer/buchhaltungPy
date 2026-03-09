@@ -26,22 +26,22 @@ from src.lohnbuchhaltung import (
 
 class TestLohnsteuer:
     def test_steuerklasse_1_basic(self):
-        result = berechne_lohnsteuer(3500, steuerklasse=1, krv=2, pkv=1, jahr=2024)
+        result = berechne_lohnsteuer(3500, steuerklasse=1, krv=1, alv=1, pkv=1, jahr=2024)
         assert result["lohnsteuer"] > 0
         assert result["soli"] >= 0
         assert result["gesamt"] == round(result["lohnsteuer"] + result["soli"] + result["kirchensteuer"], 2)
 
     def test_steuerklasse_1_high_income(self):
-        low = berechne_lohnsteuer(3500, steuerklasse=1, krv=2, pkv=1, jahr=2024)
-        high = berechne_lohnsteuer(10000, steuerklasse=1, krv=2, pkv=1, jahr=2024)
+        low = berechne_lohnsteuer(3500, steuerklasse=1, krv=1, alv=1, pkv=1, jahr=2024)
+        high = berechne_lohnsteuer(10000, steuerklasse=1, krv=1, alv=1, pkv=1, jahr=2024)
         assert high["lohnsteuer"] > low["lohnsteuer"]
 
     def test_kirchensteuer(self):
-        result = berechne_lohnsteuer(5000, steuerklasse=1, kirchensteuer_satz=0.09, krv=2, pkv=1, jahr=2024)
+        result = berechne_lohnsteuer(5000, steuerklasse=1, kirchensteuer_satz=0.09, krv=1, alv=1, pkv=1, jahr=2024)
         assert result["kirchensteuer"] == round(result["lohnsteuer"] * 0.09, 2)
 
     def test_zero_income(self):
-        result = berechne_lohnsteuer(0, steuerklasse=1, krv=2, pkv=1, jahr=2024)
+        result = berechne_lohnsteuer(0, steuerklasse=1, krv=1, alv=1, pkv=1, jahr=2024)
         assert result["lohnsteuer"] == 0
         assert result["soli"] == 0
 
@@ -51,25 +51,25 @@ class TestLohnsteuer:
 
     @pytest.mark.parametrize("jahr", [2023, 2024, 2025, 2026])
     def test_all_years_produce_tax(self, jahr):
-        result = berechne_lohnsteuer(3500, steuerklasse=1, krv=2, pkv=1, jahr=jahr)
+        result = berechne_lohnsteuer(3500, steuerklasse=1, krv=1, alv=1, pkv=1, jahr=jahr)
         assert result["lohnsteuer"] > 0
         assert result["gesamt"] == round(result["lohnsteuer"] + result["soli"] + result["kirchensteuer"], 2)
 
     @pytest.mark.parametrize("jahr", [2023, 2024, 2025, 2026])
     def test_all_years_higher_income_more_tax(self, jahr):
-        low = berechne_lohnsteuer(2000, steuerklasse=1, krv=2, pkv=1, jahr=jahr)
-        high = berechne_lohnsteuer(8000, steuerklasse=1, krv=2, pkv=1, jahr=jahr)
+        low = berechne_lohnsteuer(2000, steuerklasse=1, krv=1, alv=1, pkv=1, jahr=jahr)
+        high = berechne_lohnsteuer(8000, steuerklasse=1, krv=1, alv=1, pkv=1, jahr=jahr)
         assert high["lohnsteuer"] > low["lohnsteuer"]
 
     @pytest.mark.parametrize("jahr", [2025, 2026])
     def test_new_pap_zero_income(self, jahr):
-        result = berechne_lohnsteuer(0, steuerklasse=1, krv=2, pkv=1, jahr=jahr)
+        result = berechne_lohnsteuer(0, steuerklasse=1, krv=1, alv=1, pkv=1, jahr=jahr)
         assert result["lohnsteuer"] == 0
         assert result["soli"] == 0
 
     @pytest.mark.parametrize("jahr", [2025, 2026])
     def test_new_pap_kirchensteuer(self, jahr):
-        result = berechne_lohnsteuer(5000, steuerklasse=1, kirchensteuer_satz=0.09, krv=2, pkv=1, jahr=jahr)
+        result = berechne_lohnsteuer(5000, steuerklasse=1, kirchensteuer_satz=0.09, krv=1, alv=1, pkv=1, jahr=jahr)
         assert result["kirchensteuer"] == round(result["lohnsteuer"] * 0.09, 2)
 
     @pytest.mark.parametrize("jahr", [2025, 2026])
@@ -79,7 +79,7 @@ class TestLohnsteuer:
 
     @pytest.mark.parametrize("jahr", [2025, 2026])
     def test_new_pap_lohnabrechnung_gf(self, jahr):
-        gf = Mitarbeiter(name="Test GF", brutto_monat=8000, krankenversicherung="privat", krv=2)
+        gf = Mitarbeiter(name="Test GF", brutto_monat=8000, krankenversicherung="privat", krv=1, alv=1)
         abr = berechne_lohnabrechnung(gf, date(jahr, 6, 1))
         assert abr.netto < abr.brutto
         assert abr.lohnsteuer > 0
@@ -164,7 +164,7 @@ class TestLohnabrechnung:
             brutto_monat=8000,
             steuerklasse=1,
             krankenversicherung="privat",
-            krv=2,
+            krv=1, alv=1,
             konto_gehalt="6024",
         )
 
@@ -249,7 +249,7 @@ class TestBuchungssaetze:
             brutto_monat=8000,
             steuerklasse=1,
             krankenversicherung="privat",
-            krv=2,
+            krv=1, alv=1,
         )
         return berechne_lohnabrechnung(gf, date(2024, 1, 1))
 
@@ -309,7 +309,7 @@ class TestBuchungssaetze:
         assert df["Belegdatum"][0] == "31.01.2024"
 
     def test_february_last_day(self):
-        gf = Mitarbeiter(name="Test", brutto_monat=5000, krankenversicherung="privat", krv=2)
+        gf = Mitarbeiter(name="Test", brutto_monat=5000, krankenversicherung="privat", krv=1, alv=1)
         abr = berechne_lohnabrechnung(gf, date(2024, 2, 1))
         df = erzeuge_buchungssaetze(abr, date(2024, 2, 1))
         assert df["Belegdatum"][0] == "29.02.2024"
@@ -336,7 +336,7 @@ class TestLohnzettel:
             brutto_monat=8000,
             steuerklasse=1,
             krankenversicherung="privat",
-            krv=2,
+            krv=1, alv=1,
             personal_nr="1",
             steuer_id="12 345 678 901",
             geburtsdatum="18.01.1970",
@@ -380,7 +380,8 @@ class TestLohnzettel:
     def test_contains_brutto_netto(self, gf, firma):
         abr = berechne_lohnabrechnung(gf, date(2024, 1, 1))
         result = lohnzettel(gf, abr, firma)
-        assert "Gehalt" in result
+        assert "Steuerbrutto" in result
+        assert "Bruttolohn" in result
         assert "Nettolohn" in result
         assert "8.000,00" in result
 
@@ -406,7 +407,7 @@ class TestLohnzettel:
             brutto_monat=5000,
             kirchensteuer_satz=0.09,
             krankenversicherung="privat",
-            krv=2,
+            krv=1, alv=1,
         )
         abr = berechne_lohnabrechnung(ma, date(2024, 1, 1))
         result = lohnzettel(ma, abr, firma)
@@ -433,3 +434,198 @@ class TestLohnzettel:
         abr = berechne_lohnabrechnung(gf, date(2024, 1, 1))
         result = lohnzettel(gf, abr, firma)
         assert "EUR" in result
+
+    def test_contains_steuern_section(self, gf, firma):
+        abr = berechne_lohnabrechnung(gf, date(2024, 1, 1))
+        result = lohnzettel(gf, abr, firma)
+        assert "Steuern" in result
+        assert "Summe Steuern" in result
+
+    def test_contains_stammdaten_rv_alv(self, gf, firma):
+        abr = berechne_lohnabrechnung(gf, date(2024, 1, 1))
+        result = lohnzettel(gf, abr, firma)
+        assert "nicht versichert" in result
+        assert "Beitragsgruppe" in result
+        assert "0000" in result
+
+    def test_contains_abrechnungszeitraum(self, gf, firma):
+        abr = berechne_lohnabrechnung(gf, date(2024, 1, 1))
+        result = lohnzettel(gf, abr, firma)
+        assert "Zeitraum" in result
+        assert "01.01.2024 - 31.01.2024" in result
+
+    def test_contains_netto_waterfall(self, gf, firma):
+        abr = berechne_lohnabrechnung(gf, date(2024, 1, 1))
+        result = lohnzettel(gf, abr, firma)
+        assert "Netto" in result
+        assert "Bruttolohn" in result
+        assert "Steuern" in result
+
+    def test_angestellter_sv_detail_on_payslip(self, firma):
+        ma = Mitarbeiter(
+            name="Anna Angestellt",
+            brutto_monat=4000,
+            steuerklasse=1,
+            krankenversicherung="gesetzlich",
+            krv=0,
+        )
+        abr = berechne_lohnabrechnung(ma, date(2024, 1, 1))
+        result = lohnzettel(ma, abr, firma)
+        assert "Krankenversicherung" in result
+        assert "Rentenversicherung" in result
+        assert "Arbeitslosenversicherung" in result
+        assert "Pflegeversicherung" in result
+        assert "Summe SV (AN)" in result
+
+    def test_angestellter_ag_detail_on_payslip(self, firma):
+        ma = Mitarbeiter(
+            name="Anna Angestellt",
+            brutto_monat=4000,
+            steuerklasse=1,
+            krankenversicherung="gesetzlich",
+            krv=0,
+        )
+        abr = berechne_lohnabrechnung(ma, date(2024, 1, 1))
+        result = lohnzettel(ma, abr, firma, show_ag_kosten=True)
+        assert "KV (AG)" in result
+        assert "RV (AG)" in result
+        assert "AV (AG)" in result
+        assert "PV (AG)" in result
+        assert "Insolvenzgeldumlage" in result
+
+    def test_ag_kosten_hidden_by_default(self, gf, firma):
+        abr = berechne_lohnabrechnung(gf, date(2024, 1, 1))
+        result = lohnzettel(gf, abr, firma)
+        assert "Arbeitgeberkosten" not in result
+        assert "Gesamtkosten AG" not in result
+
+    def test_gf_no_sv_section(self, gf, firma):
+        abr = berechne_lohnabrechnung(gf, date(2024, 1, 1))
+        result = lohnzettel(gf, abr, firma)
+        assert "Krankenversicherung" not in result
+        assert "Rentenversicherung" not in result
+
+    def test_minijob_payslip_shows_pauschalen(self, firma):
+        ma = Mitarbeiter(name="Mini Jobber", brutto_monat=520, minijob=True)
+        abr = berechne_lohnabrechnung(ma, date(2024, 1, 1))
+        result = lohnzettel(ma, abr, firma, show_ag_kosten=True)
+        assert "Pauschale KV" in result
+        assert "Pauschale RV" in result
+        assert "Pauschale Lohnsteuer" in result
+        assert "Umlage U1" in result
+        assert "Umlage U2" in result
+
+    def test_sv_nummer_shown_when_set(self, firma):
+        ma = Mitarbeiter(
+            name="Test",
+            brutto_monat=4000,
+            krankenversicherung="gesetzlich",
+            krv=0,
+            sv_nummer="12 180170 M 001",
+        )
+        abr = berechne_lohnabrechnung(ma, date(2024, 1, 1))
+        result = lohnzettel(ma, abr, firma)
+        assert "SV-Nummer" in result
+        assert "12 180170 M 001" in result
+
+
+# ---------------------------------------------------------------------------
+# Lohnabrechnung detail fields
+# ---------------------------------------------------------------------------
+
+class TestLohnabrechnungDetail:
+    def test_angestellter_sv_detail_sum(self):
+        ma = Mitarbeiter(
+            name="Anna",
+            brutto_monat=4000,
+            krankenversicherung="gesetzlich",
+            krv=0,
+        )
+        abr = berechne_lohnabrechnung(ma, date(2024, 1, 1))
+        assert round(abr.kv_an + abr.rv_an + abr.av_an + abr.pv_an, 2) == abr.sv_an
+        assert round(abr.kv_ag + abr.rv_ag + abr.av_ag + abr.pv_ag + abr.insolvenz_ag, 2) == abr.sv_ag
+
+    def test_angestellter_sv_components_positive(self):
+        ma = Mitarbeiter(
+            name="Anna",
+            brutto_monat=4000,
+            krankenversicherung="gesetzlich",
+            krv=0,
+        )
+        abr = berechne_lohnabrechnung(ma, date(2024, 1, 1))
+        assert abr.kv_an > 0
+        assert abr.rv_an > 0
+        assert abr.av_an > 0
+        assert abr.pv_an > 0
+        assert abr.kv_ag > 0
+        assert abr.rv_ag > 0
+        assert abr.av_ag > 0
+        assert abr.pv_ag > 0
+        assert abr.insolvenz_ag > 0
+
+    def test_gf_sv_detail_zero(self):
+        ma = Mitarbeiter(
+            name="GF",
+            brutto_monat=8000,
+            krankenversicherung="privat",
+            krv=1, alv=1,
+        )
+        abr = berechne_lohnabrechnung(ma, date(2024, 1, 1))
+        assert abr.kv_an == 0.0
+        assert abr.rv_an == 0.0
+        assert abr.av_an == 0.0
+        assert abr.pv_an == 0.0
+        assert abr.kv_ag == 0.0
+        assert abr.insolvenz_ag == 0.0
+        assert abr.is_minijob is False
+
+    def test_minijob_detail_fields(self):
+        ma = Mitarbeiter(name="Mini", brutto_monat=520, minijob=True)
+        abr = berechne_lohnabrechnung(ma, date(2024, 1, 1))
+        assert abr.is_minijob is True
+        assert abr.pauschale_kv > 0
+        assert abr.pauschale_rv > 0
+        assert abr.pauschale_steuer > 0
+        assert abr.umlage_u1 > 0
+        assert abr.umlage_u2 > 0
+        assert abr.insolvenz_minijob > 0
+        total = round(
+            abr.pauschale_kv + abr.pauschale_rv + abr.pauschale_steuer
+            + abr.umlage_u1 + abr.umlage_u2 + abr.insolvenz_minijob,
+            2,
+        )
+        assert total == abr.sv_ag
+
+    def test_to_dict_detail_keys(self):
+        ma = Mitarbeiter(
+            name="Anna",
+            brutto_monat=4000,
+            krankenversicherung="gesetzlich",
+            krv=0,
+        )
+        abr = berechne_lohnabrechnung(ma, date(2024, 1, 1))
+        d = abr.to_dict()
+        for key in ["KV_AN", "RV_AN", "AV_AN", "PV_AN", "KV_AG", "RV_AG", "AV_AG", "PV_AG", "Insolvenz_AG"]:
+            assert key in d, f"Missing key: {key}"
+
+    def test_to_dict_minijob_keys(self):
+        ma = Mitarbeiter(name="Mini", brutto_monat=520, minijob=True)
+        abr = berechne_lohnabrechnung(ma, date(2024, 1, 1))
+        d = abr.to_dict()
+        for key in ["Pauschale_KV", "Pauschale_RV", "Pauschale_Steuer", "Umlage_U1", "Umlage_U2"]:
+            assert key in d, f"Missing key: {key}"
+
+    def test_beitragsgruppe_gesetzlich(self):
+        from src.lohnbuchhaltung import _beitragsgruppe
+        ma = Mitarbeiter(name="A", brutto_monat=4000, krankenversicherung="gesetzlich", krv=0, alv=0)
+        assert _beitragsgruppe(ma) == "1111"
+
+    def test_beitragsgruppe_gf_privat(self):
+        from src.lohnbuchhaltung import _beitragsgruppe
+        ma = Mitarbeiter(name="G", brutto_monat=8000, krankenversicherung="privat", krv=1, alv=1)
+        assert _beitragsgruppe(ma) == "0000"
+
+    def test_beitragsgruppe_minijob(self):
+        from src.lohnbuchhaltung import _beitragsgruppe
+        ma = Mitarbeiter(name="M", brutto_monat=520, minijob=True)
+        assert _beitragsgruppe(ma) == "6500"

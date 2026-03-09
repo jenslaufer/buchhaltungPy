@@ -72,7 +72,8 @@ class Mitarbeiter:
     kirchensteuer_satz: float = 0.0     # 0.08 or 0.09 if applicable
     krankenversicherung: str = "gesetzlich"  # "gesetzlich" or "privat"
     pkv_beitrag_monat: float = 0.0      # monthly private health insurance
-    krv: int = 0                        # 0=West, 1=Ost, 2=not insured (GF)
+    krv: int = 0                        # BMF PAP: 0=gesetzlich RV, 1=nicht
+    alv: int = 0                        # BMF PAP: 0=arbeitslosenversichert, 1=nicht
     kinderlos: bool = False
     minijob: bool = False
     konto_gehalt: str = KONTO_GF_GEHALT
@@ -80,6 +81,7 @@ class Mitarbeiter:
     # Stammdaten for payslip
     personal_nr: str = ""
     steuer_id: str = ""
+    sv_nummer: str = ""
     geburtsdatum: str = ""
     eintritt: str = ""
     strasse: str = ""
@@ -118,14 +120,29 @@ def _get_lohnsteuer_class(jahr: int):
     raise ValueError(f"No Lohnsteuer calculator for year {jahr}. Available: 2023-2026")
 
 
+def _translate_krv(krv: int, jahr: int) -> int:
+    """Translate semantic KRV to PAP-specific value.
+
+    Semantic: 0=gesetzlich rentenversichert, 1=nicht versichert
+    PAP 2023/2024: 0=West, 1=Ost, 2=nicht versichert
+    PAP 2025/2026: 0=versichert, 1=nicht versichert
+    """
+    if krv == 0:
+        return 0  # gesetzlich → 0 in all PAPs
+    if jahr <= 2024:
+        return 2  # nicht versichert → KRV=2 for old PAPs
+    return 1      # nicht versichert → KRV=1 for new PAPs
+
+
 def berechne_lohnsteuer(
     brutto_monat: float,
     steuerklasse: int = 1,
     kirchensteuer_satz: float = 0.0,
-    krv: int = 2,
+    krv: int = 1,
     pkv: int = 1,
     kinderfreibetraege: float = 0,
     jahr: int = 2024,
+    alv: int = 1,
 ) -> dict:
     """Compute monthly Lohnsteuer, Soli, and Kirchensteuer.
 
@@ -133,18 +150,20 @@ def berechne_lohnsteuer(
         brutto_monat: Monthly gross salary in EUR
         steuerklasse: Tax class (1-6)
         kirchensteuer_satz: Church tax rate (0.0, 0.08, or 0.09)
-        krv: Pension insurance flag (0=West, 1=East, 2=not insured)
-        pkv: Private health insurance flag (0=gesetzlich, 1=privat)
+        krv: Semantic flag (0=gesetzlich rentenversichert, 1=nicht versichert)
+        pkv: Health insurance (0=gesetzlich, 1=privat)
         kinderfreibetraege: Number of child allowances
         jahr: Tax year
+        alv: Unemployment insurance (0=versichert, 1=nicht)
 
     Returns:
         Dict with lohnsteuer, soli, kirchensteuer, gesamt (all in EUR)
     """
     Lst = _get_lohnsteuer_class(jahr)
     re4 = int(brutto_monat * 100)  # BMF expects cents
+    pap_krv = _translate_krv(krv, jahr)
 
-    lst = Lst(RE4=re4, KRV=krv, LZZ=2, STKL=steuerklasse, PKV=pkv, ZKV=kinderfreibetraege)
+    lst = Lst(RE4=re4, KRV=pap_krv, LZZ=2, STKL=steuerklasse, PKV=pkv, ZKF=kinderfreibetraege, ALV=alv)
     lst.MAIN()
 
     # 2025+ PAPs removed getStv/getSolzv (Versorgungsbezuege fields)
@@ -238,13 +257,32 @@ class Lohnabrechnung:
     lohnsteuer: float
     soli: float
     kirchensteuer: float
-    sv_an: float            # employee SV contributions
-    sv_ag: float            # employer SV contributions
+    sv_an: float            # employee SV contributions (total)
+    sv_ag: float            # employer SV contributions (total)
     netto: float            # net pay
     ag_kosten: float        # total employer cost
+    # AN SV detail
+    kv_an: float = 0.0
+    rv_an: float = 0.0
+    av_an: float = 0.0
+    pv_an: float = 0.0
+    # AG SV detail
+    kv_ag: float = 0.0
+    rv_ag: float = 0.0
+    av_ag: float = 0.0
+    pv_ag: float = 0.0
+    insolvenz_ag: float = 0.0
+    # Minijob AG detail
+    pauschale_kv: float = 0.0
+    pauschale_rv: float = 0.0
+    pauschale_steuer: float = 0.0
+    umlage_u1: float = 0.0
+    umlage_u2: float = 0.0
+    insolvenz_minijob: float = 0.0
+    is_minijob: bool = False
 
     def to_dict(self) -> dict:
-        return {
+        d = {
             "Mitarbeiter": self.mitarbeiter,
             "Monat": self.monat,
             "Brutto": self.brutto,
@@ -252,10 +290,29 @@ class Lohnabrechnung:
             "Soli": self.soli,
             "Kirchensteuer": self.kirchensteuer,
             "SV_AN": self.sv_an,
+            "KV_AN": self.kv_an,
+            "RV_AN": self.rv_an,
+            "AV_AN": self.av_an,
+            "PV_AN": self.pv_an,
             "SV_AG": self.sv_ag,
+            "KV_AG": self.kv_ag,
+            "RV_AG": self.rv_ag,
+            "AV_AG": self.av_ag,
+            "PV_AG": self.pv_ag,
+            "Insolvenz_AG": self.insolvenz_ag,
             "Netto": self.netto,
             "AG_Kosten": self.ag_kosten,
         }
+        if self.is_minijob:
+            d.update({
+                "Pauschale_KV": self.pauschale_kv,
+                "Pauschale_RV": self.pauschale_rv,
+                "Pauschale_Steuer": self.pauschale_steuer,
+                "Umlage_U1": self.umlage_u1,
+                "Umlage_U2": self.umlage_u2,
+                "Insolvenz_Minijob": self.insolvenz_minijob,
+            })
+        return d
 
 
 def berechne_lohnabrechnung(
@@ -294,6 +351,13 @@ def berechne_lohnabrechnung(
             sv_ag=ag["gesamt"],
             netto=brutto,
             ag_kosten=round(brutto + ag["gesamt"], 2),
+            is_minijob=True,
+            pauschale_kv=ag["pauschale_kv"],
+            pauschale_rv=ag["pauschale_rv"],
+            pauschale_steuer=ag["pauschale_steuer"],
+            umlage_u1=ag["umlage_u1"],
+            umlage_u2=ag["umlage_u2"],
+            insolvenz_minijob=ag["insolvenz"],
         )
 
     # Lohnsteuer
@@ -306,21 +370,21 @@ def berechne_lohnabrechnung(
         pkv=pkv,
         kinderfreibetraege=mitarbeiter.kinderfreibetraege,
         jahr=jahr,
+        alv=mitarbeiter.alv,
     )
 
     # Social insurance
-    if mitarbeiter.krankenversicherung == "privat" and mitarbeiter.krv == 2:
-        # GF with private insurance: no statutory SV
-        sv_an_total = 0.0
-        sv_ag_total = 0.0
+    _zero_sv = {"kv": 0.0, "rv": 0.0, "av": 0.0, "pv": 0.0, "gesamt": 0.0}
+    _zero_sv_ag = {**_zero_sv, "insolvenz": 0.0}
+    if mitarbeiter.krankenversicherung == "privat" and mitarbeiter.krv == 1:
+        sv_an_detail = _zero_sv
+        sv_ag_detail = _zero_sv_ag
     else:
-        sv_an = berechne_sv_an(brutto, mitarbeiter.kinderlos, sv)
-        sv_ag = berechne_sv_ag(brutto, mitarbeiter.kinderlos, sv)
-        sv_an_total = sv_an["gesamt"]
-        sv_ag_total = sv_ag["gesamt"]
+        sv_an_detail = berechne_sv_an(brutto, mitarbeiter.kinderlos, sv)
+        sv_ag_detail = berechne_sv_ag(brutto, mitarbeiter.kinderlos, sv)
 
-    netto = round(brutto - steuer["gesamt"] - sv_an_total, 2)
-    ag_kosten = round(brutto + sv_ag_total, 2)
+    netto = round(brutto - steuer["gesamt"] - sv_an_detail["gesamt"], 2)
+    ag_kosten = round(brutto + sv_ag_detail["gesamt"], 2)
 
     return Lohnabrechnung(
         mitarbeiter=mitarbeiter.name,
@@ -329,10 +393,19 @@ def berechne_lohnabrechnung(
         lohnsteuer=steuer["lohnsteuer"],
         soli=steuer["soli"],
         kirchensteuer=steuer["kirchensteuer"],
-        sv_an=sv_an_total,
-        sv_ag=sv_ag_total,
+        sv_an=sv_an_detail["gesamt"],
+        sv_ag=sv_ag_detail["gesamt"],
         netto=netto,
         ag_kosten=ag_kosten,
+        kv_an=sv_an_detail["kv"],
+        rv_an=sv_an_detail["rv"],
+        av_an=sv_an_detail["av"],
+        pv_an=sv_an_detail["pv"],
+        kv_ag=sv_ag_detail["kv"],
+        rv_ag=sv_ag_detail["rv"],
+        av_ag=sv_ag_detail["av"],
+        pv_ag=sv_ag_detail["pv"],
+        insolvenz_ag=sv_ag_detail.get("insolvenz", 0.0),
     )
 
 
@@ -437,12 +510,39 @@ def _esc(text: str) -> str:
     )
 
 
+def _beitragsgruppe(mitarbeiter: Mitarbeiter) -> str:
+    """Derive Beitragsgruppe (KV/RV/AV/PV) for display."""
+    if mitarbeiter.minijob:
+        return "6500"
+    if mitarbeiter.krankenversicherung == "privat" and mitarbeiter.krv == 1:
+        return "0000"
+    kv = "1" if mitarbeiter.krankenversicherung == "gesetzlich" else "0"
+    rv = "1" if mitarbeiter.krv == 0 else "0"
+    av = "1" if mitarbeiter.alv == 0 else "0"
+    pv = "1" if mitarbeiter.krankenversicherung == "gesetzlich" else "0"
+    return f"{kv}{rv}{av}{pv}"
+
+
+def _abrechnungszeitraum(monat_str: str) -> str:
+    """Derive date range from 'MM.YYYY' string."""
+    parts = monat_str.split(".")
+    m, y = int(parts[0]), int(parts[1])
+    erster = f"01.{m:02d}.{y}"
+    if m == 12:
+        letzter_tag = 31
+    else:
+        letzter_tag = (date(y, m + 1, 1) - __import__("datetime").timedelta(days=1)).day
+    letzter = f"{letzter_tag:02d}.{m:02d}.{y}"
+    return f"{erster} - {letzter}"
+
+
 def lohnzettel(
     mitarbeiter: Mitarbeiter,
     abrechnung: Lohnabrechnung,
     firma: Firma | None = None,
+    show_ag_kosten: bool = False,
 ) -> str:
-    """Generate a payslip as standalone HTML with Tailwind CSS 4.
+    """Generate a payslip as standalone HTML.
 
     Returns the file content as string. Open in a browser and print to PDF.
     """
@@ -455,9 +555,8 @@ def lohnzettel(
     monat_name = MONATE_DE[monat_nr]
 
     steuer_total = round(abrechnung.lohnsteuer + abrechnung.soli + abrechnung.kirchensteuer, 2)
-    abzuege_total = round(steuer_total + abrechnung.sv_an, 2)
 
-    # Firma
+    # Firma line for footer
     firma_zeile = ""
     if firma.name:
         parts = [firma.name]
@@ -467,47 +566,30 @@ def lohnzettel(
             parts.append(f"{firma.plz} {firma.ort}")
         firma_zeile = ", ".join(parts)
 
-    # Stammdaten rows
+    # --- Stammdaten ---
     stamm = []
     if mitarbeiter.personal_nr:
         stamm.append(("Personal-Nr.", mitarbeiter.personal_nr))
     if mitarbeiter.steuer_id:
         stamm.append(("Steuer-ID", mitarbeiter.steuer_id))
+    if mitarbeiter.sv_nummer:
+        stamm.append(("SV-Nummer", mitarbeiter.sv_nummer))
     stamm.append(("Steuerklasse", str(mitarbeiter.steuerklasse)))
     stamm.append(("Kinderfreibetr.", str(mitarbeiter.kinderfreibetraege)))
     stamm.append(("Konfession", mitarbeiter.konfession))
     stamm.append(("KV", mitarbeiter.krankenversicherung))
+    rv_status = "pflichtversichert" if mitarbeiter.krv == 0 else "nicht versichert"
+    stamm.append(("RV", rv_status))
+    alv_status = "pflichtversichert" if mitarbeiter.alv == 0 else "nicht versichert"
+    stamm.append(("ALV", alv_status))
+    stamm.append(("Beitragsgruppe", _beitragsgruppe(mitarbeiter)))
     if mitarbeiter.geburtsdatum:
         stamm.append(("Geb.-Datum", mitarbeiter.geburtsdatum))
     if mitarbeiter.eintritt:
         stamm.append(("Eintritt", mitarbeiter.eintritt))
+    stamm.append(("Zeitraum", _abrechnungszeitraum(abrechnung.monat)))
 
-    stamm_rows = "\n".join(
-        f'<tr><td class="pr-8 py-0.5 text-gray-500">{_esc(k)}</td><td class="text-gray-800">{_esc(v)}</td></tr>'
-        for k, v in stamm
-    )
-
-    # Abrechnung rows
-    abr_rows = [
-        _abr_row("Gehalt", _fmt(abrechnung.brutto), bold=True),
-    ]
-    abr_rows.append(_abr_row("Lohnsteuer", f"-{_fmt(abrechnung.lohnsteuer)}"))
-    if abrechnung.soli > 0:
-        abr_rows.append(_abr_row("Solidaritaetszuschlag", f"-{_fmt(abrechnung.soli)}"))
-    if abrechnung.kirchensteuer > 0:
-        abr_rows.append(_abr_row("Kirchensteuer", f"-{_fmt(abrechnung.kirchensteuer)}"))
-    if abrechnung.sv_an > 0:
-        abr_rows.append(_abr_row("Sozialversicherung (AN)", f"-{_fmt(abrechnung.sv_an)}"))
-
-    abr_html = "\n".join(abr_rows)
-
-    # AG rows
-    ag_rows = [_abr_row("Bruttolohn", _fmt(abrechnung.brutto))]
-    if abrechnung.sv_ag > 0:
-        ag_rows.append(_abr_row("Sozialversicherung (AG)", _fmt(abrechnung.sv_ag)))
-    ag_html = "\n".join(ag_rows)
-
-    # Build stammdaten as 2-column grid (4 columns visually: label val | label val)
+    # Build 2-column grid
     stamm_left = stamm[: (len(stamm) + 1) // 2]
     stamm_right = stamm[(len(stamm) + 1) // 2:]
     stamm_grid = ""
@@ -523,11 +605,100 @@ def lohnzettel(
             f'</tr>'
         )
 
-    # Abrechnung rows
-    abr_html = "\n".join(abr_rows)
+    # --- Steuern section ---
+    steuer_rows = [_abr_row("Steuerbrutto", _fmt(abrechnung.brutto), bold=True)]
+    steuer_rows.append(_abr_row("Lohnsteuer", f"-{_fmt(abrechnung.lohnsteuer)}", neg=True))
+    if abrechnung.soli > 0:
+        steuer_rows.append(_abr_row("Solidaritaetszuschlag", f"-{_fmt(abrechnung.soli)}", neg=True))
+    if abrechnung.kirchensteuer > 0:
+        steuer_rows.append(_abr_row("Kirchensteuer", f"-{_fmt(abrechnung.kirchensteuer)}", neg=True))
+    steuer_html = "\n".join(steuer_rows)
 
-    # AG rows
-    ag_html = "\n".join(ag_rows)
+    # --- SV (AN) section ---
+    sv_an_html = ""
+    if abrechnung.sv_an > 0:
+        sv_rows = []
+        if abrechnung.kv_an > 0:
+            sv_rows.append(_abr_row("Krankenversicherung", f"-{_fmt(abrechnung.kv_an)}", neg=True))
+        if abrechnung.rv_an > 0:
+            sv_rows.append(_abr_row("Rentenversicherung", f"-{_fmt(abrechnung.rv_an)}", neg=True))
+        if abrechnung.av_an > 0:
+            sv_rows.append(_abr_row("Arbeitslosenversicherung", f"-{_fmt(abrechnung.av_an)}", neg=True))
+        if abrechnung.pv_an > 0:
+            sv_rows.append(_abr_row("Pflegeversicherung", f"-{_fmt(abrechnung.pv_an)}", neg=True))
+        sv_an_html = "\n".join(sv_rows)
+
+    # --- Netto waterfall ---
+    waterfall_rows = [_abr_row("Bruttolohn", _fmt(abrechnung.brutto), bold=True)]
+    waterfall_rows.append(_abr_row("Steuern", f"-{_fmt(steuer_total)}", neg=True))
+    if abrechnung.sv_an > 0:
+        waterfall_rows.append(_abr_row("Sozialversicherung (AN)", f"-{_fmt(abrechnung.sv_an)}", neg=True))
+    waterfall_html = "\n".join(waterfall_rows)
+
+    # --- AG-Kosten section (optional) ---
+    ag_section = ""
+    if show_ag_kosten:
+        if abrechnung.is_minijob:
+            ag_rows = [_abr_row("Bruttolohn", _fmt(abrechnung.brutto))]
+            if abrechnung.pauschale_kv > 0:
+                ag_rows.append(_abr_row("Pauschale KV (13%)", _fmt(abrechnung.pauschale_kv)))
+            if abrechnung.pauschale_rv > 0:
+                ag_rows.append(_abr_row("Pauschale RV (15%)", _fmt(abrechnung.pauschale_rv)))
+            if abrechnung.pauschale_steuer > 0:
+                ag_rows.append(_abr_row("Pauschale Lohnsteuer (2%)", _fmt(abrechnung.pauschale_steuer)))
+            if abrechnung.umlage_u1 > 0:
+                ag_rows.append(_abr_row("Umlage U1", _fmt(abrechnung.umlage_u1)))
+            if abrechnung.umlage_u2 > 0:
+                ag_rows.append(_abr_row("Umlage U2", _fmt(abrechnung.umlage_u2)))
+            if abrechnung.insolvenz_minijob > 0:
+                ag_rows.append(_abr_row("Insolvenzgeldumlage", _fmt(abrechnung.insolvenz_minijob)))
+        else:
+            ag_rows = [_abr_row("Bruttolohn", _fmt(abrechnung.brutto))]
+            if abrechnung.kv_ag > 0:
+                ag_rows.append(_abr_row("KV (AG)", _fmt(abrechnung.kv_ag)))
+            if abrechnung.rv_ag > 0:
+                ag_rows.append(_abr_row("RV (AG)", _fmt(abrechnung.rv_ag)))
+            if abrechnung.av_ag > 0:
+                ag_rows.append(_abr_row("AV (AG)", _fmt(abrechnung.av_ag)))
+            if abrechnung.pv_ag > 0:
+                ag_rows.append(_abr_row("PV (AG)", _fmt(abrechnung.pv_ag)))
+            if abrechnung.insolvenz_ag > 0:
+                ag_rows.append(_abr_row("Insolvenzgeldumlage", _fmt(abrechnung.insolvenz_ag)))
+        ag_html = "\n".join(ag_rows)
+        ag_section = f"""
+<div class="section">
+  <div class="section-title">Arbeitgeberkosten</div>
+  <table class="abr">
+    <tbody>
+      {ag_html}
+    </tbody>
+    <tfoot>
+      <tr class="total">
+        <td>Gesamtkosten AG</td>
+        <td class="right">{_fmt(abrechnung.ag_kosten)} EUR</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>"""
+
+    # --- SV (AN) section block ---
+    sv_section = ""
+    if sv_an_html:
+        sv_section = f"""
+<div class="section">
+  <div class="section-title">Sozialversicherung (Arbeitnehmer)</div>
+  <table class="abr">
+    <tbody>
+      {sv_an_html}
+    </tbody>
+    <tfoot>
+      <tr class="subtotal">
+        <td>Summe SV (AN)</td>
+        <td class="right neg">-{_fmt(abrechnung.sv_an)} EUR</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>"""
 
     return f"""<!DOCTYPE html>
 <html lang="de">
@@ -606,17 +777,29 @@ table.stamm {{ border-collapse: collapse; font-size: 12px; width: 100%; }}
 </div>
 
 <div class="section">
-  <div class="section-title">Abrechnung</div>
+  <div class="section-title">Steuern</div>
   <table class="abr">
     <thead>
       <tr><th>Position</th><th class="right">Betrag</th></tr>
     </thead>
     <tbody>
-      {abr_html}
+      {steuer_html}
+    </tbody>
+    <tfoot>
       <tr class="subtotal">
-        <td>Gesetzliche Abzuege</td>
-        <td class="right neg">-{_fmt(abzuege_total)} EUR</td>
+        <td>Summe Steuern</td>
+        <td class="right neg">-{_fmt(steuer_total)} EUR</td>
       </tr>
+    </tfoot>
+  </table>
+</div>
+{sv_section}
+
+<div class="section">
+  <div class="section-title">Netto</div>
+  <table class="abr">
+    <tbody>
+      {waterfall_html}
     </tbody>
     <tfoot>
       <tr class="total">
@@ -627,20 +810,7 @@ table.stamm {{ border-collapse: collapse; font-size: 12px; width: 100%; }}
   </table>
 </div>
 
-<div class="section">
-  <div class="section-title">Arbeitgeberkosten</div>
-  <table class="abr">
-    <tbody>
-      {ag_html}
-    </tbody>
-    <tfoot>
-      <tr class="total">
-        <td>Gesamtkosten AG</td>
-        <td class="right">{_fmt(abrechnung.ag_kosten)} EUR</td>
-      </tr>
-    </tfoot>
-  </table>
-</div>
+{ag_section}
 
 <div class="footer">
   <span>{_esc(firma_zeile) if firma_zeile else ''}</span>
@@ -651,11 +821,17 @@ table.stamm {{ border-collapse: collapse; font-size: 12px; width: 100%; }}
 </html>"""
 
 
-def _abr_row(label: str, betrag: str, bold: bool = False) -> str:
-    cls = ' class="bold"' if bold else ''
+def _abr_row(label: str, betrag: str, bold: bool = False, neg: bool = False) -> str:
+    td_cls = ' class="bold"' if bold else ''
+    right_classes = ["right"]
+    if bold:
+        right_classes.append("bold")
+    if neg:
+        right_classes.append("neg")
+    right_cls = " ".join(right_classes)
     return (
         f'<tr class="row">'
-        f'<td{cls}>{label}</td>'
-        f'<td class="right{"  bold" if bold else ""}">{betrag} EUR</td>'
+        f'<td{td_cls}>{label}</td>'
+        f'<td class="{right_cls}">{betrag} EUR</td>'
         f'</tr>'
     )

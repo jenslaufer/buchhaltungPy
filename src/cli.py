@@ -162,6 +162,7 @@ def _build_mitarbeiter(args) -> lb.Mitarbeiter:
         kirchensteuer_satz=args.kirchensteuer,
         krankenversicherung=args.krankenversicherung,
         krv=args.krv,
+        alv=args.alv,
         kinderlos=args.kinderlos,
         minijob=args.minijob,
         konto_gehalt=args.konto_gehalt,
@@ -174,6 +175,7 @@ def _build_mitarbeiter(args) -> lb.Mitarbeiter:
         plz=getattr(args, "plz", ""),
         ort=getattr(args, "ort", ""),
         konfession=getattr(args, "konfession", "-"),
+        sv_nummer=getattr(args, "sv_nummer", ""),
     )
 
 
@@ -185,7 +187,8 @@ def _add_lohn_args(p):
     p.add_argument("--kinderfreibetraege", type=float, default=0, help="Child allowances (default: 0)")
     p.add_argument("--kirchensteuer", type=float, default=0.0, help="Church tax rate, e.g. 0.09 (default: 0)")
     p.add_argument("--krankenversicherung", choices=["gesetzlich", "privat"], default="privat", help="Health insurance type (default: privat)")
-    p.add_argument("--krv", type=int, default=2, help="Pension insurance: 0=West, 1=East, 2=not insured (default: 2)")
+    p.add_argument("--krv", type=int, default=1, help="Pension insurance: 0=gesetzlich, 1=nicht versichert (default: 1)")
+    p.add_argument("--alv", type=int, default=1, help="Unemployment insurance: 0=versichert, 1=nicht (default: 1)")
     p.add_argument("--kinderlos", action="store_true", help="Childless surcharge for Pflegeversicherung")
     p.add_argument("--minijob", action="store_true", help="Minijob (520 EUR basis, flat-rate tax)")
     p.add_argument("--konto-gehalt", default="6024", help="Salary expense account (default: 6024)")
@@ -219,10 +222,12 @@ def _add_lohnzettel_args(p):
     p.add_argument("--plz", default="", help="Employee postal code")
     p.add_argument("--ort", default="", help="Employee city")
     p.add_argument("--konfession", default="-", help="Confession (default: -)")
+    p.add_argument("--sv-nummer", default="", help="Social insurance number")
     p.add_argument("--firma-name", default="", help="Company name")
     p.add_argument("--firma-strasse", default="", help="Company street")
     p.add_argument("--firma-plz", default="", help="Company postal code")
     p.add_argument("--firma-ort", default="", help="Company city")
+    p.add_argument("--show-ag-kosten", action="store_true", help="Show employer costs on payslip")
     p.add_argument("-o", "--output", default="", help="Output file path (default: stdout)")
 
 
@@ -236,7 +241,7 @@ def cmd_lohn_zettel(args):
         plz=args.firma_plz,
         ort=args.firma_ort,
     )
-    content = lb.lohnzettel(ma, abr, firma)
+    content = lb.lohnzettel(ma, abr, firma, show_ag_kosten=args.show_ag_kosten)
     if args.output:
         Path(args.output).write_text(content, encoding="utf-8")
         print(f"Payslip written: {args.output}")
