@@ -62,6 +62,7 @@ python -m src.cli <command> [options]
 | `lohn-berechnen` | Compute payroll for an employee (CSV) |
 | `lohn-buchungen` | Generate payroll journal entries (CSV) |
 | `lohn-zettel` | Generate payslip as HTML |
+| `lohn-zettel-journal` | Generate payslips from journal data |
 
 ### Example
 
@@ -84,7 +85,7 @@ python -m src.cli lohn-berechnen --name "Max Mustermann" --brutto 3500 --monat 2
 ```
 src/
   buchhaltung.py      Core bookkeeping logic (Bilanz, GuV, taxes, year-end, E-Bilanz)
-  cli.py              CLI with 21 subcommands
+  cli.py              CLI with 22 subcommands
   lohnbuchhaltung.py  Payroll: Lohnsteuer (BMF PAP), SV, journal entries, payslips
   lohnsteuer/         Generated BMF PAP calculators (2023–2026)
   render.py           HTML rendering for Bilanz, GuV, T-Konten

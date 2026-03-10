@@ -23,6 +23,7 @@ Commands:
   lohn-berechnen       Compute payroll for an employee
   lohn-buchungen       Generate journal entries for a payroll
   lohn-zettel          Generate payslip as HTML
+  lohn-zettel-journal  Generate payslips from journal data
 """
 
 import argparse
