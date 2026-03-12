@@ -12,7 +12,8 @@
       "Bash(chmod +x /home/jens/Repos/buchhaltung/render_solytics.sh)",
       "Bash(./render_solytics.sh)",
       "Bash(python3 -c \":*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(google-chrome --headless --disable-gpu --print-to-pdf=\"/home/jens/Repos/solytics/2025/Berichte/jahresabschluss_2025.pdf\" --no-margins \"file:///home/jens/Repos/solytics/2025/Berichte/jahresabschluss_2025.html\")"
     ]
   }
 }
