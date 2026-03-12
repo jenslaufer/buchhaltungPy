@@ -91,62 +91,105 @@ def _render_bilanz_body(firma, titel, bilanz_df, journal_valid="", bilanz_valid=
         val = row["Betrag"][0]
         return "" if val == "0,00" else val
 
-    INDENT_CLS = {0: "", 1: "pl-4", 2: "pl-8"}
+    P = "p-2.5"
+    R = "text-align: right; padding: 10px"
 
-    def bilanz_row(seite, ebene1, ebene2, label, indent=0):
-        val = get_betrag(seite, ebene1, ebene2)
-        bold = ebene2 == "NA" and ebene1 != "NA"
-        total = ebene1 == "NA"
-        fw = " font-bold" if bold or total else ""
-        border = " border-t-2 border-black" if total else ""
-        ind = INDENT_CLS.get(indent, "")
-        return f"""<tr>
-      <td class="p-1 {ind}{fw}">{label}</td>
-      <td class="p-2.5 text-right{fw}{border}">{val}</td>
-    </tr>"""
+    def cat_row(a_label, a_seite, a_e1, p_label, p_seite, p_e1):
+        """Category row: subtotal in col 2/5, label bold."""
+        a_val = get_betrag(a_seite, a_e1) if a_seite else ""
+        p_val = get_betrag(p_seite, p_e1) if p_seite else ""
+        return (f'<tr>'
+                f'<td class="{P}"><b>{a_label}</b></td>'
+                f'<td class="{P}" style="{R}">{a_val}</td><td></td>'
+                f'<td class="{P}"><b>{p_label}</b></td>'
+                f'<td class="{P}" style="{R}">{p_val}</td><td></td>'
+                f'</tr>')
 
-    aktiva_rows = [
-        ("Aktiva", "A. Anlagevermögen", "I. Immaterielle Vermögensgegenstände", "I. Immaterielle Vermögensgegenstände", 2),
-        ("Aktiva", "A. Anlagevermögen", "II. Sachanlagen", "II. Sachanlagen", 2),
-        ("Aktiva", "A. Anlagevermögen", "III. Finanzanlagen", "III. Finanzanlagen", 2),
-        ("Aktiva", "A. Anlagevermögen", "NA", "A. Anlagevermögen", 1),
-        ("Aktiva", "B. Umlaufvermögen", "I. Vorräte", "I. Vorräte", 2),
-        ("Aktiva", "B. Umlaufvermögen", "II. Forderungen und sonstige Vermögensgegenstände", "II. Forderungen und sonstige Vermögensgegenstände", 2),
-        ("Aktiva", "B. Umlaufvermögen", "III. Wertpapiere", "III. Wertpapiere", 2),
-        ("Aktiva", "B. Umlaufvermögen", "IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks", "IV. Kassenbestand und Bankguthaben", 2),
-        ("Aktiva", "B. Umlaufvermögen", "NA", "B. Umlaufvermögen", 1),
-        ("Aktiva", "C. Rechnungsabgrenzungsposten", "NA", "C. Rechnungsabgrenzungsposten", 1),
-        ("Aktiva", "NA", "NA", "Summe Aktiva", 0),
-    ]
+    def det_row(a_label, a_seite, a_e1, a_e2, p_label, p_seite, p_e1, p_e2):
+        """Detail row: value in col 3/6."""
+        a_val = get_betrag(a_seite, a_e1, a_e2) if a_seite else ""
+        p_val = get_betrag(p_seite, p_e1, p_e2) if p_seite else ""
+        return (f'<tr>'
+                f'<td class="{P}">{a_label}</td><td></td>'
+                f'<td class="{P}" style="{R}">{a_val}</td>'
+                f'<td class="{P}">{p_label}</td><td></td>'
+                f'<td class="{P}" style="{R}">{p_val}</td>'
+                f'</tr>')
 
-    passiva_rows = [
-        ("Passiva", "A. Eigenkapital", "I. Gezeichnetes Kapital", "I. Gezeichnetes Kapital", 2),
-        ("Passiva", "A. Eigenkapital", "II. Kapitalrücklage", "II. Kapitalrücklage", 2),
-        ("Passiva", "A. Eigenkapital", "III. Gewinnrücklagen", "III. Gewinnrücklagen", 2),
-        ("Passiva", "A. Eigenkapital", "IV. Gewinnvortrag/Verlustvortrag", "IV. Gewinnvortrag/Verlustvortrag", 2),
-        ("Passiva", "A. Eigenkapital", "V. Jahresüberschuß/Jahresfehlbetrag", "V. Jahresüberschuss/Jahresfehlbetrag", 2),
-        ("Passiva", "A. Eigenkapital", "NA", "A. Eigenkapital", 1),
-        ("Passiva", "B. Rückstellungen", "NA", "B. Rückstellungen", 1),
-        ("Passiva", "C. Verbindlichkeiten", "NA", "C. Verbindlichkeiten", 1),
-        ("Passiva", "D. Rechnungsabgrenzungsposten", "NA", "D. Rechnungsabgrenzungsposten", 1),
-        ("Passiva", "NA", "NA", "Summe Passiva", 0),
-    ]
+    spacer = '<tr><td colspan="6">&nbsp;</td></tr>'
 
-    html += '<div class="grid grid-cols-2 gap-8">'
+    html += '<table class="w-full table-fixed">'
+    html += (f'<colgroup>'
+             f'<col style="width:30%"><col style="width:10%"><col style="width:10%">'
+             f'<col style="width:30%"><col style="width:10%"><col style="width:10%">'
+             f'</colgroup>'
+             f'<tr><td colspan="3" class="{P} font-bold text-lg">Aktiva</td>'
+             f'<td colspan="3" class="{P} font-bold text-lg">Passiva</td></tr>')
 
-    html += '<div><table class="w-full">'
-    html += '<tr><td colspan="2" class="p-2.5 text-center border-b-2 border-black font-bold">Aktiva</td></tr>'
-    for seite, e1, e2, label, indent in aktiva_rows:
-        html += bilanz_row(seite, e1, e2, label, indent)
-    html += '</table></div>'
+    # A. Anlagevermögen | A. Eigenkapital
+    html += cat_row("A. Anlagevermögen", "Aktiva", "A. Anlagevermögen",
+                     "A. Eigenkapital", "Passiva", "A. Eigenkapital")
+    html += det_row("I. Immaterielle Vermögensgegenstände",
+                     "Aktiva", "A. Anlagevermögen", "I. Immaterielle Vermögensgegenstände",
+                     "I. Gezeichnetes Kapital",
+                     "Passiva", "A. Eigenkapital", "I. Gezeichnetes Kapital")
+    html += det_row("II. Sachanlagen",
+                     "Aktiva", "A. Anlagevermögen", "II. Sachanlagen",
+                     "II. Kapitalrücklage",
+                     "Passiva", "A. Eigenkapital", "II. Kapitalrücklage")
+    html += det_row("III. Finanzanlagen",
+                     "Aktiva", "A. Anlagevermögen", "III. Finanzanlagen",
+                     "III. Gewinnrücklagen",
+                     "Passiva", "A. Eigenkapital", "III. Gewinnrücklagen")
+    html += det_row("", None, None, None,
+                     "IV. Gewinnvortrag/Verlustvortrag",
+                     "Passiva", "A. Eigenkapital", "IV. Gewinnvortrag/Verlustvortrag")
+    html += det_row("", None, None, None,
+                     "V. Jahresüberschuss/Jahresfehlbetrag",
+                     "Passiva", "A. Eigenkapital", "V. Jahresüberschuß/Jahresfehlbetrag")
+    html += spacer
 
-    html += '<div><table class="w-full">'
-    html += '<tr><td colspan="2" class="p-2.5 text-center border-b-2 border-black font-bold">Passiva</td></tr>'
-    for seite, e1, e2, label, indent in passiva_rows:
-        html += bilanz_row(seite, e1, e2, label, indent)
-    html += '</table></div>'
+    # B. Umlaufvermögen | B. Rückstellungen
+    html += cat_row("B. Umlaufvermögen", "Aktiva", "B. Umlaufvermögen",
+                     "B. Rückstellungen", "Passiva", "B. Rückstellungen")
+    html += det_row("I. Vorräte",
+                     "Aktiva", "B. Umlaufvermögen", "I. Vorräte",
+                     "", None, None, None)
+    html += det_row("II. Forderungen und sonstige Vermögensgegenstände",
+                     "Aktiva", "B. Umlaufvermögen", "II. Forderungen und sonstige Vermögensgegenstände",
+                     "", None, None, None)
+    html += det_row("III. Wertpapiere",
+                     "Aktiva", "B. Umlaufvermögen", "III. Wertpapiere",
+                     "", None, None, None)
+    html += det_row("IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",
+                     "Aktiva", "B. Umlaufvermögen", "IV. Kassenbestand, Bundesbankguthaben, Guthaben bei Kreditinstituten und Schecks",
+                     "", None, None, None)
+    html += spacer
 
-    html += '</div>'
+    # C. Rechnungsabgrenzungsposten | C. Verbindlichkeiten
+    html += cat_row("C. Rechnungsabgrenzungsposten", "Aktiva", "C. Rechnungsabgrenzungsposten",
+                     "C. Verbindlichkeiten", "Passiva", "C. Verbindlichkeiten")
+    html += spacer
+
+    # D. Aktive latente Steuern | D. Rechnungsabgrenzungsposten
+    html += cat_row("D. Aktive latente Steuern", "Aktiva", "D. Aktive latente Steuern",
+                     "D. Rechnungsabgrenzungsposten", "Passiva", "D. Rechnungsabgrenzungsposten")
+    html += spacer
+
+    # E. Aktiver Unterschiedsbetrag | E. Passive latente Steuern
+    html += cat_row("E. Aktiver Unterschiedsbetrag aus der Vermögensverrechnung",
+                     "Aktiva", "E. Aktiver Unterschiedsbetrag aus der Vermögensverrechnung",
+                     "E. Passive latente Steuern", "Passiva", "E. Passive latente Steuern")
+
+    # Totals
+    a_total = get_betrag("Aktiva")
+    p_total = get_betrag("Passiva")
+    html += (f'<tr style="border-top: 2px solid">'
+             f'<td></td><td class="{P}" style="{R}"><b>{a_total}</b></td>'
+             f'<td colspan="2"></td>'
+             f'<td class="{P}" style="{R}"><b>{p_total}</b></td><td></td>'
+             f'</tr>')
+    html += '</table>'
     return html
 
 
