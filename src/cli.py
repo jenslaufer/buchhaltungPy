@@ -4,6 +4,7 @@ Usage: python -m src.cli <command> [options]
 
 Commands:
   korrigiere-nummern   Fix Journalnummer (sequential) and Buchungssatznummer (dense rank)
+  sortiere-journal     Sort journal by Buchungsdatum (GoBD chronological order)
   validiere-journal    Validate journal: balanced bookings, sequential numbering
   validiere-bilanz     Validate balance sheet: Aktiva == Passiva
   anomalien            Detect irregular booking patterns (duplicates, outliers, gaps)
@@ -58,6 +59,11 @@ def _add_common(p, start=True, ende=True, hebesatz=False):
 def cmd_korrigiere_nummern(args):
     bh.korrigiere_nummern(args.journal)
     print(f"Fixed: {args.journal}")
+
+
+def cmd_sortiere_journal(args):
+    bh.sortiere_journal(args.journal)
+    print(f"Sorted: {args.journal}")
 
 
 def cmd_validiere_journal(args):
@@ -321,6 +327,11 @@ def main(argv=None):
     p = sub.add_parser("korrigiere-nummern", help="Fix journal/booking numbering")
     _add_journal(p)
     p.set_defaults(func=cmd_korrigiere_nummern)
+
+    # sortiere-journal
+    p = sub.add_parser("sortiere-journal", help="Sort journal by Buchungsdatum")
+    _add_journal(p)
+    p.set_defaults(func=cmd_sortiere_journal)
 
     # validiere-journal
     p = sub.add_parser("validiere-journal", help="Validate journal integrity")

@@ -913,6 +913,101 @@ def korrigiere_nummern(journal_file: str) -> None:
     journal.write_csv(journal_file)
 
 
+def sortiere_journal(journal_file: str) -> pl.DataFrame:
+    """Sort journal rows by Buchungsdatum, keeping Buchungssätze grouped.
+
+    Unifies Buchungsdatum within each Buchungssatz (earliest date wins).
+    Renumbers Journalnummer (sequential) and Buchungssatznummer (dense rank).
+    Stable sort: same-date Buchungssätze keep their original relative order.
+    """
+    journal = pl.read_csv(
+        journal_file,
+        schema_overrides={
+            "Konto": pl.Utf8,
+            "Journalnummer": pl.Int64,
+            "Betrag": pl.Float64,
+        },
+    )
+
+    bsn_col = "Buchungssatznummer"
+
+    # Unify Buchungsdatum within each BSN: use the earliest date
+    journal = journal.with_columns(
+        pl.col("Buchungsdatum")
+        .str.strptime(pl.Date, "%d.%m.%Y")
+        .alias("_parsed_date")
+    )
+    journal = journal.with_columns(
+        pl.col("_parsed_date").min().over(bsn_col).alias("_unified_date")
+    )
+    journal = journal.with_columns(
+        pl.col("_unified_date").dt.strftime("%d.%m.%Y").alias("Buchungsdatum")
+    )
+    journal = journal.drop(["_parsed_date", "_unified_date"])
+
+    # Get the (now unified) Buchungsdatum per BSN (sort key)
+    bsn_order = (
+        journal.group_by(bsn_col)
+        .agg(
+            pl.col("Buchungsdatum").first().alias("_sort_datum"),
+            pl.col("Journalnummer").first().alias("_sort_jnr"),
+        )
+    )
+
+    # Parse date for sorting
+    bsn_order = bsn_order.with_columns(
+        pl.col("_sort_datum")
+        .str.strptime(pl.Date, "%d.%m.%Y")
+        .alias("_sort_date_parsed")
+    )
+
+    # Detect JAB/JEB Buchungssätze (by Belegnummer prefix)
+    bsn_type = (
+        journal.group_by(bsn_col)
+        .agg(pl.col("Belegnummer").first().alias("_belnr"))
+    )
+    bsn_order = bsn_order.join(bsn_type, on=bsn_col)
+
+    # Sort key: JAB first (0), regular (1), JEB last (2)
+    bsn_order = bsn_order.with_columns(
+        pl.when(pl.col("_belnr").str.starts_with("JAB"))
+        .then(pl.lit(0))
+        .when(pl.col("_belnr").str.starts_with("JEB"))
+        .then(pl.lit(2))
+        .otherwise(pl.lit(1))
+        .alias("_sort_group")
+    )
+
+    # Sort: group (JAB/regular/JEB), then date, then original position
+    bsn_order = bsn_order.sort(["_sort_group", "_sort_date_parsed", "_sort_jnr"])
+    bsn_sorted = bsn_order[bsn_col].to_list()
+
+    # Build new Buchungssatznummer mapping
+    bsn_map = {old: new + 1 for new, old in enumerate(bsn_sorted)}
+
+    # Reorder rows: iterate sorted BSNs, collect rows per BSN in original row order
+    parts = []
+    for bsn in bsn_sorted:
+        parts.append(journal.filter(pl.col(bsn_col) == bsn))
+    journal = pl.concat(parts)
+
+    # Renumber Journalnummer 1..n
+    journal = journal.with_columns(
+        pl.arange(1, journal.height + 1, eager=True).alias("Journalnummer")
+    )
+
+    # Renumber Buchungssatznummer via mapping
+    journal = journal.with_columns(
+        pl.col(bsn_col).replace_strict(bsn_map).alias(bsn_col)
+    )
+
+    # Round Betrag to 2 decimal places
+    journal = journal.with_columns(pl.col("Betrag").round(2))
+
+    journal.write_csv(journal_file, float_precision=2)
+    return journal
+
+
 # ---------------------------------------------------------------------------
 # E-Bilanz export (myEBilanz format)
 # ---------------------------------------------------------------------------
