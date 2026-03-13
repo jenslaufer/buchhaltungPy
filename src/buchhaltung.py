@@ -1180,3 +1180,188 @@ def anomalien(
                      "Betrag": pl.Float64, "Detail": pl.Utf8}
         )
     return pl.DataFrame(findings)
+
+
+# ---------------------------------------------------------------------------
+# Benford's Law analysis
+# ---------------------------------------------------------------------------
+
+def benford(
+    journal_file: str, konten_file: str, start: str, ende: str,
+) -> pl.DataFrame:
+    """Test first-digit distribution against Benford's Law using chi-squared."""
+    import math
+
+    journal = _read_journal(journal_file, exclude_jeb=True)
+    start_d, ende_d = _parse_date(start), _parse_date(ende)
+
+    df = (
+        journal
+        .filter(~pl.col("Belegnummer").str.contains("JAB|JEB"))
+        .with_columns(
+            pl.col("Belegdatum").str.strptime(pl.Date, "%d.%m.%Y").alias("Datum"),
+        )
+        .filter((pl.col("Datum") >= start_d) & (pl.col("Datum") <= ende_d))
+        .filter(pl.col("Betrag") > 0)
+    )
+
+    # Extract first digit
+    first_digits = (
+        df.with_columns(
+            pl.col("Betrag").cast(pl.Utf8).str.replace_all(r"[0.]", "").str.slice(0, 1).alias("Ziffer")
+        )
+        .filter(pl.col("Ziffer").is_in([str(d) for d in range(1, 10)]))
+    )
+
+    total = first_digits.height
+    if total == 0:
+        return pl.DataFrame(
+            schema={"Ziffer": pl.Utf8, "Erwartet_Pct": pl.Float64,
+                     "Beobachtet_Pct": pl.Float64, "Abweichung_Pct": pl.Float64,
+                     "Anzahl": pl.Int64, "Detail": pl.Utf8}
+        )
+
+    observed = (
+        first_digits.group_by("Ziffer").agg(pl.len().alias("Anzahl"))
+        .sort("Ziffer")
+    )
+
+    rows = []
+    chi2 = 0.0
+    for d in range(1, 10):
+        digit = str(d)
+        expected_pct = math.log10(1 + 1 / d) * 100
+        count = observed.filter(pl.col("Ziffer") == digit)
+        n = int(count["Anzahl"][0]) if not count.is_empty() else 0
+        observed_pct = (n / total) * 100
+        abweichung = observed_pct - expected_pct
+        expected_n = expected_pct / 100 * total
+        if expected_n > 0:
+            chi2 += (n - expected_n) ** 2 / expected_n
+        rows.append({
+            "Ziffer": digit, "Erwartet_Pct": round(expected_pct, 2),
+            "Beobachtet_Pct": round(observed_pct, 2),
+            "Abweichung_Pct": round(abweichung, 2),
+            "Anzahl": n, "Detail": "",
+        })
+
+    # Chi-squared p-value (8 degrees of freedom)
+    # Approximate using incomplete gamma function via math
+    from src._chi2 import chi2_sf
+    p_value = chi2_sf(chi2, 8)
+
+    rows.append({
+        "Ziffer": "Chi2", "Erwartet_Pct": 0.0, "Beobachtet_Pct": 0.0,
+        "Abweichung_Pct": 0.0, "Anzahl": total,
+        "Detail": f"chi2={chi2:.4f}, p={p_value:.4f}",
+    })
+
+    return pl.DataFrame(rows)
+
+
+# ---------------------------------------------------------------------------
+# Time series analysis (Zeitreihe)
+# ---------------------------------------------------------------------------
+
+def zeitreihe(
+    journal_file: str, konten_file: str, start: str, ende: str,
+) -> pl.DataFrame:
+    """Monthly time series of revenue, expenses, result, and booking count."""
+    journal = _read_journal(journal_file, exclude_jeb=True)
+    start_d, ende_d = _parse_date(start), _parse_date(ende)
+
+    df = (
+        journal
+        .filter(~pl.col("Belegnummer").str.contains("JAB|JEB"))
+        .with_columns(
+            pl.col("Belegdatum").str.strptime(pl.Date, "%d.%m.%Y").alias("Datum"),
+        )
+        .filter((pl.col("Datum") >= start_d) & (pl.col("Datum") <= ende_d))
+        .with_columns(pl.col("Datum").dt.strftime("%Y-%m").alias("Monat"))
+    )
+
+    months = df.select("Monat").unique().sort("Monat")
+    rows = []
+    for monat in months["Monat"].to_list():
+        m_df = df.filter(pl.col("Monat") == monat)
+
+        # Revenue: Haben on 4xxx accounts
+        umsatz = m_df.filter(
+            pl.col("Konto").str.starts_with("4") & (pl.col("Typ") == "Haben")
+        )["Betrag"].sum()
+
+        # Expenses: Soll on 5xxx, 6xxx, 7xxx accounts
+        aufwand = m_df.filter(
+            (pl.col("Konto").str.starts_with("5")
+             | pl.col("Konto").str.starts_with("6")
+             | pl.col("Konto").str.starts_with("7"))
+            & (pl.col("Typ") == "Soll")
+        )["Betrag"].sum()
+
+        n_buchungen = m_df["Buchungssatznummer"].n_unique()
+
+        rows.append({
+            "Monat": monat,
+            "Umsatz": round(umsatz, 2),
+            "Aufwand": round(aufwand, 2),
+            "Ergebnis": round(umsatz - aufwand, 2),
+            "Anzahl_Buchungen": n_buchungen,
+        })
+
+    if not rows:
+        return pl.DataFrame(
+            schema={"Monat": pl.Utf8, "Umsatz": pl.Float64, "Aufwand": pl.Float64,
+                     "Ergebnis": pl.Float64, "Anzahl_Buchungen": pl.Int64}
+        )
+
+    return pl.DataFrame(rows)
+
+
+# ---------------------------------------------------------------------------
+# GoBD compliance check
+# ---------------------------------------------------------------------------
+
+def validiere_gobd(
+    journal_file: str, konten_file: str, start: str, ende: str,
+) -> str:
+    """Check GoBD compliance: chronological order, no gaps, valid accounts."""
+    journal = _read_journal(journal_file, exclude_jeb=False)
+    konten = pl.read_csv(konten_file, schema_overrides={"Konto": pl.Utf8})
+    errors = []
+
+    # 1. Chronological order of Buchungsdatum
+    dates = journal.with_columns(
+        pl.col("Buchungsdatum").str.strptime(pl.Date, "%d.%m.%Y").alias("BuchDatum")
+    )["BuchDatum"].to_list()
+
+    violations = []
+    for i in range(1, len(dates)):
+        if dates[i] < dates[i - 1]:
+            violations.append(i + 1)
+    if violations:
+        errors.append(f"Chronologie: Buchungsdatum nicht aufsteigend bei Journalnummer {violations[:5]}{'...' if len(violations) > 5 else ''}")
+
+    # 2. No future bookings
+    ende_d = _parse_date(ende)
+    future = journal.with_columns(
+        pl.col("Buchungsdatum").str.strptime(pl.Date, "%d.%m.%Y").alias("BuchDatum")
+    ).filter(pl.col("BuchDatum") > ende_d)
+    if not future.is_empty():
+        errors.append(f"Zukunftsbuchungen: {future.height} Buchungen nach {ende}")
+
+    # 3. No empty required fields
+    for col in ["Belegnummer", "Belegdatum", "Buchungsdatum", "Buchungstext", "Konto", "Typ"]:
+        empty = journal.filter(
+            pl.col(col).is_null() | (pl.col(col).cast(pl.Utf8) == "")
+        )
+        if not empty.is_empty():
+            errors.append(f"Leere Felder: {empty.height}× {col} leer")
+
+    # 4. Valid account numbers
+    valid_konten = set(konten["Konto"].to_list()) | {"00000", "9000", "99999"}
+    journal_konten = set(journal["Konto"].unique().to_list())
+    invalid = journal_konten - valid_konten
+    if invalid:
+        errors.append(f"Ungültige Konten: {sorted(invalid)}")
+
+    return "; ".join(errors)

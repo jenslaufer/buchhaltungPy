@@ -117,6 +117,37 @@ def cmd_anomalien(args):
         df.write_csv(sys.stdout)
 
 
+def cmd_benford(args):
+    df = bh.benford(args.journal, args.konten, args.start, args.ende)
+    if df.is_empty():
+        print("PASS")
+        return
+    chi2_row = df.filter(pl.col("Ziffer") == "Chi2")
+    df.write_csv(sys.stdout)
+    if not chi2_row.is_empty():
+        detail = chi2_row["Detail"][0]
+        p = float(detail.split("p=")[1])
+        if p > 0.05:
+            print("PASS", file=sys.stderr)
+        else:
+            print(f"WARNUNG: Signifikante Abweichung von Benford-Verteilung ({detail})", file=sys.stderr)
+            sys.exit(1)
+
+
+def cmd_zeitreihe(args):
+    df = bh.zeitreihe(args.journal, args.konten, args.start, args.ende)
+    df.write_csv(sys.stdout)
+
+
+def cmd_validiere_gobd(args):
+    result = bh.validiere_gobd(args.journal, args.konten, args.start, args.ende)
+    if result == "":
+        print("PASS")
+    else:
+        print(result)
+        sys.exit(1)
+
+
 def cmd_eroeffnungsbilanz(args):
     df = bh.eroeffnungsbilanz(args.journal, args.konten, args.start, args.ende)
     df.write_csv(sys.stdout)
@@ -341,6 +372,21 @@ def main(argv=None):
     _add_common(p)
     p.add_argument("--konto", default=None, help="Limit to one account")
     p.set_defaults(func=cmd_anomalien)
+
+    # benford
+    p = sub.add_parser("benford", help="Benford's Law first-digit analysis")
+    _add_common(p)
+    p.set_defaults(func=cmd_benford)
+
+    # zeitreihe
+    p = sub.add_parser("zeitreihe", help="Monthly time series analysis")
+    _add_common(p)
+    p.set_defaults(func=cmd_zeitreihe)
+
+    # validiere-gobd
+    p = sub.add_parser("validiere-gobd", help="GoBD compliance check")
+    _add_common(p)
+    p.set_defaults(func=cmd_validiere_gobd)
 
     # eroeffnungsbilanz
     p = sub.add_parser("eroeffnungsbilanz", help="Generate opening balance sheet (CSV)")

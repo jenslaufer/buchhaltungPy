@@ -45,7 +45,16 @@ python -m src.cli <command> [options]
 |---|---|
 | `validiere-journal` | Balanced bookings, sequential numbering |
 | `validiere-bilanz` | Aktiva == Passiva |
+| `validiere-gobd` | GoBD compliance (chronological order, no empty fields, valid accounts) |
 | `korrigiere-nummern` | Fix journal/booking numbering |
+
+### Audit (Betriebsprüfung)
+
+| Command | Description |
+|---|---|
+| `benford` | Benford's Law first-digit analysis (chi-squared test) |
+| `zeitreihe` | Monthly time series of revenue, expenses, result |
+| `anomalien` | Detect duplicates, outliers, regularity gaps |
 
 ### Year-End
 
