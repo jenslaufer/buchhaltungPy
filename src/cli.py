@@ -6,6 +6,7 @@ Commands:
   korrigiere-nummern   Fix Journalnummer (sequential) and Buchungssatznummer (dense rank)
   validiere-journal    Validate journal: balanced bookings, sequential numbering
   validiere-bilanz     Validate balance sheet: Aktiva == Passiva
+  anomalien            Detect irregular booking patterns (duplicates, outliers, gaps)
   betriebsergebnis     Compute operating result (Betriebsergebnis)
   koerperschaftssteuer Compute corporate tax (Koerperschaftsteuer)
   soli                 Compute solidarity surcharge (Solidaritaetszuschlag)
@@ -105,6 +106,15 @@ def cmd_guv(args):
 def cmd_bilanz(args):
     df = bh.bilanz(args.journal, args.konten, args.start, args.ende, args.hebesatz)
     df.write_csv(sys.stdout)
+
+
+def cmd_anomalien(args):
+    df = bh.anomalien(args.journal, args.konten, args.start, args.ende,
+                       konto=getattr(args, "konto", None))
+    if df.is_empty():
+        print("PASS")
+    else:
+        df.write_csv(sys.stdout)
 
 
 def cmd_eroeffnungsbilanz(args):
@@ -325,6 +335,12 @@ def main(argv=None):
     p = sub.add_parser("bilanz", help="Generate balance sheet (CSV)")
     _add_common(p, hebesatz=True)
     p.set_defaults(func=cmd_bilanz)
+
+    # anomalien
+    p = sub.add_parser("anomalien", help="Detect irregular booking patterns")
+    _add_common(p)
+    p.add_argument("--konto", default=None, help="Limit to one account")
+    p.set_defaults(func=cmd_anomalien)
 
     # eroeffnungsbilanz
     p = sub.add_parser("eroeffnungsbilanz", help="Generate opening balance sheet (CSV)")

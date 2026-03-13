@@ -1038,3 +1038,145 @@ def ebilanz_export(
         config.write(f)
 
     return str(ini_path)
+
+
+# ---------------------------------------------------------------------------
+# Anomaly detection
+# ---------------------------------------------------------------------------
+
+def anomalien(
+    journal_file: str,
+    konten_file: str,
+    start: str,
+    ende: str,
+    konto: str | None = None,
+) -> pl.DataFrame:
+    """Detect irregular patterns in journal bookings.
+
+    Returns a DataFrame with columns: Typ, Konto, Bezeichnung, Belegdatum,
+    Buchungstext, Betrag, Detail.
+
+    Checks:
+    1. Duplicates: same date + text + amount + account
+    2. Outliers: amounts > 2× IQR from median (per account, needs ≥ 4 bookings)
+    3. Regularity gaps: monthly recurring bookings with missing months
+    """
+    journal = _read_journal(journal_file, exclude_jeb=True)
+    konten = pl.read_csv(konten_file, schema_overrides={"Konto": pl.Utf8})
+
+    start_d = date.fromisoformat(start)
+    ende_d = date.fromisoformat(ende)
+
+    df = (
+        journal
+        .join(konten.select(["Konto", "Bezeichnung"]), on="Konto", how="left")
+        .with_columns(
+            pl.col("Belegdatum").str.strptime(pl.Date, "%d.%m.%Y").alias("Datum"),
+        )
+        .filter(
+            (pl.col("Datum") >= start_d) & (pl.col("Datum") <= ende_d)
+        )
+    )
+
+    if konto is not None:
+        df = df.filter(pl.col("Konto") == konto)
+
+    # Exclude opening/closing entries
+    df = df.filter(~pl.col("Belegnummer").str.contains("JAB|JEB"))
+
+    findings: list[dict] = []
+
+    # --- 1. Duplicates ---
+    dupes = (
+        df.group_by(["Konto", "Belegdatum", "Buchungstext", "Betrag", "Typ"])
+        .agg(pl.len().alias("n"))
+        .filter(pl.col("n") > 1)
+    )
+    for row in dupes.iter_rows(named=True):
+        bez = df.filter(pl.col("Konto") == row["Konto"])["Bezeichnung"][0]
+        findings.append({
+            "Typ": "Duplikat",
+            "Konto": row["Konto"],
+            "Bezeichnung": bez,
+            "Belegdatum": row["Belegdatum"],
+            "Buchungstext": row["Buchungstext"],
+            "Betrag": row["Betrag"],
+            "Detail": f"{row['n']}× identisch",
+        })
+
+    # --- 2. Outliers (IQR method, per account+text, Soll bookings only) ---
+    soll_df = df.filter(pl.col("Typ") == "Soll")
+    groups = soll_df.group_by(["Konto", "Buchungstext"]).agg(pl.len().alias("n")).filter(pl.col("n") >= 4)
+    for grp in groups.iter_rows(named=True):
+        acct, text = grp["Konto"], grp["Buchungstext"]
+        grp_df = soll_df.filter((pl.col("Konto") == acct) & (pl.col("Buchungstext") == text))
+        amounts = grp_df["Betrag"].sort()
+        q1 = amounts.quantile(0.25)
+        q3 = amounts.quantile(0.75)
+        iqr = q3 - q1
+        if iqr == 0:
+            continue
+        lower = q1 - 2.0 * iqr
+        upper = q3 + 2.0 * iqr
+        outliers = grp_df.filter(
+            (pl.col("Betrag") < lower) | (pl.col("Betrag") > upper)
+        )
+        bez = grp_df["Bezeichnung"][0]
+        median = amounts.median()
+        for row in outliers.iter_rows(named=True):
+            findings.append({
+                "Typ": "Ausreißer",
+                "Konto": row["Konto"],
+                "Bezeichnung": bez,
+                "Belegdatum": row["Belegdatum"],
+                "Buchungstext": row["Buchungstext"],
+                "Betrag": row["Betrag"],
+                "Detail": f"Median {median:.2f}, IQR [{q1:.2f}–{q3:.2f}]",
+            })
+
+    # --- 3. Regularity gaps (per account+text) ---
+    gap_groups = soll_df.group_by(["Konto", "Buchungstext"]).agg(pl.len().alias("n")).filter(pl.col("n") >= 3)
+    for grp in gap_groups.iter_rows(named=True):
+        acct, text = grp["Konto"], grp["Buchungstext"]
+        grp_df = soll_df.filter((pl.col("Konto") == acct) & (pl.col("Buchungstext") == text))
+        months = grp_df.with_columns(
+            pl.col("Datum").dt.strftime("%Y-%m").alias("Monat")
+        )["Monat"].unique().sort()
+        n_months = months.len()
+        if n_months < 3:
+            continue
+
+        first = date.fromisoformat(months[0] + "-01")
+        last = date.fromisoformat(months[n_months - 1] + "-01")
+        expected_months = (last.year - first.year) * 12 + (last.month - first.month) + 1
+
+        if n_months >= expected_months - 1 and expected_months > n_months:
+            all_months: set[str] = set()
+            y, m = first.year, first.month
+            while (y, m) <= (last.year, last.month):
+                all_months.add(f"{y:04d}-{m:02d}")
+                m += 1
+                if m > 12:
+                    m = 1
+                    y += 1
+            actual = set(months.to_list())
+            missing = sorted(all_months - actual)
+            bez = grp_df["Bezeichnung"][0]
+            for gap in missing:
+                findings.append({
+                    "Typ": "Lücke",
+                    "Konto": acct,
+                    "Bezeichnung": bez,
+                    "Belegdatum": gap,
+                    "Buchungstext": text,
+                    "Betrag": 0.0,
+                    "Detail": f"Monatliche Buchung fehlt ({n_months} von {expected_months} Monaten vorhanden)",
+                })
+
+    if not findings:
+        return pl.DataFrame(
+            schema={"Typ": pl.Utf8, "Konto": pl.Utf8, "Bezeichnung": pl.Utf8,
+                     "Belegdatum": pl.Utf8, "Buchungstext": pl.Utf8,
+                     "Betrag": pl.Float64, "Detail": pl.Utf8}
+        )
+    return pl.DataFrame(findings)
