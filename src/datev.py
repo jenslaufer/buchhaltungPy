@@ -4,8 +4,10 @@ Converts internal journal CSV to DATEV-compatible format for import
 by tax advisors or DATEV software (Kanzlei-Rechnungswesen, DATEV Unternehmen Online).
 """
 
+import shutil
 from datetime import date, datetime
 from pathlib import Path
+from textwrap import dedent
 
 import polars as pl
 
@@ -254,14 +256,18 @@ def _convert_buchungssatz(entries: list[dict]) -> list[list[str]]:
                 buchungstext=s["Buchungstext"],
             ))
     else:
-        # M:N — distribute each Soll against each Haben proportionally
-        haben_total = sum(h["Betrag"] for h in haben)
-        for s in soll:
-            for h in haben:
-                anteil = s["Betrag"] * h["Betrag"] / haben_total
-                if anteil > 0:
+        # M:N — pair matching amounts first, then handle remainder
+        remaining_soll = list(soll)
+        remaining_haben = list(haben)
+
+        # Pass 1: exact amount matches
+        matched_s = set()
+        matched_h = set()
+        for si, s in enumerate(remaining_soll):
+            for hi, h in enumerate(remaining_haben):
+                if hi not in matched_h and abs(s["Betrag"] - h["Betrag"]) < 0.005:
                     rows.append(_build_datev_row(
-                        umsatz=round(anteil, 2),
+                        umsatz=s["Betrag"],
                         sh="S",
                         konto=s["Konto"],
                         gegenkonto=h["Konto"],
@@ -269,8 +275,41 @@ def _convert_buchungssatz(entries: list[dict]) -> list[list[str]]:
                         belegnummer=belegnummer,
                         buchungstext=s["Buchungstext"],
                     ))
+                    matched_s.add(si)
+                    matched_h.add(hi)
+                    break
 
-    return rows
+        # Pass 2: remaining unmatched entries
+        rest_soll = [s for i, s in enumerate(remaining_soll) if i not in matched_s]
+        rest_haben = [h for i, h in enumerate(remaining_haben) if i not in matched_h]
+        if len(rest_soll) == 1 and rest_haben:
+            for h in rest_haben:
+                rows.append(_build_datev_row(
+                    umsatz=h["Betrag"], sh="S",
+                    konto=rest_soll[0]["Konto"], gegenkonto=h["Konto"],
+                    belegdatum=belegdatum, belegnummer=belegnummer,
+                    buchungstext=rest_soll[0]["Buchungstext"],
+                ))
+        elif len(rest_haben) == 1 and rest_soll:
+            for s in rest_soll:
+                rows.append(_build_datev_row(
+                    umsatz=s["Betrag"], sh="S",
+                    konto=s["Konto"], gegenkonto=rest_haben[0]["Konto"],
+                    belegdatum=belegdatum, belegnummer=belegnummer,
+                    buchungstext=s["Buchungstext"],
+                ))
+        else:
+            for s in rest_soll:
+                for h in rest_haben:
+                    rows.append(_build_datev_row(
+                        umsatz=s["Betrag"], sh="S",
+                        konto=s["Konto"], gegenkonto=h["Konto"],
+                        belegdatum=belegdatum, belegnummer=belegnummer,
+                        buchungstext=s["Buchungstext"],
+                    ))
+
+    # Filter out zero-amount rows (DATEV requires Umsatz > 0)
+    return [r for r in rows if r[0] != _format_amount(0)]
 
 
 def datev_export(
@@ -335,3 +374,264 @@ def datev_export(
         lines.append(";".join(row))
 
     return "\n".join(lines) + "\n"
+
+
+def _build_header_kb(
+    sachkontenlaenge: int,
+    berater_nr: int = 1001,
+    mandanten_nr: int = 1,
+) -> str:
+    """Build DATEV EXTF header for Kontenbeschriftungen (Datenkategorie 20)."""
+    created = datetime.now().strftime("%Y%m%d%H%M%S") + "000"
+    fields = [
+        '"EXTF"',                   # 1: DATEV-Format-KZ
+        "700",                      # 2: Versionsnummer
+        "20",                       # 3: Datenkategorie (Kontenbeschriftungen)
+        '"Kontenbeschriftungen"',   # 4: Formatname
+        "2",                        # 5: Formatversion
+        created,                    # 6: Erzeugt am
+        "",                         # 7: Importiert am
+        "",                         # 8: Herkunftskennzeichen
+        '"buchhaltungPy"',          # 9: Exportiert von
+        "",                         # 10: Importiert von
+        str(berater_nr),            # 11: Berater
+        str(mandanten_nr),          # 12: Mandant
+        "",                         # 13: WJ-Beginn (not needed for KB)
+        str(sachkontenlaenge),      # 14: Sachkontenlänge
+        "",                         # 15: Datum von
+        "",                         # 16: Datum bis
+        '"SKR04"',                  # 17: Bezeichnung
+        "",                         # 18: Diktatkürzel
+        "",                         # 19: Buchungstyp
+        "",                         # 20: Rechnungslegungszweck
+        "",                         # 21: Festschreibung
+        "",                         # 22: WKZ
+        "",                         # 23: reserviert
+        "",                         # 24: Derivatskennzeichen
+        "",                         # 25: reserviert
+        "",                         # 26: reserviert
+        "",                         # 27: SKR
+        "",                         # 28: Branchenlösung-Id
+        "",                         # 29: reserviert
+        "",                         # 30: reserviert
+        "",                         # 31: Anwendungsinformation
+    ]
+    return ";".join(fields)
+
+
+def kontenbeschriftungen_export(
+    konten_file: str,
+    sachkontenlaenge: int = 4,
+    berater_nr: int = 1001,
+    mandanten_nr: int = 1,
+) -> str:
+    """Export chart of accounts in DATEV EXTF Kontenbeschriftungen format."""
+    konten = pl.read_csv(konten_file, schema_overrides={"Konto": pl.Utf8})
+
+    # Filter internal accounts
+    konten = konten.filter(~pl.col("Konto").is_in(list(_INTERNAL_ACCOUNTS)))
+
+    header = _build_header_kb(sachkontenlaenge, berater_nr, mandanten_nr)
+    col_line = "Konto;Kontobeschriftung;Sprach-ID"
+
+    lines = [header, col_line]
+    for row in konten.to_dicts():
+        konto = row["Konto"]
+        bezeichnung = _quote(row["Bezeichnung"])
+        lines.append(f'{konto};{bezeichnung};"de-DE"')
+
+    return "\n".join(lines) + "\n"
+
+
+_GDPDU_DTD = dedent("""\
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!-- GDPdU DTD Version 01.09.2002 -->
+    <!ELEMENT DataSet (Version, DataSupplier?, Media+)>
+    <!ELEMENT Version (#PCDATA)>
+    <!ELEMENT DataSupplier (Name, Location?, Comment?)>
+    <!ELEMENT Name (#PCDATA)>
+    <!ELEMENT Location (#PCDATA)>
+    <!ELEMENT Comment (#PCDATA)>
+    <!ELEMENT Media (Name?, Table+)>
+    <!ELEMENT Table (URL, Name?, Description?, Validity?, DecimalSymbol?, DigitGroupingSymbol?, (VariableLength | FixedLength))>
+    <!ELEMENT URL (#PCDATA)>
+    <!ELEMENT Description (#PCDATA)>
+    <!ELEMENT Validity (Range)>
+    <!ELEMENT Range (From, To)>
+    <!ELEMENT From (#PCDATA)>
+    <!ELEMENT To (#PCDATA)>
+    <!ELEMENT DecimalSymbol (#PCDATA)>
+    <!ELEMENT DigitGroupingSymbol (#PCDATA)>
+    <!ELEMENT VariableLength (ColumnDelimiter?, RecordDelimiter?, TextEncapsulator?, (VariableColumn | VariablePrimaryKey | ForeignKey)+)>
+    <!ELEMENT ColumnDelimiter (#PCDATA)>
+    <!ELEMENT RecordDelimiter (#PCDATA)>
+    <!ELEMENT TextEncapsulator (#PCDATA)>
+    <!ELEMENT VariableColumn (Name, Description?, (Numeric | AlphaNumeric | Date)?, Map*)>
+    <!ELEMENT VariablePrimaryKey (Name, Description?, (Numeric | AlphaNumeric | Date)?, Map*)>
+    <!ELEMENT ForeignKey (Name, References)>
+    <!ELEMENT References (URL, Name)>
+    <!ELEMENT Numeric (Accuracy?, ImpliedAccuracy?)>
+    <!ELEMENT Accuracy (#PCDATA)>
+    <!ELEMENT ImpliedAccuracy (#PCDATA)>
+    <!ELEMENT AlphaNumeric (MaxLength?)>
+    <!ELEMENT MaxLength (#PCDATA)>
+    <!ELEMENT Date (Format)>
+    <!ELEMENT Format (#PCDATA)>
+    <!ELEMENT Map (From, To, Description?)>
+    <!ELEMENT FixedLength (RecordDelimiter?, (FixedColumn | FixedPrimaryKey | ForeignKey)+)>
+    <!ELEMENT FixedColumn (Name, Description?, (Numeric | AlphaNumeric | Date)?, Map*, FixedRange)>
+    <!ELEMENT FixedPrimaryKey (Name, Description?, (Numeric | AlphaNumeric | Date)?, Map*, FixedRange)>
+    <!ELEMENT FixedRange (From, (To | Length))>
+    <!ELEMENT Length (#PCDATA)>
+""")
+
+
+def _build_index_xml(start: str, ende: str) -> str:
+    """Build GDPdU index.xml referencing the export CSV files."""
+    return dedent(f"""\
+        <?xml version="1.0" encoding="utf-8"?>
+        <!DOCTYPE DataSet SYSTEM "gdpdu-01-09-2002.dtd">
+        <DataSet>
+          <Version>1.0</Version>
+          <DataSupplier>
+            <Name>buchhaltungPy</Name>
+            <Location>DATEV-Export</Location>
+            <Comment>GDPdU export for tax audit</Comment>
+          </DataSupplier>
+          <Media>
+            <Name>DATEV-Export</Name>
+            <Table>
+              <URL>EXTF_Buchungsstapel.csv</URL>
+              <Name>Buchungsstapel</Name>
+              <Description>DATEV EXTF Buchungsstapel</Description>
+              <Validity>
+                <Range>
+                  <From>{start}</From>
+                  <To>{ende}</To>
+                </Range>
+              </Validity>
+              <DecimalSymbol>,</DecimalSymbol>
+              <DigitGroupingSymbol>.</DigitGroupingSymbol>
+              <VariableLength>
+                <ColumnDelimiter>;</ColumnDelimiter>
+                <RecordDelimiter>&#10;</RecordDelimiter>
+                <TextEncapsulator>"</TextEncapsulator>
+                <VariableColumn>
+                  <Name>Umsatz</Name>
+                  <Description>Betrag</Description>
+                  <Numeric><Accuracy>2</Accuracy></Numeric>
+                </VariableColumn>
+                <VariableColumn>
+                  <Name>Soll/Haben-Kennzeichen</Name>
+                  <AlphaNumeric><MaxLength>1</MaxLength></AlphaNumeric>
+                </VariableColumn>
+                <VariableColumn>
+                  <Name>WKZ</Name>
+                  <AlphaNumeric><MaxLength>3</MaxLength></AlphaNumeric>
+                </VariableColumn>
+                <VariableColumn>
+                  <Name>Konto</Name>
+                  <AlphaNumeric><MaxLength>8</MaxLength></AlphaNumeric>
+                </VariableColumn>
+                <VariableColumn>
+                  <Name>Gegenkonto</Name>
+                  <AlphaNumeric><MaxLength>8</MaxLength></AlphaNumeric>
+                </VariableColumn>
+                <VariableColumn>
+                  <Name>Belegdatum</Name>
+                  <AlphaNumeric><MaxLength>4</MaxLength></AlphaNumeric>
+                </VariableColumn>
+                <VariableColumn>
+                  <Name>Belegfeld1</Name>
+                  <Description>Belegnummer</Description>
+                  <AlphaNumeric><MaxLength>36</MaxLength></AlphaNumeric>
+                </VariableColumn>
+                <VariableColumn>
+                  <Name>Buchungstext</Name>
+                  <AlphaNumeric><MaxLength>60</MaxLength></AlphaNumeric>
+                </VariableColumn>
+              </VariableLength>
+            </Table>
+            <Table>
+              <URL>EXTF_Kontenbeschriftungen.csv</URL>
+              <Name>Kontenbeschriftungen</Name>
+              <Description>DATEV EXTF Kontenbeschriftungen (SKR04)</Description>
+              <VariableLength>
+                <ColumnDelimiter>;</ColumnDelimiter>
+                <RecordDelimiter>&#10;</RecordDelimiter>
+                <TextEncapsulator>"</TextEncapsulator>
+                <VariablePrimaryKey>
+                  <Name>Konto</Name>
+                  <AlphaNumeric><MaxLength>8</MaxLength></AlphaNumeric>
+                </VariablePrimaryKey>
+                <VariableColumn>
+                  <Name>Kontobeschriftung</Name>
+                  <AlphaNumeric><MaxLength>100</MaxLength></AlphaNumeric>
+                </VariableColumn>
+                <VariableColumn>
+                  <Name>Sprach-ID</Name>
+                  <AlphaNumeric><MaxLength>5</MaxLength></AlphaNumeric>
+                </VariableColumn>
+              </VariableLength>
+            </Table>
+          </Media>
+        </DataSet>
+    """)
+
+
+def _copy_documents(src_dirs: list[Path], dest_dir: Path) -> int:
+    """Copy PDF files from source directories into dest_dir. Returns count."""
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    count = 0
+    for src in src_dirs:
+        if not src.is_dir():
+            continue
+        for pdf in sorted(src.glob("*.pdf")):
+            shutil.copy2(pdf, dest_dir / pdf.name)
+            count += 1
+    return count
+
+
+def datev_paket(
+    journal_file: str,
+    konten_file: str,
+    start: str,
+    ende: str,
+    output_dir,
+    berater_nr: int = 1001,
+    mandanten_nr: int = 1,
+    belege_dirs: list[str] | None = None,
+    kontoauszuege_dir: str | None = None,
+) -> Path:
+    """Create a complete DATEV/GDPdU audit package.
+
+    Writes EXTF_Buchungsstapel.csv, EXTF_Kontenbeschriftungen.csv,
+    index.xml, gdpdu-01-09-2002.dtd, and copies Belege/Kontoauszüge PDFs.
+    """
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Buchungsstapel
+    bs = datev_export(journal_file, konten_file, start, ende, berater_nr, mandanten_nr)
+    (output_dir / "EXTF_Buchungsstapel.csv").write_text(bs, encoding="cp1252")
+
+    # Kontenbeschriftungen
+    kb = kontenbeschriftungen_export(konten_file, berater_nr=berater_nr, mandanten_nr=mandanten_nr)
+    (output_dir / "EXTF_Kontenbeschriftungen.csv").write_text(kb, encoding="cp1252")
+
+    # Copy Belege
+    if belege_dirs:
+        _copy_documents([Path(d) for d in belege_dirs], output_dir / "Belege")
+
+    # Copy Kontoauszüge
+    if kontoauszuege_dir:
+        _copy_documents([Path(kontoauszuege_dir)], output_dir / "Kontoauszuege")
+
+    # GDPdU index.xml
+    index_xml = _build_index_xml(start, ende)
+    (output_dir / "index.xml").write_text(index_xml, encoding="utf-8")
+
+    # GDPdU DTD
+    (output_dir / "gdpdu-01-09-2002.dtd").write_text(_GDPDU_DTD, encoding="utf-8")
+
+    return output_dir

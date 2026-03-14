@@ -200,6 +200,18 @@ def cmd_datev_export(args):
         sys.stdout.write(result)
 
 
+def cmd_datev_paket(args):
+    belege = args.belege if args.belege else None
+    kontoauszuege = args.kontoauszuege if args.kontoauszuege else None
+    out = datev.datev_paket(
+        args.journal, args.konten, args.start, args.ende,
+        args.output_dir,
+        berater_nr=args.berater_nr, mandanten_nr=args.mandanten_nr,
+        belege_dirs=belege, kontoauszuege_dir=kontoauszuege,
+    )
+    print(f"DATEV package: {out}")
+
+
 def cmd_ebilanz(args):
     ini_path = bh.ebilanz_export(
         args.journal, args.konten, args.start, args.ende,
@@ -450,6 +462,16 @@ def main(argv=None):
     p.add_argument("--mandanten-nr", type=int, default=1, help="DATEV Mandanten-Nr (default: 1)")
     p.add_argument("-o", "--output", default="", help="Output file (default: stdout)")
     p.set_defaults(func=cmd_datev_export)
+
+    # datev-paket
+    p = sub.add_parser("datev-paket", help="Export complete DATEV/GDPdU audit package")
+    _add_common(p)
+    p.add_argument("--berater-nr", type=int, default=1001, help="DATEV Berater-Nr (default: 1001)")
+    p.add_argument("--mandanten-nr", type=int, default=1, help="DATEV Mandanten-Nr (default: 1)")
+    p.add_argument("--output-dir", required=True, help="Output directory for the package")
+    p.add_argument("--belege", nargs="+", default=[], help="Belege directories (PDFs)")
+    p.add_argument("--kontoauszuege", default="", help="Kontoauszüge directory (PDFs)")
+    p.set_defaults(func=cmd_datev_paket)
 
     # ebilanz
     p = sub.add_parser("ebilanz", help="Export E-Bilanz for myEBilanz")
