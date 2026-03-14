@@ -36,6 +36,7 @@ from pathlib import Path
 import polars as pl
 
 from src import buchhaltung as bh
+from src import datev
 from src import lohnbuchhaltung as lb
 
 DEFAULT_KONTEN = str(Path(__file__).parent.parent / "data" / "konten.csv")
@@ -185,6 +186,18 @@ def cmd_jahresabschluss(args):
 def cmd_jahreseroeffnung(args):
     new_file = bh.jahreseroeffnung(args.journal, args.konten, args.ende, args.hebesatz)
     print(f"Opening entries written: {new_file}")
+
+
+def cmd_datev_export(args):
+    result = datev.datev_export(
+        args.journal, args.konten, args.start, args.ende,
+        berater_nr=args.berater_nr, mandanten_nr=args.mandanten_nr,
+    )
+    if args.output:
+        Path(args.output).write_text(result, encoding="cp1252")
+        print(f"DATEV export: {args.output}")
+    else:
+        sys.stdout.write(result)
 
 
 def cmd_ebilanz(args):
@@ -429,6 +442,14 @@ def main(argv=None):
     p = sub.add_parser("jahreseroeffnung", help="Create opening entries for next year")
     _add_common(p, start=False, hebesatz=True)
     p.set_defaults(func=cmd_jahreseroeffnung)
+
+    # datev-export
+    p = sub.add_parser("datev-export", help="Export journal in DATEV EXTF format")
+    _add_common(p)
+    p.add_argument("--berater-nr", type=int, default=1001, help="DATEV Berater-Nr (default: 1001)")
+    p.add_argument("--mandanten-nr", type=int, default=1, help="DATEV Mandanten-Nr (default: 1)")
+    p.add_argument("-o", "--output", default="", help="Output file (default: stdout)")
+    p.set_defaults(func=cmd_datev_export)
 
     # ebilanz
     p = sub.add_parser("ebilanz", help="Export E-Bilanz for myEBilanz")

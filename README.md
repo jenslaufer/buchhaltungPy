@@ -1,6 +1,6 @@
 # buchhaltungPy
 
-Double-entry bookkeeping CLI for German GmbH. Handles journal validation, financial statements (Bilanz, GuV), tax computation, payroll, year-end closing, and E-Bilanz export.
+Double-entry bookkeeping CLI for German GmbH. Handles journal validation, financial statements (Bilanz, GuV), tax computation, payroll, year-end closing, E-Bilanz export, and DATEV export.
 
 Built on SKR04 (Kontenrahmen). All amounts in EUR.
 
@@ -63,6 +63,7 @@ python -m src.cli <command> [options]
 | `jahresabschluss` | Year-end closing (modifies journal) |
 | `jahreseroeffnung` | Opening entries for next fiscal year |
 | `ebilanz` | E-Bilanz export (CSV + INI for myEBilanz) |
+| `datev-export` | DATEV EXTF Buchungsstapel export |
 
 ### Payroll
 
@@ -85,6 +86,9 @@ python -m src.cli guv journal.csv --start 2024-01-01 --ende 2024-12-31 > guv.csv
 python -m src.cli jahresabschluss journal.csv --start 2024-01-01
 python -m src.cli ebilanz journal.csv --start 2024-01-01 --ende 2024-12-31 --output-dir ./ebilanz
 
+# DATEV export for Steuerberater
+python -m src.cli datev-export journal.csv --start 2024-01-01 --ende 2024-12-31 -o EXTF_Buchungsstapel.csv
+
 # Payroll
 python -m src.cli lohn-berechnen --name "Max Mustermann" --brutto 3500 --monat 2024-01-01
 ```
@@ -94,7 +98,8 @@ python -m src.cli lohn-berechnen --name "Max Mustermann" --brutto 3500 --monat 2
 ```
 src/
   buchhaltung.py      Core bookkeeping logic (Bilanz, GuV, taxes, year-end, E-Bilanz)
-  cli.py              CLI with 22 subcommands
+  cli.py              CLI with 23 subcommands
+  datev.py            DATEV EXTF Buchungsstapel exporter
   lohnbuchhaltung.py  Payroll: Lohnsteuer (BMF PAP), SV, journal entries, payslips
   lohnsteuer/         Generated BMF PAP calculators (2023–2026)
   render.py           HTML rendering for Bilanz, GuV, T-Konten
@@ -119,7 +124,7 @@ Each booking entry has `Typ` = `Soll` or `Haben`. Bookings within the same `Buch
 python -m pytest tests/
 ```
 
-347 tests across 15 test modules. Tests run against synthetic fixtures and real journal data from 2022–2026.
+388 tests across 16 test modules. Tests run against synthetic fixtures and real journal data from 2022–2026.
 
 ## Dependencies
 
