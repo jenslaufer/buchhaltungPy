@@ -66,7 +66,7 @@ Konto,Bezeichnung,Bilanzposten,GuV Posten,XBRL Taxonomie
 6855,Nebenkosten des Geldverkehrs,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.otherOrdinary
 6880,Aufwendungen aus der Währungsumrechnung,,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.currLoss
 6930,Forderungsverluste (übliche Höhe),,8. Sonstige betriebliche Aufwendungen,is.netIncome.regular.operatingTC.otherCost.regAllowance
-7100,Sonstige Zinsen und ähnliche Erträge,,4. Sonstige betriebliche Erträge,is.netIncome.regular.fin.netInterest.income.deposits
+7100,Sonstige Zinsen und ähnliche Erträge,,"11. Sonstige Zinsen und ähnliche Erträge, davon aus verbundenen Unternehmen",is.netIncome.regular.fin.netInterest.income.deposits
 7600,Körperschaftsteuer,,14. Steuern vom Einkommen und vom Ertrag,is.netIncome.tax.kst
 7603,Körperschaftsteuer für Vorjahre,,14. Steuern vom Einkommen und vom Ertrag,is.netIncome.tax.kst
 7604,Körperschaftsteuererstattungen für Vorjahre,,14. Steuern vom Einkommen und vom Ertrag,is.netIncome.tax.kst

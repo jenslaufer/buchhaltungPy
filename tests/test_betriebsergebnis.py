@@ -23,8 +23,8 @@ CASES = [
     ("16_multiple_bank_accounts.csv", DEFAULT_START, DEFAULT_ENDE, 20000.0),
     ("17_liabilities.csv", DEFAULT_START, DEFAULT_ENDE, 17000.0),
     ("19_boundary_rounding_99.csv", DEFAULT_START, DEFAULT_ENDE, 99.99),
-    # Zinserträge (7100) mapped to "4. Sonstige betriebliche Erträge" in konten.csv → included in BE
-    ("20_financial_income.csv", DEFAULT_START, DEFAULT_ENDE, 20500.0),
+    # Zinserträge (7100) mapped to "11. Sonstige Zinsen" → excluded from BE (financial income, not operating)
+    ("20_financial_income.csv", DEFAULT_START, DEFAULT_ENDE, 20000.0),
     ("22_full_year_monthly.csv", DEFAULT_START, DEFAULT_ENDE, 84000.0),
     ("24_investments.csv", DEFAULT_START, DEFAULT_ENDE, 50000.0),
     # Period filtering

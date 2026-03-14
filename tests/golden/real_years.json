@@ -4,7 +4,7 @@
     "koerperschaftssteuer": 6910.95,
     "soli": 380.1,
     "gewerbesteuer": 4910.5,
-    "steuern": 12201.55,
+    "steuern": 12290.17,
     "validiere_journal": "",
     "validiere_bilanz": "",
     "guv": {
@@ -22,10 +22,10 @@
       "11. Sonstige Zinsen und ähnliche Erträge, davon aus verbundenen Unternehmen": 0.0,
       "12. Abschreibungen auf Finanzanlagen und auf Wertpapiere des Umlaufvermögens": 0.0,
       "13. Zinsen und ähnliche Aufwendungen, davon an verbundene Unternehmen": 0.0,
-      "14. Steuern vom Einkommen und vom Ertrag": 12201.55,
-      "15. Ergebnis nach Steuern": 33872.18999999999,
+      "14. Steuern vom Einkommen und vom Ertrag": 12290.17,
+      "15. Ergebnis nach Steuern": 33783.56999999999,
       "16. Sonstige Steuern": 0.0,
-      "17. Jahresüberschuss/Jahresfehlbetrag": 33872.18999999999
+      "17. Jahresüberschuss/Jahresfehlbetrag": 33783.56999999999
     },
     "bilanz": [
       {
@@ -116,7 +116,7 @@
         "Bilanzseite": "Passiva",
         "Ebene1": "A. Eigenkapital",
         "Ebene2": "NA",
-        "Betrag": "58.872,19"
+        "Betrag": "58.783,57"
       },
       {
         "Bilanzseite": "Passiva",
@@ -146,13 +146,13 @@
         "Bilanzseite": "Passiva",
         "Ebene1": "A. Eigenkapital",
         "Ebene2": "V. Jahresüberschuß/Jahresfehlbetrag",
-        "Betrag": "33.872,19"
+        "Betrag": "33.783,57"
       },
       {
         "Bilanzseite": "Passiva",
         "Ebene1": "B. Rückstellungen",
         "Ebene2": "NA",
-        "Betrag": "12.201,55"
+        "Betrag": "12.290,17"
       },
       {
         "Bilanzseite": "Passiva",
@@ -175,10 +175,10 @@
     ]
   },
   "2023": {
-    "betriebsergebnis": 110872.16999999998,
-    "koerperschaftssteuer": 16630.8,
-    "soli": 914.69,
-    "gewerbesteuer": 12603.5,
+    "betriebsergebnis": 110724.23999999999,
+    "koerperschaftssteuer": 16608.6,
+    "soli": 913.47,
+    "gewerbesteuer": 12592.12,
     "steuern": 30178.579999999998,
     "validiere_journal": "",
     "validiere_bilanz": "",
@@ -186,15 +186,15 @@
       "1. Umsatzerlöse": 131100.0,
       "2. Erhöhung oder Verminderung des Bestands an fertigen und unfertigen Erzeugnissen": 0.0,
       "3. Andere aktivierte Eigenleistungen": 0.0,
-      "4. Sonstige betriebliche Erträge": 200.12,
+      "4. Sonstige betriebliche Erträge": 52.19,
       "5. Materialaufwand": 0.0,
       "6. Personalaufwand": 17000.0,
       "7. Abschreibungen": 2209.24,
       "8. Sonstige betriebliche Aufwendungen": 1218.71,
-      "Betriebsergebnis": 110872.16999999998,
+      "Betriebsergebnis": 110724.23999999999,
       "9. Erträge aus Beteiligungen, davon aus verbundenen Unternehmen": 0.0,
       "10. Erträge aus anderen Wertpapieren und Ausleihungen des Finanzanlagevermögens, davon aus verbundenen Unternehmen": 0.0,
-      "11. Sonstige Zinsen und ähnliche Erträge, davon aus verbundenen Unternehmen": 0.0,
+      "11. Sonstige Zinsen und ähnliche Erträge, davon aus verbundenen Unternehmen": 147.93,
       "12. Abschreibungen auf Finanzanlagen und auf Wertpapiere des Umlaufvermögens": 0.0,
       "13. Zinsen und ähnliche Aufwendungen, davon an verbundene Unternehmen": 0.0,
       "14. Steuern vom Einkommen und vom Ertrag": 30178.579999999998,
@@ -350,10 +350,10 @@
     ]
   },
   "2024": {
-    "betriebsergebnis": 13287.189999999999,
-    "koerperschaftssteuer": 1993.05,
-    "soli": 109.62,
-    "gewerbesteuer": 1501.5,
+    "betriebsergebnis": 13048.820000000003,
+    "koerperschaftssteuer": 1957.2,
+    "soli": 107.65,
+    "gewerbesteuer": 1478.75,
     "steuern": 3651.84,
     "validiere_journal": "",
     "validiere_bilanz": "",
@@ -361,21 +361,21 @@
       "1. Umsatzerlöse": 57285.0,
       "2. Erhöhung oder Verminderung des Bestands an fertigen und unfertigen Erzeugnissen": 0.0,
       "3. Andere aktivierte Eigenleistungen": 0.0,
-      "4. Sonstige betriebliche Erträge": 271.49,
+      "4. Sonstige betriebliche Erträge": 33.12,
       "5. Materialaufwand": 0.0,
       "6. Personalaufwand": 42000.0,
       "7. Abschreibungen": 531.91,
       "8. Sonstige betriebliche Aufwendungen": 1737.3899999999999,
-      "Betriebsergebnis": 13287.189999999999,
+      "Betriebsergebnis": 13048.820000000003,
       "9. Erträge aus Beteiligungen, davon aus verbundenen Unternehmen": 0.0,
       "10. Erträge aus anderen Wertpapieren und Ausleihungen des Finanzanlagevermögens, davon aus verbundenen Unternehmen": 0.0,
-      "11. Sonstige Zinsen und ähnliche Erträge, davon aus verbundenen Unternehmen": 0.0,
+      "11. Sonstige Zinsen und ähnliche Erträge, davon aus verbundenen Unternehmen": 238.37,
       "12. Abschreibungen auf Finanzanlagen und auf Wertpapiere des Umlaufvermögens": 0.0,
       "13. Zinsen und ähnliche Aufwendungen, davon an verbundene Unternehmen": 0.0,
       "14. Steuern vom Einkommen und vom Ertrag": 3651.84,
-      "15. Ergebnis nach Steuern": 9635.349999999999,
+      "15. Ergebnis nach Steuern": 9635.350000000004,
       "16. Sonstige Steuern": 0.0,
-      "17. Jahresüberschuss/Jahresfehlbetrag": 9635.349999999999
+      "17. Jahresüberschuss/Jahresfehlbetrag": 9635.350000000004
     },
     "bilanz": [
       {
@@ -525,7 +525,7 @@
     ]
   },
   "2025": {
-    "betriebsergebnis": -44478.37,
+    "betriebsergebnis": -44574.670000000006,
     "koerperschaftssteuer": 0.0,
     "soli": 0.0,
     "gewerbesteuer": 0.0,
@@ -536,15 +536,15 @@
       "1. Umsatzerlöse": 0.0,
       "2. Erhöhung oder Verminderung des Bestands an fertigen und unfertigen Erzeugnissen": 0.0,
       "3. Andere aktivierte Eigenleistungen": 0.0,
-      "4. Sonstige betriebliche Erträge": 161.43,
+      "4. Sonstige betriebliche Erträge": 65.13,
       "5. Materialaufwand": 0.0,
       "6. Personalaufwand": 42000.0,
       "7. Abschreibungen": 0.0,
       "8. Sonstige betriebliche Aufwendungen": 2639.8,
-      "Betriebsergebnis": -44478.37,
+      "Betriebsergebnis": -44574.670000000006,
       "9. Erträge aus Beteiligungen, davon aus verbundenen Unternehmen": 0.0,
       "10. Erträge aus anderen Wertpapieren und Ausleihungen des Finanzanlagevermögens, davon aus verbundenen Unternehmen": 0.0,
-      "11. Sonstige Zinsen und ähnliche Erträge, davon aus verbundenen Unternehmen": 0.0,
+      "11. Sonstige Zinsen und ähnliche Erträge, davon aus verbundenen Unternehmen": 96.3,
       "12. Abschreibungen auf Finanzanlagen und auf Wertpapiere des Umlaufvermögens": 0.0,
       "13. Zinsen und ähnliche Aufwendungen, davon an verbundene Unternehmen": 0.0,
       "14. Steuern vom Einkommen und vom Ertrag": 19.63,

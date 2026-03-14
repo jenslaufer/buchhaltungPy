@@ -185,17 +185,52 @@ def _get_steuerbuchungen(
     return pl.concat(bookings)
 
 
+def _journal_has_jeb_taxes(journal_file: str) -> bool:
+    """Check if the journal already has JEB tax provision bookings."""
+    journal = _read_journal(journal_file)
+    tax_provisions = {KONTO_GEWERBESTEUER_RUECKSTELLUNG,
+                      KONTO_KOERPERSCHAFTSTEUER_RUECKSTELLUNG,
+                      KONTO_SOLI_RUECKSTELLUNG}
+    return len(journal.filter(
+        pl.col("Belegnummer").str.starts_with("JEB")
+        & pl.col("Konto").is_in(tax_provisions)
+        & (pl.col("Typ") == "Haben")
+    )) > 0
+
+
+def _get_jeb_tax_bookings(journal_file: str) -> pl.DataFrame:
+    """Extract the original JEB tax booking pairs (expense + provision)."""
+    journal = _read_journal(journal_file)
+    tax_texts = {"Gewerbesteuer", "Körperschaftsteuer", "Solidaritätszuschlag"}
+    tax_accounts = {KONTO_GEWERBESTEUER_AUFWAND, KONTO_GEWERBESTEUER_RUECKSTELLUNG,
+                    KONTO_KOERPERSCHAFTSTEUER_AUFWAND, KONTO_KOERPERSCHAFTSTEUER_RUECKSTELLUNG,
+                    KONTO_SOLI_AUFWAND, KONTO_SOLI_RUECKSTELLUNG}
+    return journal.filter(
+        pl.col("Belegnummer").str.starts_with("JEB")
+        & pl.col("Konto").is_in(tax_accounts)
+        & pl.col("Buchungstext").is_in(tax_texts)
+    )
+
+
 def _get_konten_mit_steuer(
     journal_file: str, konten_file: str,
     start: date, ende: date, hebesatz: int,
 ) -> pl.DataFrame:
-    """Get account balances including computed tax bookings."""
-    steuer_buchungen = _get_steuerbuchungen(journal_file, konten_file, start, ende, hebesatz)
+    """Get account balances including tax bookings.
+
+    Uses JEB tax entries from the journal when present (closed years),
+    otherwise auto-computes taxes from Betriebsergebnis (open years).
+    """
+    base_konten = _get_konten(journal_file, konten_file, start, ende, True)
+
+    if _journal_has_jeb_taxes(journal_file):
+        steuer_buchungen = _get_jeb_tax_bookings(journal_file)
+    else:
+        steuer_buchungen = _get_steuerbuchungen(journal_file, konten_file, start, ende, hebesatz)
+
     steuer_konten = _join_and_summarise(
         steuer_buchungen, konten_file, start, ende
     ).filter(pl.col("Saldo").round(2) > 0)
-
-    base_konten = _get_konten(journal_file, konten_file, start, ende, True)
 
     base_rows = _unnest_details(base_konten)
     steuer_rows = _unnest_details(steuer_konten)

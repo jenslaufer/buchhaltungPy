@@ -102,14 +102,14 @@ def test_guv_taxes_and_jahresueberschuss(api, konten, fixture, expected_be, taxe
 # --- GuV with financial income (goes to Ergebnis nach Steuern, not BE) ---
 
 def test_guv_financial_income(api, konten):
-    """Zinserträge (7100) is mapped to '4. Sonstige betriebliche Erträge' in konten.csv,
-    so it is included in Betriebsergebnis (20000 + 500 = 20500)."""
+    """Zinserträge (7100) mapped to '11. Sonstige Zinsen' → financial income,
+    excluded from Betriebsergebnis (only 20000 Umsatz)."""
     result = api.guv(
         fixture_path("20_financial_income.csv"), konten,
         DEFAULT_START, DEFAULT_ENDE, DEFAULT_HEBESATZ,
     )
     be = get_guv_betrag(result, "Betriebsergebnis")
-    assert abs(be - 20500.0) < 0.01, f"BE should include Zinserträge, got {be}"
+    assert abs(be - 20000.0) < 0.01, f"BE should exclude Zinserträge, got {be}"
 
 
 # --- GuV with provisions release (sonstige betriebliche Erträge) ---
