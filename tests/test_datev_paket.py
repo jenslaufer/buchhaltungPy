@@ -80,6 +80,14 @@ def test_kontenbeschriftungen_header_sachkontenlaenge_custom():
     assert fields[13] == "5"
 
 
+def test_kontenbeschriftungen_header_wj_beginn_from_datev_paket(tmp_path):
+    out_dir = tmp_path / "datev_export"
+    datev_paket(JOURNAL_SIMPLE, KONTEN_FILE, START, ENDE, out_dir)
+    text = (out_dir / "EXTF_Kontenbeschriftungen.csv").read_bytes().decode("cp1252")
+    header_fields = text.splitlines()[0].split(";")
+    assert header_fields[12] == "20240101"
+
+
 def test_kontenbeschriftungen_header_is_semicolon_separated_31_fields():
     out = kontenbeschriftungen_export(KONTEN_FILE)
     header, _, _ = _parse_kontenbeschriftungen(out)
@@ -160,6 +168,14 @@ def test_kontobeschriftung_is_double_quoted():
         assert label.startswith('"') and label.endswith('"'), (
             f"Kontobeschriftung not quoted: {label!r}"
         )
+
+
+def test_kontobeschriftung_truncated_to_40_chars():
+    out = kontenbeschriftungen_export(KONTEN_FILE)
+    _, _, data = _parse_kontenbeschriftungen(out)
+    for row in data:
+        label = _unquote(row[1])
+        assert len(label) <= 40, f"Too long: {label!r} ({len(label)} chars)"
 
 
 def test_kontobeschriftung_not_empty_for_known_account():

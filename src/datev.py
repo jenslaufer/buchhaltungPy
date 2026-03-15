@@ -378,6 +378,7 @@ def datev_export(
 
 def _build_header_kb(
     sachkontenlaenge: int,
+    wj_beginn: str = "",
     berater_nr: int = 1001,
     mandanten_nr: int = 1,
 ) -> str:
@@ -396,7 +397,7 @@ def _build_header_kb(
         "",                         # 10: Importiert von
         str(berater_nr),            # 11: Berater
         str(mandanten_nr),          # 12: Mandant
-        "",                         # 13: WJ-Beginn (not needed for KB)
+        wj_beginn,                  # 13: WJ-Beginn
         str(sachkontenlaenge),      # 14: Sachkontenlänge
         "",                         # 15: Datum von
         "",                         # 16: Datum bis
@@ -422,6 +423,7 @@ def _build_header_kb(
 def kontenbeschriftungen_export(
     konten_file: str,
     sachkontenlaenge: int = 4,
+    wj_beginn: str = "",
     berater_nr: int = 1001,
     mandanten_nr: int = 1,
 ) -> str:
@@ -431,13 +433,13 @@ def kontenbeschriftungen_export(
     # Filter internal accounts
     konten = konten.filter(~pl.col("Konto").is_in(list(_INTERNAL_ACCOUNTS)))
 
-    header = _build_header_kb(sachkontenlaenge, berater_nr, mandanten_nr)
+    header = _build_header_kb(sachkontenlaenge, wj_beginn, berater_nr, mandanten_nr)
     col_line = "Konto;Kontobeschriftung;Sprach-ID"
 
     lines = [header, col_line]
     for row in konten.to_dicts():
         konto = row["Konto"]
-        bezeichnung = _quote(row["Bezeichnung"])
+        bezeichnung = _quote(row["Bezeichnung"][:40])
         lines.append(f'{konto};{bezeichnung};"de-DE"')
 
     return "\n".join(lines) + "\n"
@@ -616,7 +618,11 @@ def datev_paket(
     (output_dir / "EXTF_Buchungsstapel.csv").write_text(bs, encoding="cp1252")
 
     # Kontenbeschriftungen
-    kb = kontenbeschriftungen_export(konten_file, berater_nr=berater_nr, mandanten_nr=mandanten_nr)
+    wj_beginn = date.fromisoformat(start).strftime("%Y%m%d")
+    kb = kontenbeschriftungen_export(
+        konten_file, wj_beginn=wj_beginn,
+        berater_nr=berater_nr, mandanten_nr=mandanten_nr,
+    )
     (output_dir / "EXTF_Kontenbeschriftungen.csv").write_text(kb, encoding="cp1252")
 
     # Copy Belege

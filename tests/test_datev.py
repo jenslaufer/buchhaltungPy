@@ -394,6 +394,42 @@ def test_only_internal_accounts_produces_empty_output(tmp_path):
 # 13. Date range filtering
 # ---------------------------------------------------------------------------
 
+def test_mn_booking_no_zero_amounts(tmp_path):
+    """M:N booking with same account on both sides must not produce 0,00 rows."""
+    journal_path = tmp_path / "journal.csv"
+    journal_path.write_text(
+        "Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,"
+        "Buchungstext,Konto,Typ,Betrag\n"
+        "1,1,S21,01.12.2024,01.12.2024,USt-Voranmeldung,3806,Soll,2617.25\n"
+        "2,1,S21,01.12.2024,01.12.2024,USt-Voranmeldung,3820,Haben,2617.25\n"
+        "3,1,S21,01.12.2024,01.12.2024,USt-Voranmeldung,3820,Soll,2.33\n"
+        "4,1,S21,01.12.2024,01.12.2024,USt-Voranmeldung,1406,Haben,2.33\n"
+    )
+    out = datev_export(str(journal_path), KONTEN_FILE, START, ENDE)
+    _, _, data = parse_output(out)
+    amounts = [row[0] for row in data]
+    assert "0,00" not in amounts
+    assert len(data) == 2
+
+
+def test_mn_booking_pairs_matching_amounts(tmp_path):
+    """M:N booking pairs entries with matching amounts correctly."""
+    journal_path = tmp_path / "journal.csv"
+    journal_path.write_text(
+        "Journalnummer,Buchungssatznummer,Belegnummer,Belegdatum,Buchungsdatum,"
+        "Buchungstext,Konto,Typ,Betrag\n"
+        "1,1,S21,01.12.2024,01.12.2024,USt-Voranmeldung,3806,Soll,2617.25\n"
+        "2,1,S21,01.12.2024,01.12.2024,USt-Voranmeldung,3820,Haben,2617.25\n"
+        "3,1,S21,01.12.2024,01.12.2024,USt-Voranmeldung,3820,Soll,2.33\n"
+        "4,1,S21,01.12.2024,01.12.2024,USt-Voranmeldung,1406,Haben,2.33\n"
+    )
+    out = datev_export(str(journal_path), KONTEN_FILE, START, ENDE)
+    _, _, data = parse_output(out)
+    pairs = {(row[6], row[7]): row[0] for row in data}
+    assert pairs[("3806", "3820")] == "2617,25"
+    assert pairs[("3820", "1406")] == "2,33"
+
+
 def test_bookings_outside_date_range_excluded(tmp_path):
     journal_path = tmp_path / "journal.csv"
     journal_path.write_text(
