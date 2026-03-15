@@ -232,6 +232,8 @@ def test_datev_paket_return_type_is_path(tmp_path):
 EXPECTED_FILES = [
     "EXTF_Buchungsstapel.csv",
     "EXTF_Kontenbeschriftungen.csv",
+    "Buchungsjournal.csv",
+    "Kontenplan.csv",
     "Summen_und_Saldenliste.csv",
     "index.xml",
     "gdpdu-01-09-2002.dtd",
@@ -306,18 +308,18 @@ def test_datev_paket_index_xml_encoded_as_utf8(tmp_path):
 # datev_paket — 4. index.xml references both CSV files
 # ---------------------------------------------------------------------------
 
-def test_datev_paket_index_xml_references_buchungsstapel(tmp_path):
+def test_datev_paket_index_xml_references_buchungsjournal(tmp_path):
     out_dir = tmp_path / "datev_export"
     datev_paket(JOURNAL_SIMPLE, KONTEN_FILE, START, ENDE, out_dir)
     xml_text = (out_dir / "index.xml").read_bytes().decode("utf-8")
-    assert "EXTF_Buchungsstapel.csv" in xml_text
+    assert "Buchungsjournal.csv" in xml_text
 
 
-def test_datev_paket_index_xml_references_kontenbeschriftungen(tmp_path):
+def test_datev_paket_index_xml_references_kontenplan(tmp_path):
     out_dir = tmp_path / "datev_export"
     datev_paket(JOURNAL_SIMPLE, KONTEN_FILE, START, ENDE, out_dir)
     xml_text = (out_dir / "index.xml").read_bytes().decode("utf-8")
-    assert "EXTF_Kontenbeschriftungen.csv" in xml_text
+    assert "Kontenplan.csv" in xml_text
 
 
 def test_datev_paket_index_xml_references_dtd(tmp_path):
@@ -576,7 +578,7 @@ def test_susa_in_datev_paket(tmp_path):
     datev_paket(JOURNAL_SIMPLE, KONTEN_FILE, START, ENDE, out_dir)
     susa_path = out_dir / "Summen_und_Saldenliste.csv"
     assert susa_path.exists()
-    content = susa_path.read_bytes().decode("cp1252")
+    content = susa_path.read_bytes().decode("utf-8")
     assert "Konto" in content
     assert "1810" in content
 

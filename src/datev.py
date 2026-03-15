@@ -98,6 +98,8 @@ _NUMERIC_COLUMNS = {
 
 def _format_amount(betrag: float) -> str:
     """Format amount with comma decimal separator, 2 decimal places."""
+    if betrag == 0 or abs(betrag) < 0.005:
+        return "0,00"
     return f"{betrag:.2f}".replace(".", ",")
 
 
@@ -153,7 +155,7 @@ def _build_header(
         "",                         # 18: Diktatkürzel (max 2 Zeichen)
         "1",                        # 19: Buchungstyp (1=Fibu)
         "0",                        # 20: Rechnungslegungszweck
-        "0",                        # 21: Festschreibung
+        "1",                        # 21: Festschreibung (1=festgeschrieben)
         '"EUR"',                    # 22: WKZ
         "",                         # 23: reserviert
         "",                         # 24: Derivatskennzeichen
@@ -488,8 +490,75 @@ _GDPDU_DTD = dedent("""\
 """)
 
 
+def gdpdu_journal(
+    journal_file: str,
+    konten_file: str,
+    start: str,
+    ende: str,
+    belege_dir: Path | None = None,
+) -> str:
+    """Export plain CSV journal for GDPdU/IDEA (UTF-8, no EXTF header).
+
+    Includes Beleglink column pointing to PDFs in Belege/ if available.
+    """
+    journal = pl.read_csv(
+        journal_file,
+        schema_overrides={"Konto": pl.Utf8, "Belegnummer": pl.Utf8},
+    )
+    konten = pl.read_csv(konten_file, schema_overrides={"Konto": pl.Utf8})
+    start_d = date.fromisoformat(start)
+    ende_d = date.fromisoformat(ende)
+
+    journal = journal.with_columns(
+        pl.col("Buchungsdatum").str.strptime(pl.Date, "%d.%m.%Y").alias("_bd"),
+    ).filter(
+        (pl.col("_bd") >= start_d) & (pl.col("_bd") <= ende_d)
+    ).filter(~pl.col("Konto").is_in(list(_INTERNAL_ACCOUNTS)))
+
+    # Build Belegnummer → PDF filename mapping
+    beleg_map: dict[str, str] = {}
+    if belege_dir and belege_dir.is_dir():
+        for pdf in belege_dir.glob("*.pdf"):
+            # Extract Belegnummer from filename (e.g. "2024-01-01_E1_KO1_desc.pdf" → "E1")
+            parts = pdf.stem.split("_")
+            for part in parts:
+                if part and part[0] in "AESK" and any(c.isdigit() for c in part):
+                    beleg_map.setdefault(part, f"Belege/{pdf.name}")
+
+    # Join with Bezeichnung
+    journal = journal.join(
+        konten.select("Konto", "Bezeichnung"), on="Konto", how="left",
+    )
+
+    cols = [
+        "Journalnummer", "Buchungssatznummer", "Belegnummer",
+        "Belegdatum", "Buchungsdatum", "Buchungstext",
+        "Konto", "Bezeichnung", "Typ", "Betrag",
+    ]
+    lines = [";".join(cols + ["Beleglink"])]
+    for row in journal.select(cols).to_dicts():
+        beleg_nr = row["Belegnummer"]
+        beleglink = beleg_map.get(beleg_nr, "")
+        vals = [
+            str(row["Journalnummer"]),
+            str(row["Buchungssatznummer"]),
+            _quote(beleg_nr),
+            _quote(row["Belegdatum"]),
+            _quote(row["Buchungsdatum"]),
+            _quote(row["Buchungstext"]),
+            row["Konto"],
+            _quote(row["Bezeichnung"] or ""),
+            _quote(row["Typ"]),
+            _format_amount(row["Betrag"]),
+            _quote(beleglink),
+        ]
+        lines.append(";".join(vals))
+
+    return "\n".join(lines) + "\n"
+
+
 def _build_index_xml(start: str, ende: str) -> str:
-    """Build GDPdU index.xml referencing the export CSV files."""
+    """Build GDPdU index.xml referencing the plain CSV files for IDEA."""
     return dedent(f"""\
         <?xml version="1.0" encoding="utf-8"?>
         <!DOCTYPE DataSet SYSTEM "gdpdu-01-09-2002.dtd">
@@ -503,9 +572,9 @@ def _build_index_xml(start: str, ende: str) -> str:
           <Media>
             <Name>DATEV-Export</Name>
             <Table>
-              <URL>EXTF_Buchungsstapel.csv</URL>
-              <Name>Buchungsstapel</Name>
-              <Description>DATEV EXTF Buchungsstapel</Description>
+              <URL>Buchungsjournal.csv</URL>
+              <Name>Buchungsjournal</Name>
+              <Description>Buchungsjournal (alle Einzelbuchungen)</Description>
               <Validity>
                 <Range>
                   <From>{start}</From>
@@ -518,46 +587,63 @@ def _build_index_xml(start: str, ende: str) -> str:
                 <ColumnDelimiter>;</ColumnDelimiter>
                 <RecordDelimiter>&#10;</RecordDelimiter>
                 <TextEncapsulator>"</TextEncapsulator>
+                <VariablePrimaryKey>
+                  <Name>Journalnummer</Name>
+                  <Numeric/>
+                </VariablePrimaryKey>
                 <VariableColumn>
-                  <Name>Umsatz</Name>
-                  <Description>Betrag</Description>
-                  <Numeric><Accuracy>2</Accuracy></Numeric>
+                  <Name>Buchungssatznummer</Name>
+                  <Numeric/>
                 </VariableColumn>
                 <VariableColumn>
-                  <Name>Soll/Haben-Kennzeichen</Name>
-                  <AlphaNumeric><MaxLength>1</MaxLength></AlphaNumeric>
+                  <Name>Belegnummer</Name>
+                  <AlphaNumeric><MaxLength>36</MaxLength></AlphaNumeric>
                 </VariableColumn>
                 <VariableColumn>
-                  <Name>WKZ</Name>
-                  <AlphaNumeric><MaxLength>3</MaxLength></AlphaNumeric>
+                  <Name>Belegdatum</Name>
+                  <Date><Format>DD.MM.YYYY</Format></Date>
+                </VariableColumn>
+                <VariableColumn>
+                  <Name>Buchungsdatum</Name>
+                  <Date><Format>DD.MM.YYYY</Format></Date>
+                </VariableColumn>
+                <VariableColumn>
+                  <Name>Buchungstext</Name>
+                  <AlphaNumeric><MaxLength>200</MaxLength></AlphaNumeric>
                 </VariableColumn>
                 <VariableColumn>
                   <Name>Konto</Name>
                   <AlphaNumeric><MaxLength>8</MaxLength></AlphaNumeric>
                 </VariableColumn>
                 <VariableColumn>
-                  <Name>Gegenkonto</Name>
-                  <AlphaNumeric><MaxLength>8</MaxLength></AlphaNumeric>
+                  <Name>Bezeichnung</Name>
+                  <AlphaNumeric><MaxLength>100</MaxLength></AlphaNumeric>
                 </VariableColumn>
                 <VariableColumn>
-                  <Name>Belegdatum</Name>
-                  <AlphaNumeric><MaxLength>4</MaxLength></AlphaNumeric>
+                  <Name>Typ</Name>
+                  <AlphaNumeric><MaxLength>5</MaxLength></AlphaNumeric>
                 </VariableColumn>
                 <VariableColumn>
-                  <Name>Belegfeld1</Name>
-                  <Description>Belegnummer</Description>
-                  <AlphaNumeric><MaxLength>36</MaxLength></AlphaNumeric>
+                  <Name>Betrag</Name>
+                  <Numeric><Accuracy>2</Accuracy></Numeric>
                 </VariableColumn>
                 <VariableColumn>
-                  <Name>Buchungstext</Name>
-                  <AlphaNumeric><MaxLength>60</MaxLength></AlphaNumeric>
+                  <Name>Beleglink</Name>
+                  <AlphaNumeric><MaxLength>255</MaxLength></AlphaNumeric>
                 </VariableColumn>
+                <ForeignKey>
+                  <Name>Konto</Name>
+                  <References>
+                    <URL>Kontenplan.csv</URL>
+                    <Name>Konto</Name>
+                  </References>
+                </ForeignKey>
               </VariableLength>
             </Table>
             <Table>
-              <URL>EXTF_Kontenbeschriftungen.csv</URL>
-              <Name>Kontenbeschriftungen</Name>
-              <Description>DATEV EXTF Kontenbeschriftungen (SKR04)</Description>
+              <URL>Kontenplan.csv</URL>
+              <Name>Kontenplan</Name>
+              <Description>Kontenplan SKR04</Description>
               <VariableLength>
                 <ColumnDelimiter>;</ColumnDelimiter>
                 <RecordDelimiter>&#10;</RecordDelimiter>
@@ -567,19 +653,15 @@ def _build_index_xml(start: str, ende: str) -> str:
                   <AlphaNumeric><MaxLength>8</MaxLength></AlphaNumeric>
                 </VariablePrimaryKey>
                 <VariableColumn>
-                  <Name>Kontobeschriftung</Name>
+                  <Name>Bezeichnung</Name>
                   <AlphaNumeric><MaxLength>100</MaxLength></AlphaNumeric>
-                </VariableColumn>
-                <VariableColumn>
-                  <Name>Sprach-ID</Name>
-                  <AlphaNumeric><MaxLength>5</MaxLength></AlphaNumeric>
                 </VariableColumn>
               </VariableLength>
             </Table>
             <Table>
               <URL>Summen_und_Saldenliste.csv</URL>
               <Name>Summen- und Saldenliste</Name>
-              <Description>Trial balance per account</Description>
+              <Description>Kontensalden</Description>
               <Validity>
                 <Range>
                   <From>{start}</From>
@@ -612,6 +694,13 @@ def _build_index_xml(start: str, ende: str) -> str:
                   <Name>Saldo</Name>
                   <Numeric><Accuracy>2</Accuracy></Numeric>
                 </VariableColumn>
+                <ForeignKey>
+                  <Name>Konto</Name>
+                  <References>
+                    <URL>Kontenplan.csv</URL>
+                    <Name>Konto</Name>
+                  </References>
+                </ForeignKey>
               </VariableLength>
             </Table>
           </Media>
@@ -708,17 +797,31 @@ def datev_paket(
     )
     (output_dir / "EXTF_Kontenbeschriftungen.csv").write_text(kb, encoding="cp1252")
 
-    # Summen- und Saldenliste
-    susa = summen_und_saldenliste(journal_file, konten_file, start, ende)
-    (output_dir / "Summen_und_Saldenliste.csv").write_text(susa, encoding="cp1252")
-
     # Copy Belege
+    belege_out = output_dir / "Belege"
     if belege_dirs:
-        _copy_documents([Path(d) for d in belege_dirs], output_dir / "Belege")
+        _copy_documents([Path(d) for d in belege_dirs], belege_out)
 
     # Copy Kontoauszüge
     if kontoauszuege_dir:
         _copy_documents([Path(kontoauszuege_dir)], output_dir / "Kontoauszuege")
+
+    # GDPdU plain CSVs (UTF-8 for IDEA)
+    journal_csv = gdpdu_journal(
+        journal_file, konten_file, start, ende,
+        belege_dir=belege_out if belege_out.is_dir() else None,
+    )
+    (output_dir / "Buchungsjournal.csv").write_text(journal_csv, encoding="utf-8")
+
+    konten = pl.read_csv(konten_file, schema_overrides={"Konto": pl.Utf8})
+    konten = konten.filter(~pl.col("Konto").is_in(list(_INTERNAL_ACCOUNTS)))
+    kp_lines = ["Konto;Bezeichnung"]
+    for row in konten.to_dicts():
+        kp_lines.append(f'{row["Konto"]};{_quote(row["Bezeichnung"])}')
+    (output_dir / "Kontenplan.csv").write_text("\n".join(kp_lines) + "\n", encoding="utf-8")
+
+    susa = summen_und_saldenliste(journal_file, konten_file, start, ende)
+    (output_dir / "Summen_und_Saldenliste.csv").write_text(susa, encoding="utf-8")
 
     # GDPdU index.xml
     index_xml = _build_index_xml(start, ende)
