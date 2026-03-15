@@ -576,9 +576,92 @@ def _build_index_xml(start: str, ende: str) -> str:
                 </VariableColumn>
               </VariableLength>
             </Table>
+            <Table>
+              <URL>Summen_und_Saldenliste.csv</URL>
+              <Name>Summen- und Saldenliste</Name>
+              <Description>Trial balance per account</Description>
+              <Validity>
+                <Range>
+                  <From>{start}</From>
+                  <To>{ende}</To>
+                </Range>
+              </Validity>
+              <DecimalSymbol>,</DecimalSymbol>
+              <DigitGroupingSymbol>.</DigitGroupingSymbol>
+              <VariableLength>
+                <ColumnDelimiter>;</ColumnDelimiter>
+                <RecordDelimiter>&#10;</RecordDelimiter>
+                <TextEncapsulator>"</TextEncapsulator>
+                <VariablePrimaryKey>
+                  <Name>Konto</Name>
+                  <AlphaNumeric><MaxLength>8</MaxLength></AlphaNumeric>
+                </VariablePrimaryKey>
+                <VariableColumn>
+                  <Name>Bezeichnung</Name>
+                  <AlphaNumeric><MaxLength>100</MaxLength></AlphaNumeric>
+                </VariableColumn>
+                <VariableColumn>
+                  <Name>Summe Soll</Name>
+                  <Numeric><Accuracy>2</Accuracy></Numeric>
+                </VariableColumn>
+                <VariableColumn>
+                  <Name>Summe Haben</Name>
+                  <Numeric><Accuracy>2</Accuracy></Numeric>
+                </VariableColumn>
+                <VariableColumn>
+                  <Name>Saldo</Name>
+                  <Numeric><Accuracy>2</Accuracy></Numeric>
+                </VariableColumn>
+              </VariableLength>
+            </Table>
           </Media>
         </DataSet>
     """)
+
+
+def summen_und_saldenliste(
+    journal_file: str,
+    konten_file: str,
+    start: str,
+    ende: str,
+) -> str:
+    """Generate Summen- und Saldenliste (trial balance) as semicolon-separated CSV."""
+    journal = pl.read_csv(
+        journal_file,
+        schema_overrides={"Konto": pl.Utf8, "Belegnummer": pl.Utf8},
+    )
+    konten = pl.read_csv(konten_file, schema_overrides={"Konto": pl.Utf8})
+
+    start_d = date.fromisoformat(start)
+    ende_d = date.fromisoformat(ende)
+
+    journal = journal.with_columns(
+        pl.col("Buchungsdatum").str.strptime(pl.Date, "%d.%m.%Y").alias("_bd"),
+    ).filter(
+        (pl.col("_bd") >= start_d) & (pl.col("_bd") <= ende_d)
+    ).filter(~pl.col("Konto").is_in(list(_INTERNAL_ACCOUNTS)))
+
+    susa = journal.group_by("Konto").agg(
+        pl.col("Betrag").filter(pl.col("Typ") == "Soll").sum().alias("Summe Soll"),
+        pl.col("Betrag").filter(pl.col("Typ") == "Haben").sum().alias("Summe Haben"),
+    ).join(
+        konten.select("Konto", "Bezeichnung"), on="Konto", how="left",
+    ).with_columns(
+        (pl.col("Summe Soll") - pl.col("Summe Haben")).alias("Saldo"),
+    ).select(
+        "Konto", "Bezeichnung", "Summe Soll", "Summe Haben", "Saldo",
+    ).sort("Konto")
+
+    lines = ["Konto;Bezeichnung;Summe Soll;Summe Haben;Saldo"]
+    for row in susa.to_dicts():
+        konto = row["Konto"]
+        bez = _quote(row["Bezeichnung"] or "")
+        s = _format_amount(row["Summe Soll"] or 0)
+        h = _format_amount(row["Summe Haben"] or 0)
+        saldo = _format_amount(row["Saldo"] or 0)
+        lines.append(f"{konto};{bez};{s};{h};{saldo}")
+
+    return "\n".join(lines) + "\n"
 
 
 def _copy_documents(src_dirs: list[Path], dest_dir: Path) -> int:
@@ -624,6 +707,10 @@ def datev_paket(
         berater_nr=berater_nr, mandanten_nr=mandanten_nr,
     )
     (output_dir / "EXTF_Kontenbeschriftungen.csv").write_text(kb, encoding="cp1252")
+
+    # Summen- und Saldenliste
+    susa = summen_und_saldenliste(journal_file, konten_file, start, ende)
+    (output_dir / "Summen_und_Saldenliste.csv").write_text(susa, encoding="cp1252")
 
     # Copy Belege
     if belege_dirs:

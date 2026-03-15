@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from src.datev import datev_paket, kontenbeschriftungen_export
+from src.datev import datev_paket, kontenbeschriftungen_export, summen_und_saldenliste
 from tests.conftest import KONTEN_FILE, fixture_path
 
 START = "2024-01-01"
@@ -232,6 +232,7 @@ def test_datev_paket_return_type_is_path(tmp_path):
 EXPECTED_FILES = [
     "EXTF_Buchungsstapel.csv",
     "EXTF_Kontenbeschriftungen.csv",
+    "Summen_und_Saldenliste.csv",
     "index.xml",
     "gdpdu-01-09-2002.dtd",
 ]
@@ -516,3 +517,72 @@ def test_datev_paket_ignores_non_pdf_files(tmp_path):
                 belege_dirs=[str(belege_dir)])
     assert (out_dir / "Belege" / "RE001.pdf").exists()
     assert not (out_dir / "Belege" / "notes.txt").exists()
+
+
+# ---------------------------------------------------------------------------
+# Summen- und Saldenliste
+# ---------------------------------------------------------------------------
+
+JOURNAL_VAT_EXPENSE = fixture_path("11_with_vat_and_expense.csv")
+
+
+def test_susa_output_is_string():
+    result = summen_und_saldenliste(JOURNAL_SIMPLE, KONTEN_FILE, START, ENDE)
+    assert isinstance(result, str)
+
+
+def test_susa_header_line():
+    out = summen_und_saldenliste(JOURNAL_SIMPLE, KONTEN_FILE, START, ENDE)
+    header = out.splitlines()[0]
+    assert "Konto" in header
+    assert "Summe Soll" in header
+    assert "Summe Haben" in header
+    assert "Saldo" in header
+
+
+def test_susa_contains_accounts():
+    out = summen_und_saldenliste(JOURNAL_SIMPLE, KONTEN_FILE, START, ENDE)
+    assert "1810" in out
+    assert "4400" in out
+
+
+def test_susa_amounts_correct():
+    out = summen_und_saldenliste(JOURNAL_SIMPLE, KONTEN_FILE, START, ENDE)
+    lines = out.splitlines()[1:]
+    row_1810 = next(l for l in lines if l.startswith("1810"))
+    fields = row_1810.split(";")
+    assert fields[2] == "10000,00"  # Summe Soll
+    assert fields[3] == "0,00"     # Summe Haben
+    assert fields[4] == "10000,00" # Saldo
+
+
+def test_susa_excludes_internal_accounts():
+    out = summen_und_saldenliste(JOURNAL_SIMPLE, KONTEN_FILE, START, ENDE)
+    assert "00000" not in out
+    assert "9000" not in out
+
+
+def test_susa_comma_decimal_separator():
+    out = summen_und_saldenliste(JOURNAL_SIMPLE, KONTEN_FILE, START, ENDE)
+    lines = out.splitlines()[1:]
+    for line in lines:
+        fields = line.split(";")
+        for amount_field in fields[2:5]:
+            assert "," in amount_field
+
+
+def test_susa_in_datev_paket(tmp_path):
+    out_dir = tmp_path / "export"
+    datev_paket(JOURNAL_SIMPLE, KONTEN_FILE, START, ENDE, out_dir)
+    susa_path = out_dir / "Summen_und_Saldenliste.csv"
+    assert susa_path.exists()
+    content = susa_path.read_bytes().decode("cp1252")
+    assert "Konto" in content
+    assert "1810" in content
+
+
+def test_susa_referenced_in_index_xml(tmp_path):
+    out_dir = tmp_path / "export"
+    datev_paket(JOURNAL_SIMPLE, KONTEN_FILE, START, ENDE, out_dir)
+    xml_text = (out_dir / "index.xml").read_bytes().decode("utf-8")
+    assert "Summen_und_Saldenliste.csv" in xml_text
