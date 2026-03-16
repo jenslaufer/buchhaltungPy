@@ -3,29 +3,37 @@
 Usage: python -m src.cli <command> [options]
 
 Commands:
-  korrigiere-nummern   Fix Journalnummer (sequential) and Buchungssatznummer (dense rank)
-  sortiere-journal     Sort journal by Buchungsdatum (GoBD chronological order)
-  validiere-journal    Validate journal: balanced bookings, sequential numbering
-  validiere-bilanz     Validate balance sheet: Aktiva == Passiva
-  anomalien            Detect irregular booking patterns (duplicates, outliers, gaps)
-  betriebsergebnis     Compute operating result (Betriebsergebnis)
-  koerperschaftssteuer Compute corporate tax (Koerperschaftsteuer)
-  soli                 Compute solidarity surcharge (Solidaritaetszuschlag)
-  gewerbesteuer        Compute trade tax (Gewerbesteuer)
-  steuern              Compute total taxes
-  guv                  Generate income statement (GuV) as CSV
-  bilanz               Generate balance sheet as CSV
-  eroeffnungsbilanz    Generate opening balance sheet as CSV
-  konten               List account balances as CSV
-  t-konto              Show T-account detail for one account as CSV
-  t-konten             Show T-account detail for all accounts
-  jahresabschluss      Perform year-end closing (modifies journal in-place)
-  jahreseroeffnung     Create opening entries for next fiscal year
-  ebilanz              Export E-Bilanz CSV + INI for myEBilanz
-  lohn-berechnen       Compute payroll for an employee
-  lohn-buchungen       Generate journal entries for a payroll
-  lohn-zettel          Generate payslip as HTML
-  lohn-zettel-journal  Generate payslips from journal data
+  korrigiere-nummern          Fix Journalnummer (sequential) and Buchungssatznummer (dense rank)
+  sortiere-journal            Sort journal by Buchungsdatum (GoBD chronological order)
+  validiere-journal           Validate journal: balanced bookings, sequential numbering
+  validiere-bilanz            Validate balance sheet: Aktiva == Passiva
+  validiere-gobd              GoBD compliance check
+  anomalien                   Detect irregular booking patterns (duplicates, outliers, gaps)
+  benford                     Benford's Law first-digit analysis
+  zeitreihe                   Monthly time series analysis
+  betriebsergebnis            Compute operating result (Betriebsergebnis)
+  koerperschaftssteuer        Compute corporate tax (Koerperschaftsteuer)
+  soli                        Compute solidarity surcharge (Solidaritaetszuschlag)
+  gewerbesteuer               Compute trade tax (Gewerbesteuer)
+  steuern                     Compute total taxes
+  guv                         Generate income statement (GuV) as CSV
+  bilanz                      Generate balance sheet as CSV
+  eroeffnungsbilanz           Generate opening balance sheet as CSV
+  konten                      List account balances as CSV
+  t-konto                     Show T-account detail for one account as CSV
+  t-konten                    Show T-account detail for all accounts
+  susa                        Summen- und Saldenliste (trial balance)
+  jahresabschluss             Perform year-end closing (modifies journal in-place)
+  jahreseroeffnung            Create opening entries for next fiscal year
+  ebilanz                     Export E-Bilanz CSV + INI for myEBilanz
+  datev-export                Export journal in DATEV EXTF format
+  datev-kontenbeschriftungen  Export DATEV Kontenbeschriftungen (EXTF)
+  datev-paket                 Export complete DATEV/GDPdU audit package
+  gdpdu-journal               Export GDPdU journal (plain CSV for IDEA)
+  lohn-berechnen              Compute payroll for an employee
+  lohn-buchungen              Generate journal entries for a payroll
+  lohn-zettel                 Generate payslip as HTML
+  lohn-zettel-journal         Generate payslips from journal data
 """
 
 import argparse
@@ -196,6 +204,44 @@ def cmd_datev_export(args):
     if args.output:
         Path(args.output).write_text(result, encoding="cp1252")
         print(f"DATEV export: {args.output}")
+    else:
+        sys.stdout.write(result)
+
+
+def cmd_datev_kontenbeschriftungen(args):
+    result = datev.kontenbeschriftungen_export(
+        args.konten,
+        sachkontenlaenge=args.sachkontenlaenge,
+        wj_beginn=args.wj_beginn,
+        berater_nr=args.berater_nr, mandanten_nr=args.mandanten_nr,
+    )
+    if args.output:
+        Path(args.output).write_text(result, encoding="cp1252")
+        print(f"DATEV Kontenbeschriftungen: {args.output}")
+    else:
+        sys.stdout.write(result)
+
+
+def cmd_gdpdu_journal(args):
+    belege_dir = Path(args.belege) if args.belege else None
+    result = datev.gdpdu_journal(
+        args.journal, args.konten, args.start, args.ende,
+        belege_dir=belege_dir,
+    )
+    if args.output:
+        Path(args.output).write_text(result, encoding="utf-8")
+        print(f"GDPdU journal: {args.output}")
+    else:
+        sys.stdout.write(result)
+
+
+def cmd_susa(args):
+    result = datev.summen_und_saldenliste(
+        args.journal, args.konten, args.start, args.ende,
+    )
+    if args.output:
+        Path(args.output).write_text(result, encoding="utf-8")
+        print(f"SuSa: {args.output}")
     else:
         sys.stdout.write(result)
 
@@ -462,6 +508,29 @@ def main(argv=None):
     p.add_argument("--mandanten-nr", type=int, default=1, help="DATEV Mandanten-Nr (default: 1)")
     p.add_argument("-o", "--output", default="", help="Output file (default: stdout)")
     p.set_defaults(func=cmd_datev_export)
+
+    # datev-kontenbeschriftungen
+    p = sub.add_parser("datev-kontenbeschriftungen", help="Export DATEV Kontenbeschriftungen (EXTF)")
+    p.add_argument("--konten", default=DEFAULT_KONTEN, help="Path to konten.csv")
+    p.add_argument("--sachkontenlaenge", type=int, default=4, help="Account number length (default: 4)")
+    p.add_argument("--wj-beginn", default="", help="WJ-Beginn (YYYYMMDD)")
+    p.add_argument("--berater-nr", type=int, default=1001, help="DATEV Berater-Nr (default: 1001)")
+    p.add_argument("--mandanten-nr", type=int, default=1, help="DATEV Mandanten-Nr (default: 1)")
+    p.add_argument("-o", "--output", default="", help="Output file (default: stdout)")
+    p.set_defaults(func=cmd_datev_kontenbeschriftungen)
+
+    # gdpdu-journal
+    p = sub.add_parser("gdpdu-journal", help="Export GDPdU journal (plain CSV for IDEA)")
+    _add_common(p)
+    p.add_argument("--belege", default="", help="Belege directory for PDF linking")
+    p.add_argument("-o", "--output", default="", help="Output file (default: stdout)")
+    p.set_defaults(func=cmd_gdpdu_journal)
+
+    # susa (Summen- und Saldenliste)
+    p = sub.add_parser("susa", help="Summen- und Saldenliste (trial balance)")
+    _add_common(p)
+    p.add_argument("-o", "--output", default="", help="Output file (default: stdout)")
+    p.set_defaults(func=cmd_susa)
 
     # datev-paket
     p = sub.add_parser("datev-paket", help="Export complete DATEV/GDPdU audit package")

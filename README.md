@@ -26,6 +26,7 @@ python -m src.cli <command> [options]
 | `eroeffnungsbilanz` | Opening balance sheet (CSV) |
 | `guv` | Income statement (CSV) |
 | `konten` | Account balances (CSV) |
+| `susa` | Summen- und Saldenliste / trial balance |
 | `t-konto --konto <nr>` | T-account for one account (CSV) |
 | `t-konten` | T-accounts for all accounts |
 
@@ -47,6 +48,7 @@ python -m src.cli <command> [options]
 | `validiere-bilanz` | Aktiva == Passiva |
 | `validiere-gobd` | GoBD compliance (chronological order, no empty fields, valid accounts) |
 | `korrigiere-nummern` | Fix journal/booking numbering |
+| `sortiere-journal` | Sort journal by Buchungsdatum (GoBD chronological order) |
 
 ### Audit (Betriebsprüfung)
 
@@ -64,6 +66,9 @@ python -m src.cli <command> [options]
 | `jahreseroeffnung` | Opening entries for next fiscal year |
 | `ebilanz` | E-Bilanz export (CSV + INI for myEBilanz) |
 | `datev-export` | DATEV EXTF Buchungsstapel export |
+| `datev-kontenbeschriftungen` | DATEV EXTF Kontenbeschriftungen export |
+| `datev-paket` | Complete DATEV/GDPdU audit package |
+| `gdpdu-journal` | GDPdU journal (plain CSV for IDEA) |
 
 ### Payroll
 
@@ -88,6 +93,10 @@ python -m src.cli ebilanz journal.csv --start 2024-01-01 --ende 2024-12-31 --out
 
 # DATEV export for Steuerberater
 python -m src.cli datev-export journal.csv --start 2024-01-01 --ende 2024-12-31 -o EXTF_Buchungsstapel.csv
+python -m src.cli datev-paket journal.csv --start 2024-01-01 --ende 2024-12-31 --output-dir ./datev
+
+# Trial balance
+python -m src.cli susa journal.csv --start 2024-01-01 --ende 2024-12-31
 
 # Payroll
 python -m src.cli lohn-berechnen --name "Max Mustermann" --brutto 3500 --monat 2024-01-01
@@ -98,8 +107,8 @@ python -m src.cli lohn-berechnen --name "Max Mustermann" --brutto 3500 --monat 2
 ```
 src/
   buchhaltung.py      Core bookkeeping logic (Bilanz, GuV, taxes, year-end, E-Bilanz)
-  cli.py              CLI with 23 subcommands
-  datev.py            DATEV EXTF Buchungsstapel exporter
+  cli.py              CLI with 31 subcommands
+  datev.py            DATEV EXTF exporter, GDPdU, SuSa, Kontenbeschriftungen
   lohnbuchhaltung.py  Payroll: Lohnsteuer (BMF PAP), SV, journal entries, payslips
   lohnsteuer/         Generated BMF PAP calculators (2023–2026)
   render.py           HTML rendering for Bilanz, GuV, T-Konten
